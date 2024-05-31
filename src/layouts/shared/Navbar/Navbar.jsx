@@ -32,7 +32,7 @@ const Navbar = () => {
   const handleLogout = async () => {
     try {
       await logoutUser();
-      navigate('/');
+      navigate('/login');
     } catch (error) {
       console.log(error);
     }
@@ -62,15 +62,15 @@ const Navbar = () => {
               <button
                 onClick={handleLogout}
                 type="button"
-                className="rounded-lg bg-blue-700 px-5 py-2.5 text-sm font-semibold capitalize tracking-wide text-white hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+                className="rounded bg-blue-700 px-5 py-2.5 text-sm font-medium capitalize tracking-wide text-white hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
               >
                 logout
               </button>
             ) : (
-              <Link>
+              <Link to={'/login'}>
                 <button
                   type="button"
-                  className="rounded-lg bg-blue-700 px-5 py-2.5 text-sm font-semibold capitalize tracking-wide text-white hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+                  className="rounded bg-blue-700 px-5 py-2.5 text-sm font-medium capitalize tracking-wide text-white hover:bg-blue-800 focus:outline-none focus:ring-2 focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
                 >
                   login
                 </button>

@@ -1,6 +1,4 @@
 const GoogleButton = ({ onClick }) => {
-
-  
   return (
     <button
       onClick={onClick}
