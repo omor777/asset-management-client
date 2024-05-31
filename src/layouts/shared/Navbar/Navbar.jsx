@@ -1,8 +1,11 @@
 import { useEffect, useRef, useState } from 'react';
 import { FaBars, FaMoon } from 'react-icons/fa';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import useAuth from '../../../hooks/useAuth';
 import NavItem from './NavItem';
 const Navbar = () => {
+  const { user, logoutUser } = useAuth();
+  const navigate = useNavigate();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const mobileMenuRef = useRef(null);
   const [theme, setTheme] = useState(true);
@@ -26,6 +29,14 @@ const Navbar = () => {
     );
   };
 
+  const handleLogout = async () => {
+    try {
+      await logoutUser();
+      navigate('/');
+    } catch (error) {
+      console.log(error);
+    }
+  };
   return (
     <nav className="fixed start-0 top-0 z-20 w-full border-b border-gray-200 bg-white dark:border-gray-600 dark:bg-gray-900">
       <div className="mx-auto flex max-w-screen-xl flex-wrap items-center justify-between p-4">
@@ -47,14 +58,24 @@ const Navbar = () => {
             <button onClick={handleThemeToggle}>
               <FaMoon className="text-xl dark:text-gray-300" />
             </button>
-            <Link>
+            {user ? (
               <button
+                onClick={handleLogout}
                 type="button"
                 className="rounded-lg bg-blue-700 px-5 py-2.5 text-sm font-semibold capitalize tracking-wide text-white hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
               >
-                login
+                logout
               </button>
-            </Link>
+            ) : (
+              <Link>
+                <button
+                  type="button"
+                  className="rounded-lg bg-blue-700 px-5 py-2.5 text-sm font-semibold capitalize tracking-wide text-white hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+                >
+                  login
+                </button>
+              </Link>
+            )}
           </div>
           <button
             onClick={handleMenuToggle}

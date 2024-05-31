@@ -1,6 +1,9 @@
-const GoogleButton = () => {
+const GoogleButton = ({ onClick }) => {
+
+  
   return (
     <button
+      onClick={onClick}
       type="button"
       className="inline-flex w-full items-center justify-center rounded bg-[#FC4100] px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-[#FC4100]/90 focus:outline-none focus:ring-4 focus:ring-[#FC4100]/50 dark:focus:ring-[#FC4100]/55"
     >
