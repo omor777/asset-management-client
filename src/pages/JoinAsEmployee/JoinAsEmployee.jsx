@@ -1,3 +1,4 @@
+import { updateProfile } from 'firebase/auth';
 import { useState } from 'react';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
@@ -6,20 +7,45 @@ import { useNavigate } from 'react-router-dom';
 import GithubButton from '../../components/SocialBtn/GithubButton';
 import GoogleButton from '../../components/SocialBtn/GoogleButton';
 import useAuth from '../../hooks/useAuth';
+import useAxiosSecure from '../../hooks/useAxiosSecure';
 import { errorAlert, successAlert } from '../../utils/alert';
+import { imageUpload } from '../../utils/api';
 import './style.css';
 
 const JoinAsEmployee = () => {
   const { createUser, googleLogin } = useAuth();
   const navigate = useNavigate();
   const [startDate, setStartDate] = useState(new Date());
-
+  const axiosSecure = useAxiosSecure();
   const { register, handleSubmit } = useForm();
 
   const onSubmit = async (data) => {
-    const { email, password } = data;
+    const { name, email, password, photo } = data;
+    // console.log(data);
+    // console.log(data.photo[0]);
     try {
-      await createUser(email, password);
+      // upload image
+      const image_url = await imageUpload(photo[0]);
+
+      const employeeData = {
+        name,
+        email,
+        image: image_url,
+        member_type: 'employee',
+        date_of_birth: startDate,
+      };
+      //added user info to the db
+      await axiosSecure.post('/employees', employeeData);
+
+      //sing up user
+      const { user } = await createUser(email, password);
+
+      // update user name and photo
+      await updateProfile(user, {
+        displayName: name,
+        photoURL: image_url,
+      });
+
       successAlert('Sing up successful!');
       navigate('/');
     } catch (error) {
@@ -51,12 +77,9 @@ const JoinAsEmployee = () => {
 
             <div className="mt-4 flex items-center justify-between">
               <span className="w-1/4 border-b dark:border-gray-600 sm:w-1/3" />
-              <a
-                href="#"
-                className="text-center text-xs uppercase text-gray-500 hover:underline dark:text-gray-400"
-              >
+              <p className="text-center text-xs uppercase text-gray-500 dark:text-gray-400">
                 or login with email
-              </a>
+              </p>
               <span className="w-1/4 border-b dark:border-gray-600 sm:w-1/3" />
             </div>
 
@@ -77,7 +100,7 @@ const JoinAsEmployee = () => {
                   {...register('name', { required: true })}
                   type="text"
                   id="name"
-                  className="focus:ring-primary-600 focus:border-primary-600 block w-full rounded border border-gray-300 bg-gray-50 p-2.5 text-gray-900 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-500 sm:text-sm"
+                  className="block w-full rounded border border-blue-300 bg-gray-50 p-2.5 text-gray-900 outline-none focus:border-primary focus:ring-1 focus:ring-blue-300 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-300 sm:text-sm"
                   placeholder="Enter your full name"
                 />
               </div>
@@ -93,7 +116,21 @@ const JoinAsEmployee = () => {
                   type="email"
                   id="email"
                   placeholder="Enter your emails"
-                  className="focus:ring-primary-600 focus:border-primary-600 block w-full rounded border border-gray-300 bg-gray-50 p-2.5 text-gray-900 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-500 sm:text-sm"
+                  className="block w-full rounded border border-blue-300 bg-gray-50 p-2.5 text-gray-900 outline-none focus:border-primary focus:ring-1 focus:ring-blue-300 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-300 sm:text-sm"
+                />
+              </div>
+              <div>
+                <label
+                  htmlFor="photo"
+                  className="mb-2 block text-sm font-medium text-gray-900 dark:text-white"
+                >
+                  Photo
+                </label>
+                <input
+                  {...register('photo', { required: true })}
+                  type="file"
+                  id="file-input"
+                  className="block w-full rounded border border-gray-200 text-sm file:me-4 file:border-0 file:bg-primary file:px-4 file:py-2.5 file:font-medium file:text-white focus:z-10 focus:border-blue-300 focus:ring-blue-300 disabled:pointer-events-none disabled:opacity-50 dark:border-neutral-700 dark:bg-gray-700 dark:text-neutral-400"
                 />
               </div>
               <div>
@@ -108,7 +145,7 @@ const JoinAsEmployee = () => {
                   type="password"
                   id="password"
                   placeholder="Enter your password"
-                  className="focus:ring-primary-600 focus:border-primary-600 block w-full rounded border border-gray-300 bg-gray-50 p-2.5 text-gray-900 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-500 sm:text-sm"
+                  className="block w-full rounded border border-blue-300 bg-gray-50 p-2.5 text-gray-900 outline-none focus:border-primary focus:ring-1 focus:ring-blue-300 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-300 sm:text-sm"
                 />
               </div>
               <div>
@@ -119,7 +156,7 @@ const JoinAsEmployee = () => {
                   Date of Birth
                 </label>
                 <DatePicker
-                  className="focus:ring-primary-600 focus:border-primary-600 block w-full rounded border border-gray-300 bg-gray-50 p-2.5 text-gray-900 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-500 sm:text-sm"
+                  className="block w-full rounded border border-blue-300 bg-gray-50 p-2.5 text-gray-900 outline-none focus:border-primary focus:ring-1 focus:ring-blue-300 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-300 sm:text-sm"
                   selected={startDate}
                   onChange={(date) => setStartDate(date)}
                 />
