@@ -91,9 +91,9 @@ const Navbar = () => {
         >
           <ul className="mt-4 flex flex-col space-y-2 rounded-lg border border-gray-100 bg-gray-50 p-4 font-medium dark:border-gray-700 dark:bg-gray-800 md:mt-0 md:flex-row md:space-x-8 md:space-y-0 md:border-0 md:bg-white md:p-0 md:dark:bg-gray-900 rtl:space-x-reverse">
             <NavItem label={'Home'} address={'/'} />
-            <NavItem label={'Join As Employee'} address={'/join-as-employee'} />
+            <NavItem label={'Join As Employee'} address={'/employee'} />
 
-            <NavItem label={'Join As HR Manager'} address={'/hr'} />
+            <NavItem label={'Join As HR Manager'} address={'/hr-manager'} />
           </ul>
         </div>
       </div>
