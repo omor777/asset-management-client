@@ -1,5 +1,6 @@
 import { createBrowserRouter } from 'react-router-dom';
 import Root from '../layouts/Root/Root';
+import AddAsset from '../pages/AddAsset/AddAsset';
 import Home from '../pages/Home/Home/Home';
 import JoinAsEmployee from '../pages/JoinAsEmployee/JoinAsEmployee';
 import JoinAsHrManager from '../pages/JoinAsHrManager/JoinAsHrManager';
@@ -22,6 +23,10 @@ const router = createBrowserRouter([
       {
         path: '/hr-manager',
         element: <JoinAsHrManager />,
+      },
+      {
+        path: '/add-asset',
+        element: <AddAsset />,
       },
       {
         path: '/payment',
