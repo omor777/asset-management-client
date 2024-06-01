@@ -1,14 +1,21 @@
 import { useEffect, useRef, useState } from 'react';
 import { FaBars, FaMoon } from 'react-icons/fa';
 import { Link, useNavigate } from 'react-router-dom';
+import CommonNavItem from '../../../components/NavItem/CommonNavItem';
+import EmployeeNavItem from '../../../components/NavItem/EmployeeNavItem/EmployeeNavItem';
+import HrNavItem from '../../../components/NavItem/HrNavItem/HrNavItem';
 import useAuth from '../../../hooks/useAuth';
-import NavItem from './NavItem';
+import useRoll from '../../../hooks/useRoll';
 const Navbar = () => {
   const { user, logoutUser } = useAuth();
   const navigate = useNavigate();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const mobileMenuRef = useRef(null);
   const [theme, setTheme] = useState(true);
+
+  const [role] = useRoll();
+  // console.log( role);
+
   useEffect(() => {
     if (isMenuOpen) {
       mobileMenuRef.current.classList.remove('hidden');
@@ -53,7 +60,7 @@ const Navbar = () => {
             Flowbite
           </span>
         </Link>
-        <div className="flex space-x-3 md:order-2 md:space-x-0 rtl:space-x-reverse">
+        <div className="flex space-x-3 lg:order-2 lg:space-x-0 rtl:space-x-reverse">
           <div className="flex items-center gap-5">
             <button onClick={handleThemeToggle}>
               <FaMoon className="text-xl dark:text-gray-300" />
@@ -79,21 +86,20 @@ const Navbar = () => {
           </div>
           <button
             onClick={handleMenuToggle}
-            className="inline-flex h-10 w-10 items-center justify-center rounded-lg p-2 text-sm text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600 md:hidden"
+            className="inline-flex h-10 w-10 items-center justify-center rounded-lg p-2 text-sm text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600 lg:hidden"
           >
             <FaBars className="text-2xl" />
           </button>
         </div>
         <div
           ref={mobileMenuRef}
-          className="hidden w-full items-center justify-between md:order-1 md:flex md:w-auto"
+          className="hidden w-full items-center justify-between lg:order-1 lg:flex lg:w-auto"
           id="navbar-sticky"
         >
-          <ul className="mt-4 flex flex-col space-y-2 rounded-lg border border-gray-100 bg-gray-50 p-4 font-medium dark:border-gray-700 dark:bg-gray-800 md:mt-0 md:flex-row md:space-x-8 md:space-y-0 md:border-0 md:bg-white md:p-0 md:dark:bg-gray-900 rtl:space-x-reverse">
-            <NavItem label={'Home'} address={'/'} />
-            <NavItem label={'Join As Employee'} address={'/employee'} />
-
-            <NavItem label={'Join As HR Manager'} address={'/hr-manager'} />
+          <ul className="mt-4 flex flex-col items-center space-y-2 rounded-lg border border-gray-100 bg-gray-50 p-4 font-medium dark:border-gray-700 dark:bg-gray-800 lg:mt-0 lg:flex-row lg:space-x-6 lg:space-y-0 lg:border-0 lg:bg-white lg:p-0 lg:dark:bg-gray-900 rtl:space-x-reverse">
+            {role === undefined && <CommonNavItem />}
+            {role === 'employee' && <EmployeeNavItem />}
+            {role === 'HR' && <HrNavItem />}
           </ul>
         </div>
       </div>
