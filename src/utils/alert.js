@@ -5,7 +5,7 @@ const successAlert = (msg) => {
     icon: 'success',
     title: msg,
     showConfirmButton: false,
-    timer: 1600,
+    timer: 2000,
   });
 };
 
@@ -15,7 +15,7 @@ const errorAlert = (msg) => {
     icon: 'error',
     title: msg,
     showConfirmButton: false,
-    timer: 1600,
+    timer: 2000,
   });
 };
 

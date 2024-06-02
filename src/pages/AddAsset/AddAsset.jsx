@@ -11,11 +11,12 @@ const AddAsset = () => {
       product_quantity: '',
     },
   });
+
   const onSubmit = async (data) => {
     const assetInfo = {
       ...data,
       availability: 'Available',
-      added_data: new Date(),
+      added_date: new Date(),
     };
     console.log(assetInfo);
     try {
@@ -30,6 +31,8 @@ const AddAsset = () => {
       errorAlert(error.message);
     }
   };
+
+
 
   return (
     <section className="pt-40">

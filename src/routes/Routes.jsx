@@ -1,6 +1,7 @@
 import { createBrowserRouter } from 'react-router-dom';
 import Root from '../layouts/Root/Root';
 import AddAsset from '../pages/AddAsset/AddAsset';
+import AssetList from '../pages/AssetList/AssetList';
 import Home from '../pages/Home/Home/Home';
 import JoinAsEmployee from '../pages/JoinAsEmployee/JoinAsEmployee';
 import JoinAsHrManager from '../pages/JoinAsHrManager/JoinAsHrManager';
@@ -27,6 +28,10 @@ const router = createBrowserRouter([
       {
         path: '/add-asset',
         element: <AddAsset />,
+      },
+      {
+        path: '/asset-list',
+        element: <AssetList />,
       },
       {
         path: '/payment',
