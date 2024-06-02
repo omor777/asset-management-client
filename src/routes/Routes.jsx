@@ -2,6 +2,7 @@ import { createBrowserRouter } from 'react-router-dom';
 import Root from '../layouts/Root/Root';
 import AddAsset from '../pages/AddAsset/AddAsset';
 import AssetList from '../pages/AssetList/AssetList';
+import MyRequestedAsset from '../pages/Employee/RequestForAsset/MyRequestedAsset/MyRequestedAsset';
 import RequestForAsset from '../pages/Employee/RequestForAsset/RequestForAsset';
 import AllRequests from '../pages/HR/AllRequests/AllRequests';
 import Home from '../pages/Home/Home/Home';
@@ -27,7 +28,10 @@ const router = createBrowserRouter([
         path: '/request-for-asset',
         element: <RequestForAsset />,
       },
-      {},
+      {
+        path: '/my-assets',
+        element: <MyRequestedAsset />,
+      },
       {},
       {},
       {

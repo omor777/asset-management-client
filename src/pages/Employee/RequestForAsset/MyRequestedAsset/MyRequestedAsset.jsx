@@ -1,61 +1,25 @@
-import { useMutation, useQuery } from '@tanstack/react-query';
-import LoadingSpinner from '../../../components/LoadingSpinner/LoadingSpinner';
-import useAuth from '../../../hooks/useAuth';
-import useAxiosSecure from '../../../hooks/useAxiosSecure';
-import { errorAlert, successAlert } from '../../../utils/alert';
-import { dateFormat } from '../../../utils/date';
+import { useQuery } from '@tanstack/react-query';
+import LoadingSpinner from '../../../../components/LoadingSpinner/LoadingSpinner';
+import useAuth from '../../../../hooks/useAuth';
+import useAxiosSecure from '../../../../hooks/useAxiosSecure';
+import { dateFormat } from '../../../../utils/date';
 
-
-// TODO: reject button function
-
-const AllRequests = () => {
+const MyRequestedAsset = () => {
   const { user, loading } = useAuth();
   const axiosSecure = useAxiosSecure();
   const {
-    data: reqAssets = [],
+    data: myAssets = [],
     isPending,
     refetch,
   } = useQuery({
-    queryKey: ['req-assets', user?.email],
-    enabled: !loading && !!user?.email,
+    queryKey: ['my-requested-assets', user?.email],
     queryFn: async () => {
-      const { data } = await axiosSecure(`/assets/all-requests/${user?.email}`);
+      const { data } = await axiosSecure(`/my-requested-assets/${user?.email}`);
       return data;
     },
   });
-
-  // handle approve button
-  const { mutateAsync } = useMutation({
-    mutationFn: async ({ id, updatedAssetData }) => {
-      console.log();
-      const { data } = await axiosSecure.patch(
-        `/asset/req-asset/${id}`,
-        updatedAssetData,
-      );
-      return data;
-    },
-    onSuccess: (data) => {
-      console.log(data);
-      refetch();
-      successAlert('Request has been approved!');
-    },
-  });
-
-  const handleApprove = async (id) => {
-    const updatedAssetData = {
-      status: 'approve',
-      approve_date: new Date(),
-    };
-    try {
-      await mutateAsync({ id, updatedAssetData });
-    } catch (error) {
-      console.log(error);
-      errorAlert(error.message);
-    }
-  };
 
   if (isPending) return <LoadingSpinner h={'50vh'} />;
-
   return (
     <section className="container px-4 pt-40">
       <div className="flex flex-col">
@@ -73,85 +37,49 @@ const AllRequests = () => {
                     </th>
                     <th
                       scope="col"
-                      className="px-4 py-3.5 text-left text-sm font-normal text-gray-500 dark:text-gray-400 rtl:text-right"
+                      className="py-3.5 text-left text-sm font-normal text-gray-500 dark:text-gray-400 rtl:text-right"
                     >
                       <span className="whitespace-nowrap">Asset Type</span>
-                    </th>
-                    <th
-                      scope="col"
-                      className="px-4 py-3.5 text-left text-sm font-normal text-gray-500 dark:text-gray-400 rtl:text-right"
-                    >
-                      <span className="whitespace-nowrap">Requester Name</span>
-                    </th>
-                    <th
-                      scope="col"
-                      className="px-4 py-3.5 text-left text-sm font-normal text-gray-500 dark:text-gray-400 rtl:text-right"
-                    >
-                      <span className="whitespace-nowrap">Requester Email</span>
                     </th>
 
                     <th
                       scope="col"
-                      className="px-4 py-3.5 text-left text-sm font-normal text-gray-500 dark:text-gray-400 rtl:text-right"
+                      className="py-3.5 text-left text-sm font-normal text-gray-500 dark:text-gray-400 rtl:text-right"
                     >
-                      <span className="whitespace-nowrap">
-                        Additional Notes
-                      </span>
+                      <span className="whitespace-nowrap">Request Status</span>
                     </th>
                     <th
                       scope="col"
-                      className="px-4 py-3.5 text-left text-sm font-normal text-gray-500 dark:text-gray-400 rtl:text-right"
+                      className="py-3.5 text-left text-sm font-normal text-gray-500 dark:text-gray-400 rtl:text-right"
                     >
                       <span className="whitespace-nowrap">Request Date</span>
                     </th>
                     <th
                       scope="col"
-                      className="px-4 py-3.5 text-left text-sm font-normal text-gray-500 dark:text-gray-400 rtl:text-right"
+                      className="py-3.5 text-left text-sm font-normal text-gray-500 dark:text-gray-400 rtl:text-right"
                     >
-                      <span className="whitespace-nowrap">Status</span>
+                      <span className="whitespace-nowrap">Approval Date</span>
                     </th>
+
                     <th
                       scope="col"
-                      className="px-5 py-3.5 text-left text-sm font-normal text-gray-500 dark:text-gray-400 rtl:text-right"
+                      className="py-3.5 text-left text-sm font-normal text-gray-500 dark:text-gray-400 rtl:text-right"
                     >
                       <span className="whitespace-nowrap">Action</span>
                     </th>
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-gray-200 bg-white dark:divide-gray-700 dark:bg-gray-900">
-                  {reqAssets?.map((asset) => (
+                  {myAssets?.map((asset) => (
                     <tr key={asset?._id}>
-                      <td className="whitespace-nowrap p-4 text-sm font-medium text-gray-700">
+                      <td className="whitespace-nowrap p-4 py-4 text-sm font-medium text-gray-700">
                         <span className="capitalize dark:text-gray-300">
                           {asset?.product_name}
                         </span>
                       </td>
-                      <td className="whitespace-nowrap p-4 text-sm font-medium text-gray-700">
+                      <td className="whitespace-nowrap py-4 text-sm font-medium text-gray-700">
                         <span className="capitalize dark:text-gray-300">
                           {asset?.product_type}
-                        </span>
-                      </td>
-                      <td className="whitespace-nowrap p-4 text-sm font-medium text-gray-700">
-                        <span className="capitalize dark:text-gray-300">
-                          {asset?.requester_info?.name}
-                        </span>
-                      </td>
-                      <td className="whitespace-nowrap p-4 text-sm font-medium text-gray-700">
-                        <span className="capitalize dark:text-gray-300">
-                          {asset?.requester_info?.email}
-                        </span>
-                      </td>
-
-                      <td className="whitespace-nowrap p-4 text-sm font-medium text-gray-700">
-                        <span className="capitalize dark:text-gray-300">
-                          {asset?.additional_notes}
-                        </span>
-                      </td>
-                      <td className="whitespace-nowrap p-4 text-sm font-medium text-gray-700">
-                        <span className="capitalize dark:text-gray-300">
-                          <p className="w-max rounded-full bg-purple-100/60 px-3 py-1 text-xs tracking-wider text-purple-500 dark:bg-gray-800">
-                            {dateFormat(asset?.requested_date)}
-                          </p>
                         </span>
                       </td>
                       <td className="whitespace-nowrap text-sm font-medium text-gray-700">
@@ -168,18 +96,53 @@ const AllRequests = () => {
                           </span>
                         </div>
                       </td>
-                      <td className="whitespace-nowrap px-4 py-4 text-sm">
-                        <div className="flex items-center gap-x-6">
-                          <button className="shadow-tableBtn rounded bg-rose-500 px-4 py-1 text-sm tracking-wide text-white transition-all duration-200 hover:bg-rose-700">
+                      <td className="whitespace-nowrap p-4 text-sm font-medium text-gray-700">
+                        <span className="capitalize dark:text-gray-300">
+                          {dateFormat(asset?.requested_date)}
+                        </span>
+                      </td>
+                      <td className="whitespace-nowrap py-4 text-sm font-medium text-gray-700">
+                        {asset?.approve_date && (
+                          <span className="capitalize dark:text-gray-300">
+                            {dateFormat(asset?.approve_date)}
+                          </span>
+                        )}
+                      </td>
+
+                      <td className="whitespace-nowrap py-4 text-sm">
+                        <div className="flex items-center">
+                          {asset?.status === 'pending' && (
+                            <button
+                              className={`shadow-tableBtn w-20 rounded bg-rose-500 py-1 text-sm tracking-wide text-white transition-all duration-200 hover:bg-rose-700`}
+                            >
+                              Cancel
+                            </button>
+                          )}
+                          {asset?.status === 'approve' &&
+                            asset?.product_type !== 'Returnable' && (
+                              <button
+                                className={`shadow-tableBtn w-20 rounded bg-blue-500 py-1 text-sm tracking-wide text-white transition-all duration-200 hover:bg-blue-700`}
+                              >
+                                Print
+                              </button>
+                            )}
+                          {asset?.status === 'approve' &&
+                            asset?.product_type === 'Returnable' && (
+                              <button
+                                className={`shadow-tableBtn w-20 rounded bg-purple-500 py-1 text-sm tracking-wide text-white transition-all duration-200 hover:bg-purple-700`}
+                              >
+                                Return
+                              </button>
+                            )}
+                          {/* <button className="shadow-tableBtn rounded bg-rose-500 px-4 py-1 text-sm tracking-wide text-white transition-all duration-200 hover:bg-rose-700">
                             Reject
                           </button>
                           <button
                             disabled={asset?.status === 'approve'}
-                            onClick={() => handleApprove(asset?._id)}
                             className={`shadow-tableBtn rounded px-4 py-1 text-sm tracking-wide text-white transition-all duration-200 ${asset?.status === 'approve' ? 'cursor-not-allowed bg-emerald-500' : 'bg-primary hover:bg-blue-700'}`}
                           >
                             Approve
-                          </button>
+                          </button> */}
                         </div>
                       </td>
                     </tr>
@@ -280,4 +243,4 @@ const AllRequests = () => {
   );
 };
 
-export default AllRequests;
+export default MyRequestedAsset;
