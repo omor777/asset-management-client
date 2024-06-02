@@ -3,6 +3,7 @@ import Root from '../layouts/Root/Root';
 import AddAsset from '../pages/AddAsset/AddAsset';
 import AssetList from '../pages/AssetList/AssetList';
 import RequestForAsset from '../pages/Employee/RequestForAsset/RequestForAsset';
+import AllRequests from '../pages/HR/AllRequests/AllRequests';
 import Home from '../pages/Home/Home/Home';
 import JoinAsEmployee from '../pages/JoinAsEmployee/JoinAsEmployee';
 import JoinAsHrManager from '../pages/JoinAsHrManager/JoinAsHrManager';
@@ -41,6 +42,12 @@ const router = createBrowserRouter([
         path: '/asset-list',
         element: <AssetList />,
       },
+      {
+        path: '/all-requests',
+        element: <AllRequests />,
+      },
+      {},
+      {},
       {
         path: '/payment',
         element: <Payment />,

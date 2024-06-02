@@ -1,8 +1,10 @@
 import { useForm } from 'react-hook-form';
+import useAuth from '../../hooks/useAuth';
 import useAxiosSecure from '../../hooks/useAxiosSecure';
 import { errorAlert, successAlert } from '../../utils/alert';
 
 const AddAsset = () => {
+  const { user } = useAuth();
   const axiosSecure = useAxiosSecure();
   const { register, handleSubmit, reset } = useForm({
     defaultValues: {
@@ -17,8 +19,13 @@ const AddAsset = () => {
       ...data,
       availability: 'Available',
       added_date: new Date(),
+      provider_info: {
+        name: user?.displayName,
+        email: user?.email,
+        photo: user?.photoURL,
+      },
     };
-    console.log(assetInfo);
+    // console.log(assetInfo);
     try {
       //
       const { data } = await axiosSecure.post('/assets', assetInfo);
@@ -31,8 +38,6 @@ const AddAsset = () => {
       errorAlert(error.message);
     }
   };
-
-
 
   return (
     <section className="pt-40">

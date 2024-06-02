@@ -6,7 +6,7 @@ export default {
       sm: '576px',
       md: '768px',
       lg: '1024px',
-      xl: '1170px',
+      xl: '1240px',
     },
     extend: {
       container: {
@@ -20,6 +20,8 @@ export default {
       },
       boxShadow: {
         form: 'rgba(0, 0, 0, 0.05) 0px 6px 24px 0px, rgba(0, 0, 0, 0.08) 0px 0px 0px 1px',
+        tableBtn:
+          'rgba(17, 17, 26, 0.05) 0px 4px 16px, rgba(17, 17, 26, 0.05) 0px 8px 32px;',
       },
     },
   },

@@ -6,6 +6,7 @@ const HrNavItem = () => {
       <NavItem label={'Home'} address={'/'} />
       <NavItem label={'Asset List'} address={'/asset-list'} />
       <NavItem label={'Add Asset'} address={'/add-asset'} />
+      <NavItem label={'All Requests'} address={'/all-requests'} />
       <NavItem label={'My Employee List'} address={'/my-employee-list'} />
       <NavItem label={'Add Employee'} address={'/add-employee'} />
       {/* <NavItem label={'Home'} address={'/'} /> */}

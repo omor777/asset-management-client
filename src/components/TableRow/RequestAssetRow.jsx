@@ -43,7 +43,7 @@ const RequestAssetRow = ({ asset = {}, refetch }) => {
         `/asset/update/${deleteId}`,
         updatedData,
       );
-      console.log(data, 'form hanlde ');
+    //   console.log(data, 'form hanlde ');
       if (data.modifiedCount > 0) {
         setShowModal(false);
         refetch();
@@ -57,8 +57,8 @@ const RequestAssetRow = ({ asset = {}, refetch }) => {
   };
 
   const handleOpenModal = () => {
-    if (asset.status === 'pending')
-      return warningAlert('You have already request this asset!');
+    // if (asset.status === 'pending')
+    //   return warningAlert('You have already request this asset!');
     setShowModal(true);
   };
 
@@ -89,8 +89,8 @@ const RequestAssetRow = ({ asset = {}, refetch }) => {
               handleOpenModal();
               setDeleteId(_id);
             }}
-            // disabled={availability === 'Out of stock'}
-            className={`rounded bg-primary px-3 py-1 tracking-wide text-white transition-colors duration-200 hover:bg-blue-700 focus:outline-none ${availability === 'Out of stock' ? 'cursor-not-allowed bg-blue-800 hover:bg-blue-800' : ''}`}
+            disabled={availability === 'Out of stock'}
+            className={`rounded bg-primary px-3 py-1 tracking-wide text-white transition-colors duration-200 hover:bg-blue-700 focus:outline-none ${availability === 'Out of stock' ? 'cursor-not-allowed bg-gray-700 hover:bg-gray-700' : ''}`}
           >
             Request
           </button>
