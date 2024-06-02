@@ -19,4 +19,14 @@ const errorAlert = (msg) => {
   });
 };
 
-export { errorAlert, successAlert };
+const warningAlert = (msg) => {
+  Swal.fire({
+    position: 'center',
+    icon: 'warning',
+    title: msg,
+    showConfirmButton: false,
+    timer: 2000,
+  });
+};
+
+export { errorAlert, successAlert, warningAlert };

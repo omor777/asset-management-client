@@ -2,6 +2,7 @@ import { createBrowserRouter } from 'react-router-dom';
 import Root from '../layouts/Root/Root';
 import AddAsset from '../pages/AddAsset/AddAsset';
 import AssetList from '../pages/AssetList/AssetList';
+import RequestForAsset from '../pages/Employee/RequestForAsset/RequestForAsset';
 import Home from '../pages/Home/Home/Home';
 import JoinAsEmployee from '../pages/JoinAsEmployee/JoinAsEmployee';
 import JoinAsHrManager from '../pages/JoinAsHrManager/JoinAsHrManager';
@@ -21,6 +22,13 @@ const router = createBrowserRouter([
         path: '/employee',
         element: <JoinAsEmployee />,
       },
+      {
+        path: '/request-for-asset',
+        element: <RequestForAsset />,
+      },
+      {},
+      {},
+      {},
       {
         path: '/hr-manager',
         element: <JoinAsHrManager />,
