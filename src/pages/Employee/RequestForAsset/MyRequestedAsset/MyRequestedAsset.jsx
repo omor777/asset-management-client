@@ -1,7 +1,8 @@
-import { useQuery } from '@tanstack/react-query';
+import { useMutation, useQuery } from '@tanstack/react-query';
 import LoadingSpinner from '../../../../components/LoadingSpinner/LoadingSpinner';
 import useAuth from '../../../../hooks/useAuth';
 import useAxiosSecure from '../../../../hooks/useAxiosSecure';
+import { errorAlert, successAlert } from '../../../../utils/alert';
 import { dateFormat } from '../../../../utils/date';
 
 const MyRequestedAsset = () => {
@@ -18,6 +19,44 @@ const MyRequestedAsset = () => {
       return data;
     },
   });
+
+  // update status to cancel
+  const { mutateAsync } = useMutation({
+    mutationFn: async (id) => {
+      const { data } = await axiosSecure.patch(`/my-requested-asset/${id}`, {
+        status: 'cancel',
+      });
+      return data;
+    },
+    onSuccess: () => {
+      refetch();
+      successAlert('Request has been canceled!');
+    },
+  });
+
+  // handle return button
+
+  const handleCancelRequest = async (id) => {
+    try {
+      await mutateAsync(id);
+    } catch (error) {
+      console.log(error);
+      errorAlert(error.message);
+    }
+  };
+
+  const handleReturn = async (id) => {
+    try {
+      await axiosSecure.patch(`/my-requested-asset/${id}`, {
+        status: 'return',
+      });
+      refetch();
+      successAlert('Return successfully!');
+    } catch (error) {
+      console.log(error);
+      errorAlert(error.message);
+    }
+  };
 
   if (isPending) return <LoadingSpinner h={'50vh'} />;
   return (
@@ -84,13 +123,13 @@ const MyRequestedAsset = () => {
                       </td>
                       <td className="whitespace-nowrap text-sm font-medium text-gray-700">
                         <div
-                          className={`inline-flex items-center gap-x-2 rounded-full px-3 py-1 dark:bg-gray-800 ${asset?.status === 'pending' && 'bg-amber-100/60'} ${asset?.status === 'approve' && 'bg-emerald-100/60'} ${asset?.status === 'reject' && 'bg-rose-100/60'}`}
+                          className={`inline-flex items-center gap-x-2 rounded-full px-3 py-1 dark:bg-gray-800 ${asset?.status === 'pending' && 'bg-amber-100/60'} ${asset?.status === 'approve' && 'bg-emerald-100/60'} ${asset?.status === 'reject' && 'bg-rose-100/60'} ${asset?.status === 'return' && 'bg-purple-100/60'} ${asset?.status === 'cancel' && 'bg-rose-100/60'}`}
                         >
                           <span
-                            className={`h-1.5 w-1.5 rounded-full ${asset?.status === 'pending' && 'bg-amber-500'} ${asset?.status === 'approve' && 'bg-emerald-500'} ${asset?.status === 'reject' && 'bg-rose-500'}`}
+                            className={`h-1.5 w-1.5 rounded-full ${asset?.status === 'pending' && 'bg-amber-500'} ${asset?.status === 'approve' && 'bg-emerald-500'} ${asset?.status === 'reject' && 'bg-rose-500'} ${asset?.status === 'return' && 'bg-purple-500'} ${asset?.status === 'cancel' && 'bg-rose-500'}`}
                           />
                           <span
-                            className={`text-sm font-normal capitalize ${asset?.status === 'pending' && 'text-amber-500'} ${asset?.status === 'approve' && 'text-emerald-500'} ${asset?.status === 'reject' && 'text-rose-500'}`}
+                            className={`text-sm font-normal capitalize ${asset?.status === 'pending' && 'text-amber-500'} ${asset?.status === 'approve' && 'text-emerald-500'} ${asset?.status === 'reject' && 'text-rose-500'} ${asset?.status === 'return' && 'text-purple-500'} ${asset?.status === 'cancel' && 'text-rose-500'}`}
                           >
                             {asset?.status}
                           </span>
@@ -111,38 +150,35 @@ const MyRequestedAsset = () => {
 
                       <td className="whitespace-nowrap py-4 text-sm">
                         <div className="flex items-center">
-                          {asset?.status === 'pending' && (
+                          {asset?.status === 'pending' ||
+                          asset?.status === 'cancel' ? (
                             <button
-                              className={`shadow-tableBtn w-20 rounded bg-rose-500 py-1 text-sm tracking-wide text-white transition-all duration-200 hover:bg-rose-700`}
+                              disabled={asset?.status === 'cancel'}
+                              onClick={() => handleCancelRequest(asset._id)}
+                              className={`w-20 rounded bg-rose-500 py-1 text-sm tracking-wide text-white shadow-tableBtn transition-all duration-200 hover:bg-rose-700 ${asset?.status === 'cancel' ? 'cursor-not-allowed' : ''}`}
                             >
                               Cancel
                             </button>
-                          )}
+                          ) : null}
                           {asset?.status === 'approve' &&
                             asset?.product_type !== 'Returnable' && (
                               <button
-                                className={`shadow-tableBtn w-20 rounded bg-blue-500 py-1 text-sm tracking-wide text-white transition-all duration-200 hover:bg-blue-700`}
+                                className={`w-20 rounded bg-blue-500 py-1 text-sm tracking-wide text-white shadow-tableBtn transition-all duration-200 hover:bg-blue-700`}
                               >
                                 Print
                               </button>
                             )}
-                          {asset?.status === 'approve' &&
-                            asset?.product_type === 'Returnable' && (
-                              <button
-                                className={`shadow-tableBtn w-20 rounded bg-purple-500 py-1 text-sm tracking-wide text-white transition-all duration-200 hover:bg-purple-700`}
-                              >
-                                Return
-                              </button>
-                            )}
-                          {/* <button className="shadow-tableBtn rounded bg-rose-500 px-4 py-1 text-sm tracking-wide text-white transition-all duration-200 hover:bg-rose-700">
-                            Reject
-                          </button>
-                          <button
-                            disabled={asset?.status === 'approve'}
-                            className={`shadow-tableBtn rounded px-4 py-1 text-sm tracking-wide text-white transition-all duration-200 ${asset?.status === 'approve' ? 'cursor-not-allowed bg-emerald-500' : 'bg-primary hover:bg-blue-700'}`}
-                          >
-                            Approve
-                          </button> */}
+                          {(asset?.status === 'approve' ||
+                            asset?.status === 'return') &&
+                          asset?.product_type === 'Returnable' ? (
+                            <button
+                              onClick={() => handleReturn(asset?._id)}
+                              disabled={asset?.status === 'return'}
+                              className={`w-20 rounded bg-purple-500 py-1 text-sm tracking-wide text-white shadow-tableBtn transition-all duration-200 hover:bg-purple-700 ${asset?.status === 'return' ? 'cursor-not-allowed' : ''}`}
+                            >
+                              Return
+                            </button>
+                          ) : null}
                         </div>
                       </td>
                     </tr>
