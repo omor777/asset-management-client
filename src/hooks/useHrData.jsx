@@ -9,7 +9,7 @@ const useHrData = () => {
   const { data: hrData = {}, isPending } = useQuery({
     queryKey: ['manager', user?.email],
     queryFn: async () => {
-      const { data } = await axiosSecure(`/employee/${user?.email}`);
+      const { data } = await axiosSecure(`/employee/${user?.email}?role=HR`);
       return data;
     },
   });

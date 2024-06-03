@@ -4,6 +4,7 @@ import AddAsset from '../pages/AddAsset/AddAsset';
 import AssetList from '../pages/AssetList/AssetList';
 import MyRequestedAsset from '../pages/Employee/RequestForAsset/MyRequestedAsset/MyRequestedAsset';
 import RequestForAsset from '../pages/Employee/RequestForAsset/RequestForAsset';
+import AddAnEmployee from '../pages/HR/AddAnEmployee/AddAnEmployee';
 import AllRequests from '../pages/HR/AllRequests/AllRequests';
 import Home from '../pages/Home/Home/Home';
 import JoinAsEmployee from '../pages/JoinAsEmployee/JoinAsEmployee';
@@ -50,7 +51,10 @@ const router = createBrowserRouter([
         path: '/all-requests',
         element: <AllRequests />,
       },
-      {},
+      {
+        path: '/add-an-employee',
+        element: <AddAnEmployee />,
+      },
       {},
       {
         path: '/payment',
