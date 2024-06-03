@@ -10,7 +10,14 @@ import { imageUpload } from '../../utils/api';
 const JoinAsHrManager = () => {
   const { createUser } = useAuth();
   const [startDate, setStartDate] = useState(new Date());
-  const { register, handleSubmit } = useForm();
+  const { register, handleSubmit } = useForm({
+    defaultValues: {
+      name: '',
+      company_name: '',
+      email: '',
+      password: '',
+    },
+  });
   const navigate = useNavigate();
   const axiosCommon = useAxiosCommon();
 
@@ -31,8 +38,8 @@ const JoinAsHrManager = () => {
           members: pricing === 5 ? 5 : pricing === 8 ? 10 : 20,
         },
         date_of_birth: startDate,
-        status: 'pending',
-        role:'HR'
+        payment_status: 'pending',
+        role: 'HR',
       };
       // sing up user
       await createUser(email, password);
@@ -181,7 +188,6 @@ const JoinAsHrManager = () => {
                 Sing Up
               </button>
             </form>
-          
           </div>
         </div>
       </div>

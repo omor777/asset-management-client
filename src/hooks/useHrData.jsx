@@ -3,7 +3,7 @@ import useAuth from './useAuth';
 import useAxiosSecure from './useAxiosSecure';
 
 const useHrData = () => {
-  const { user } = useAuth();
+  const { user, loading } = useAuth();
   const axiosSecure = useAxiosSecure();
 
   const { data: hrData = {}, isPending } = useQuery({

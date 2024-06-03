@@ -17,12 +17,18 @@ const JoinAsEmployee = () => {
   const navigate = useNavigate();
   const [startDate, setStartDate] = useState(new Date());
   const axiosSecure = useAxiosSecure();
-  const { register, handleSubmit } = useForm();
+  const { register, handleSubmit } = useForm({
+    defaultValues: {
+      name: '',
+      email: '',
+      password: '',
+    },
+  });
 
   const onSubmit = async (data) => {
     const { name, email, password, photo } = data;
+
     // console.log(data);
-    // console.log(data.photo[0]);
     try {
       // upload image
       const image_url = await imageUpload(photo[0]);
@@ -33,8 +39,9 @@ const JoinAsEmployee = () => {
         image: image_url,
         role: 'employee',
         date_of_birth: startDate,
+        isJoin: false,
       };
-      //added user info to the db
+      // added user info to the db
       await axiosSecure.post('/employees', employeeData);
 
       //sing up user

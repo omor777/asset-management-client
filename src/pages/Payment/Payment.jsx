@@ -13,6 +13,8 @@ const Payment = () => {
   const axiosSecure = useAxiosSecure();
   const [hrData, isPending] = useHrData();
 
+  console.log(hrData);
+
   if (isPending) return <LoadingSpinner h={'90vh'} />;
 
   return (
@@ -52,7 +54,7 @@ const Payment = () => {
 
         <div>
           <Elements stripe={stripePromise}>
-            <CheckoutForm  />
+            <CheckoutForm />
           </Elements>
         </div>
       </div>

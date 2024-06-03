@@ -14,7 +14,6 @@ const Navbar = () => {
   const [theme, setTheme] = useState(true);
 
   const [role] = useRoll();
-  // console.log( role);
 
   useEffect(() => {
     if (isMenuOpen) {
