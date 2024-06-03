@@ -5,16 +5,19 @@ import useAxiosSecure from '../../../hooks/useAxiosSecure';
 import useHrData from '../../../hooks/useHrData';
 import { errorAlert, successAlert } from '../../../utils/alert';
 
+//TODO: add increase the limit button and functionality
+// add multiple member with checkbox
+// add pagination on table
 const AddAnEmployee = () => {
   const { user } = useAuth();
   const axiosSecure = useAxiosSecure();
 
-  const [hrData] = useHrData();
+  const [hrData, isPending, refetch] = useHrData();
 
   const {
     data: employees = [],
-    isPending,
-    refetch,
+    isPending: loading,
+    refetch: refetch2,
   } = useQuery({
     queryKey: ['not-affiliated-employee'],
     queryFn: async () => {
@@ -30,16 +33,15 @@ const AddAnEmployee = () => {
       return data;
     },
     onSuccess: (data) => {
-      //   console.log(data);
       if (data.insertedId) {
         refetch();
+        refetch2();
         successAlert('Team member added successfully');
       }
     },
   });
 
   const handleAddToTeam = async (employee) => {
-    // console.log(employee);
     const teamMemberData = {
       employeeId: employee._id,
       teamId: hrData._id,
@@ -65,11 +67,27 @@ const AddAnEmployee = () => {
     }
   };
 
-  if (isPending) return <LoadingSpinner h={'50vh'} />;
+  console.log(hrData);
+
+  if (loading || isPending) return <LoadingSpinner h={'50vh'} />;
 
   return (
-    <>
-      <section className="container px-4 pt-40">
+    <div className="container px-4 pt-40">
+      <div className="grid grid-cols-1 gap-6 pb-20 md:grid-cols-2">
+        <div className="flex h-[13.75rem] flex-col items-center justify-center gap-4 rounded-md bg-blue-500 shadow-md">
+          <h1 className="text-4xl font-bold text-white">Total Employee</h1>
+          <h3 className="text-6xl font-extrabold text-white">
+            {hrData?.employee_count ? hrData?.employee_count : '0'}
+          </h3>
+        </div>
+        <div className="flex h-[13.75rem] flex-col items-center justify-center gap-4 rounded-md bg-rose-500 shadow-md">
+          <h1 className="text-4xl font-bold text-white">Package Limit</h1>
+          <h3 className="text-6xl font-extrabold text-white">
+            {hrData?.package_info?.members}
+          </h3>
+        </div>
+      </div>
+      <section>
         <div className="flex flex-col">
           <div className="overflow-x-auto">
             <div className="inline-block min-w-full align-middle">
@@ -248,7 +266,7 @@ const AddAnEmployee = () => {
           </a>
         </div>
       </section>
-    </>
+    </div>
   );
 };
 
