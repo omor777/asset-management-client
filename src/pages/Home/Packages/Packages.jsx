@@ -3,9 +3,6 @@ const Packages = () => {
     <section>
       <div className="container mx-auto">
         <div className="grid gap-6 sm:grid-cols-2 sm:gap-8 lg:grid-cols-3">
-          {/* <PricingCard />
-          <PricingCard />
-          <PricingCard /> */}
           <div className="shadow-card transform cursor-pointer rounded px-6 py-4 transition-colors duration-300 hover:bg-gray-200 dark:bg-gray-700 dark:hover:bg-gray-900">
             <p className="text-lg font-medium text-gray-800 dark:text-gray-100">
               Base

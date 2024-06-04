@@ -5,6 +5,8 @@ import GithubButton from '../../components/SocialBtn/GithubButton';
 import GoogleButton from '../../components/SocialBtn/GoogleButton';
 import useAuth from '../../hooks/useAuth';
 import { errorAlert, successAlert } from '../../utils/alert';
+import { saveTokenToLs } from '../../utils/token';
+import { setUserToLs } from '../../utils/localStorage';
 
 const Login = () => {
   const { loginUser, googleLogin } = useAuth();
@@ -15,6 +17,13 @@ const Login = () => {
     const { email, password } = data;
     try {
       await loginUser(email, password);
+
+      // // save user email to local storage
+      //  setUserToLs(email)
+
+      // // save token to local storage
+      // await saveTokenToLs(email);
+
       successAlert('Login successful!');
       navigate('/');
     } catch (error) {

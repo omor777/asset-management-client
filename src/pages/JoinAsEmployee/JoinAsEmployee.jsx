@@ -10,6 +10,7 @@ import useAuth from '../../hooks/useAuth';
 import useAxiosSecure from '../../hooks/useAxiosSecure';
 import { errorAlert, successAlert } from '../../utils/alert';
 import { imageUpload } from '../../utils/api';
+import { saveTokenToLs } from '../../utils/token';
 import './style.css';
 
 const JoinAsEmployee = () => {
@@ -47,13 +48,16 @@ const JoinAsEmployee = () => {
       //sing up user
       const { user } = await createUser(email, password);
 
+      // // save token to ls
+      // await saveTokenToLs(email);
+
       // update user name and photo
       await updateProfile(user, {
         displayName: name,
         photoURL: image_url,
       });
 
-      successAlert('Sing up successful!');
+      successAlert('Sing up successful please login!');
       navigate('/');
     } catch (error) {
       console.log(error);
