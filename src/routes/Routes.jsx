@@ -6,6 +6,7 @@ import MyRequestedAsset from '../pages/Employee/RequestForAsset/MyRequestedAsset
 import RequestForAsset from '../pages/Employee/RequestForAsset/RequestForAsset';
 import AddAnEmployee from '../pages/HR/AddAnEmployee/AddAnEmployee';
 import AllRequests from '../pages/HR/AllRequests/AllRequests';
+import MyEmployeeList from '../pages/HR/MyEmployeeList/MyEmployeeList';
 import Home from '../pages/Home/Home/Home';
 import JoinAsEmployee from '../pages/JoinAsEmployee/JoinAsEmployee';
 import JoinAsHrManager from '../pages/JoinAsHrManager/JoinAsHrManager';
@@ -55,7 +56,10 @@ const router = createBrowserRouter([
         path: '/add-an-employee',
         element: <AddAnEmployee />,
       },
-      {},
+      {
+        path: 'my-employee-list',
+        element: <MyEmployeeList />,
+      },
       {
         path: '/payment',
         element: <Payment />,
