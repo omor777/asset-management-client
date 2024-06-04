@@ -5,7 +5,7 @@ const EmployeeNavItem = () => {
     <>
       <NavItem label={'Home'} address={'/'} />
       <NavItem label={'My Assets'} address={'/my-assets'} />
-      <NavItem label={'My Team'} address={'/add-asset'} />
+      <NavItem label={'My Team'} address={'/my-team'} />
       <NavItem label={'Request for an Asset'} address={'/request-for-asset'} />
       <NavItem label={'Profile'} address={'/add-employee'} />
     </>

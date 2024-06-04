@@ -3,6 +3,7 @@ import Root from '../layouts/Root/Root';
 import AddAsset from '../pages/AddAsset/AddAsset';
 import AssetList from '../pages/AssetList/AssetList';
 import MyRequestedAsset from '../pages/Employee/MyRequestedAsset/MyRequestedAsset';
+import MyTeam from '../pages/Employee/MyTeam/MyTeam';
 import RequestForAsset from '../pages/Employee/RequestForAsset/RequestForAsset';
 import AddAnEmployee from '../pages/HR/AddAnEmployee/AddAnEmployee';
 import AllRequests from '../pages/HR/AllRequests/AllRequests';
@@ -34,7 +35,10 @@ const router = createBrowserRouter([
         path: '/my-assets',
         element: <MyRequestedAsset />,
       },
-      {},
+      {
+        path: '/my-team',
+        element: <MyTeam />,
+      },
       {},
       {
         path: '/hr-manager',

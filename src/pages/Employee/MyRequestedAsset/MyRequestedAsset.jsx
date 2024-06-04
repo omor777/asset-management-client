@@ -9,7 +9,7 @@ import { dateFormat } from '../../../utils/date';
 //TODO: Search, filter implement latter
 //TODO: style pdf page
 const MyRequestedAsset = () => {
-  const { user, loading } = useAuth();
+  const { user } = useAuth();
   const axiosSecure = useAxiosSecure();
   const [showModal, setShowModal] = useState(false);
   const [pdfData, setPdfData] = useState(null);
