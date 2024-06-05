@@ -5,10 +5,10 @@ import './style.css';
 
 import { useNavigate } from 'react-router-dom';
 import useAuth from '../../hooks/useAuth';
-import useHrData from '../../hooks/useHrData';
+import useLoggedInUser from '../../hooks/useLoggedInUser';
 import { successAlert } from '../../utils/alert';
 
-const CheckoutForm = () => {
+const CheckoutForm = ({price}) => {
   const stripe = useStripe();
   const elements = useElements();
   const axiosSecure = useAxiosSecure();
@@ -17,12 +17,15 @@ const CheckoutForm = () => {
   const [error, setError] = useState('');
   const { user } = useAuth();
   const navigate = useNavigate();
-  const [hrData] = useHrData();
+
+  const [loggedInUser] = useLoggedInUser();
 
   useEffect(() => {
-    getClientSecret({ price: hrData?.package_info?.price });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [hrData?.package_info?.price]);
+    getClientSecret({ price });
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [price]);
+
+
 
   const getClientSecret = async (price) => {
     const { data } = await axiosSecure.post('/create-payment-intent', price);
@@ -80,14 +83,14 @@ const CheckoutForm = () => {
     // console.log(paymentIntent);
     if (paymentIntent.status === 'succeeded') {
       const paymentInfo = {
-        ...hrData,
+        ...loggedInUser,
         transactionId: paymentIntent.id,
         payment_date: new Date(),
       };
       delete paymentInfo._id;
 
       try {
-        await axiosSecure.patch(`/employee/${hrData?.email}`, {
+        await axiosSecure.patch(`/employee/${loggedInUser?.email}`, {
           status: 'success',
         });
 
@@ -126,7 +129,7 @@ const CheckoutForm = () => {
           type="submit"
           disabled={!stripe}
         >
-          Pay
+          Pay ${price}
         </button>
       </div>
     </form>

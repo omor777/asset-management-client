@@ -13,6 +13,7 @@ import JoinAsEmployee from '../pages/JoinAsEmployee/JoinAsEmployee';
 import JoinAsHrManager from '../pages/JoinAsHrManager/JoinAsHrManager';
 import Login from '../pages/Login/Login';
 import Payment from '../pages/Payment/Payment';
+import { Profile } from '../pages/shared/Profile';
 
 const router = createBrowserRouter([
   {
@@ -39,6 +40,7 @@ const router = createBrowserRouter([
         path: '/my-team',
         element: <MyTeam />,
       },
+      {},
       {},
       {
         path: '/hr-manager',
@@ -67,6 +69,10 @@ const router = createBrowserRouter([
       {
         path: '/payment',
         element: <Payment />,
+      },
+      {
+        path: '/profile',
+        element: <Profile />,
       },
       {
         path: '/login',

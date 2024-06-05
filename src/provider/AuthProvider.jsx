@@ -48,8 +48,9 @@ const AuthProvider = ({ children }) => {
     return signOut(auth);
   };
 
+
   const updateUserProfile = (name, photoUrl) => {
-    return updateProfile(user, {
+    return updateProfile(auth.currentUser, {
       displayName: name,
       photoURL: photoUrl,
     });
@@ -58,6 +59,7 @@ const AuthProvider = ({ children }) => {
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, async (currentUser) => {
       setUser(currentUser);
+      // console.log(currentUser);
       if (currentUser) {
         // get token and store client secret
         const userInfo = { email: currentUser.email };

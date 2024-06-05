@@ -2,7 +2,7 @@ import { useMutation, useQuery } from '@tanstack/react-query';
 import LoadingSpinner from '../../../components/LoadingSpinner/LoadingSpinner';
 import useAuth from '../../../hooks/useAuth';
 import useAxiosSecure from '../../../hooks/useAxiosSecure';
-import useHrData from '../../../hooks/useHrData';
+import useLoggedInUser from '../../../hooks/useLoggedInUser';
 import { errorAlert, successAlert } from '../../../utils/alert';
 
 //TODO: add increase the limit button and functionality
@@ -11,8 +11,7 @@ import { errorAlert, successAlert } from '../../../utils/alert';
 const AddAnEmployee = () => {
   const { user } = useAuth();
   const axiosSecure = useAxiosSecure();
-
-  const [hrData, isPending, refetch] = useHrData();
+  const [loggedInUser, isPending, refetch] = useLoggedInUser();
 
   const {
     data: employees = [],
@@ -44,7 +43,7 @@ const AddAnEmployee = () => {
   const handleAddToTeam = async (employee) => {
     const teamMemberData = {
       employeeId: employee._id,
-      teamId: hrData._id,
+      teamId: loggedInUser._id,
       join_date: new Date(),
       employee_info: {
         name: employee.name,
@@ -54,9 +53,9 @@ const AddAnEmployee = () => {
         role: employee.role,
       },
       hr_info: {
-        name: hrData.name,
-        email: hrData.email,
-        company_name: hrData.company_name,
+        name: loggedInUser.name,
+        email: loggedInUser.email,
+        company_name: loggedInUser.company_name,
       },
     };
     try {
@@ -67,8 +66,6 @@ const AddAnEmployee = () => {
     }
   };
 
-  console.log(hrData);
-
   if (loading || isPending) return <LoadingSpinner h={'50vh'} />;
 
   return (
@@ -77,13 +74,13 @@ const AddAnEmployee = () => {
         <div className="flex h-[13.75rem] flex-col items-center justify-center gap-4 rounded-md bg-blue-500 shadow-md">
           <h1 className="text-4xl font-bold text-white">Total Employee</h1>
           <h3 className="text-6xl font-extrabold text-white">
-            {hrData?.employee_count ? hrData?.employee_count : '0'}
+            {loggedInUser?.employee_count ? loggedInUser?.employee_count : '0'}
           </h3>
         </div>
         <div className="flex h-[13.75rem] flex-col items-center justify-center gap-4 rounded-md bg-rose-500 shadow-md">
           <h1 className="text-4xl font-bold text-white">Package Limit</h1>
           <h3 className="text-6xl font-extrabold text-white">
-            {hrData?.package_info?.members}
+            {loggedInUser?.package_info?.members}
           </h3>
         </div>
       </div>

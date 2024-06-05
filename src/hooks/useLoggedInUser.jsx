@@ -2,22 +2,22 @@ import { useQuery } from '@tanstack/react-query';
 import useAuth from './useAuth';
 import useAxiosSecure from './useAxiosSecure';
 
-const useHrData = () => {
+const useLoggedInUser = () => {
   const { user } = useAuth();
   const axiosSecure = useAxiosSecure();
 
   const {
-    data: hrData = {},
+    data: loggedInUser = {},
     isPending,
     refetch,
   } = useQuery({
-    queryKey: ['manager', user?.email],
+    queryKey: ['loggedUser', user?.email],
     queryFn: async () => {
-      const { data } = await axiosSecure(`/employee/${user?.email}?role=HR`);
+      const { data } = await axiosSecure(`/employee/${user?.email}`);
       return data;
     },
   });
-  return [hrData, isPending, refetch];
+  return [loggedInUser, isPending, refetch];
 };
 
-export default useHrData;
+export default useLoggedInUser;
