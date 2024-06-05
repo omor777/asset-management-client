@@ -9,7 +9,7 @@ import useAxiosCommon from '../../hooks/useAxiosCommon';
 import { errorAlert, successAlert } from '../../utils/alert';
 import { imageUpload } from '../../utils/api';
 const JoinAsHrManager = () => {
-  const { createUser } = useAuth();
+  const { createUser, updateUserProfile } = useAuth();
   const [startDate, setStartDate] = useState(new Date());
 
   const { register, handleSubmit } = useForm({
@@ -68,6 +68,9 @@ const JoinAsHrManager = () => {
       };
       // sing up user
       await createUser(email, password);
+
+      // update profile
+      await updateUserProfile(name, profile_url);
 
       // save manager data to db
       await mutateAsync(hrData);
