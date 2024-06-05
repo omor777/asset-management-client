@@ -3,15 +3,13 @@ import LoadingSpinner from '../../../components/LoadingSpinner/LoadingSpinner';
 import TableHeading from '../../../components/shared/TableHeading';
 import useAuth from '../../../hooks/useAuth';
 import useAxiosSecure from '../../../hooks/useAxiosSecure';
-const PendingRequests = () => {
+const TopRequestedItem = () => {
   const { user, loading } = useAuth();
   const axiosSecure = useAxiosSecure();
   const { data, isPending } = useQuery({
-    queryKey: ['pending-request-hr', user?.email],
+    queryKey: ['top-request-hr', user?.email],
     queryFn: async () => {
-      const { data } = await axiosSecure(
-        `assets/pending-request/${user?.email}`,
-      );
+      const { data } = await axiosSecure(`assets/top-request/${user?.email}`);
       return data;
     },
   });
@@ -20,7 +18,7 @@ const PendingRequests = () => {
 
   return (
     <section className="container mx-auto px-4 md:px-0">
-      <TableHeading heading={'Pending Request Items'} />
+      <TableHeading heading={'Top Most Requested Items'} />
       <div className="flex flex-col">
         <div className="overflow-x-auto">
           <div className="inline-block min-w-full py-2 align-middle">
@@ -38,7 +36,7 @@ const PendingRequests = () => {
                       scope="col"
                       className="py-3.5 text-left text-sm font-normal text-gray-500 dark:text-gray-400 rtl:text-right"
                     >
-                      <span>Product quantity</span>
+                      <span>Request count</span>
                     </th>
                     <th
                       scope="col"
@@ -69,8 +67,8 @@ const PendingRequests = () => {
                       </td>
                       <td className="whitespace-nowrap pl-6 text-sm font-medium text-gray-700">
                         <span className="capitalize dark:text-gray-300">
-                          <p className="w-max rounded-full bg-purple-100/60 px-3 py-1 text-xs tracking-wider text-purple-500 dark:bg-gray-800">
-                            {item?.product_quantity}
+                          <p className="w-max rounded-full bg-blue-100/60 px-3 py-1 text-xs tracking-wider text-blue-500 dark:bg-gray-800">
+                            {item?.request_count}
                           </p>
                         </span>
                       </td>
@@ -111,4 +109,4 @@ const PendingRequests = () => {
   );
 };
 
-export default PendingRequests;
+export default TopRequestedItem;
