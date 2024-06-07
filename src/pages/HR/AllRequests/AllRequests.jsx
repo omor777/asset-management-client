@@ -1,4 +1,4 @@
-import { useMutation, useQuery } from '@tanstack/react-query';
+import { useQuery } from '@tanstack/react-query';
 import LoadingSpinner from '../../../components/LoadingSpinner/LoadingSpinner';
 import useAuth from '../../../hooks/useAuth';
 import useAxiosSecure from '../../../hooks/useAxiosSecure';
@@ -24,30 +24,17 @@ const AllRequests = () => {
   });
 
   // handle approve button
-  const { mutateAsync } = useMutation({
-    mutationFn: async ({ updatedAssetData }) => {
-      console.log();
-      const { data } = await axiosSecure.patch(
-        `/asset/approve/`,
-        updatedAssetData,
-      );
-      return data;
-    },
-    onSuccess: (data) => {
-      console.log(data);
-      refetch();
-      successAlert('Request has been approved!');
-    },
-  });
-
   const handleApprove = async (id) => {
     const updatedAssetData = {
       status: 'approve',
       approve_date: new Date(),
       ...id,
     };
+
     try {
-      await mutateAsync({ updatedAssetData });
+      await axiosSecure.patch(`/asset/request/approve`, updatedAssetData);
+      refetch();
+      successAlert('Request have been approved');
     } catch (error) {
       console.log(error);
       errorAlert(error.message);

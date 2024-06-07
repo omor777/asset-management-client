@@ -20,7 +20,7 @@ export const Profile = () => {
     <div className="flex items-center justify-center pt-60">
       <form
         onSubmit={handleProfileUpdate}
-        className="shadow-profile-card mx-auto flex w-full max-w-2xl flex-col justify-center rounded py-10 dark:bg-gray-800 sm:px-12"
+        className="mx-auto flex w-full max-w-2xl flex-col justify-center rounded py-10 shadow-profile-card dark:bg-gray-800 sm:px-12"
       >
         <img
           src={user?.photoURL}
@@ -49,7 +49,7 @@ export const Profile = () => {
           </div>
           <p className="flex items-center justify-center text-center dark:text-gray-300 sm:text-lg">
             <AiOutlineMail className="mr-2 text-xl" />
-            Example@gmail.com
+            {user?.email}
           </p>
         </div>
         <button

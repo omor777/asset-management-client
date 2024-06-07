@@ -1,5 +1,6 @@
 import { useMutation, useQuery } from '@tanstack/react-query';
 import { useState } from 'react';
+import { IoIosSearch } from 'react-icons/io';
 import LoadingSpinner from '../../../components/LoadingSpinner/LoadingSpinner';
 import PrintAssetPdf from '../../../components/Pdf/PrintAssetPdf';
 import useAuth from '../../../hooks/useAuth';
@@ -13,15 +14,19 @@ const MyRequestedAsset = () => {
   const axiosSecure = useAxiosSecure();
   const [showModal, setShowModal] = useState(false);
   const [pdfData, setPdfData] = useState(null);
-  const [assetInfo,setAssetInfo] = useState(null)
+  const [assetInfo, setAssetInfo] = useState(null);
+  const [filter, setFilter] = useState('');
+  const [search, setSearch] = useState('');
   const {
     data: myAssets = [],
     isPending,
     refetch,
   } = useQuery({
-    queryKey: ['my-requested-assets', user?.email],
+    queryKey: ['my-requested-assets', user?.email, search, filter],
     queryFn: async () => {
-      const { data } = await axiosSecure(`/my-requested-assets/${user?.email}`);
+      const { data } = await axiosSecure(
+        `/assets/requested-assets/${user?.email}?search=${search}&filter=${filter}`,
+      );
       return data;
     },
   });
@@ -52,7 +57,7 @@ const MyRequestedAsset = () => {
 
   const handleReturn = async (ids) => {
     try {
-      await axiosSecure.patch(`/asset/return/`, {
+      await axiosSecure.patch(`/asset/request/return`, {
         ...ids,
       });
       refetch();
@@ -70,7 +75,7 @@ const MyRequestedAsset = () => {
     try {
       const { data } = await axiosSecure(`/asset/${asset?.requestedAssetId}`);
       // console.log(data);
-      setAssetInfo(data)
+      setAssetInfo(data);
     } catch (error) {
       console.log(error);
     }
@@ -78,14 +83,64 @@ const MyRequestedAsset = () => {
     setShowModal(true);
   };
 
+  const handleSearch = (e) => {
+    e.preventDefault();
+    setFilter('');
+    setSearch(e.target.search.value);
+    e.target.reset();
+  };
+
+  const handleFilter = (e) => {
+    setSearch('');
+    setFilter(e.target.value);
+  };
+
   if (isPending) return <LoadingSpinner h={'50vh'} />;
   return (
     <>
       <section className="container px-4 pt-40">
-        <div className="flex flex-col">
-          <div className="overflow-x-auto">
+        <div className="flex items-center justify-between">
+          <div>
+            <form onSubmit={handleSearch} className="mx-auto max-w-md">
+              <div>
+                <div className="flex h-[44px] items-center justify-between rounded-e rounded-s shadow">
+                  <input
+                    type="text"
+                    name="search"
+                    className="h-full rounded-s border border-r-0 border-blue-300 pl-4 outline-none"
+                    placeholder="Search..."
+                  />
+                  <button
+                    type="submit"
+                    className="inline-flex h-full w-14 items-center justify-center rounded-e border border-l-0 border-blue-500 bg-blue-500"
+                  >
+                    <IoIosSearch className="text-2xl text-white" />
+                  </button>
+                </div>
+              </div>
+            </form>
+          </div>
+          <div>
+            <select
+              onChange={handleFilter}
+              defaultValue={'empty'}
+              className="dark:text-gray-300l block h-11 w-[130px] appearance-none rounded bg-emerald-500 text-center text-sm text-white shadow-md outline-none disabled:pointer-events-none disabled:text-white"
+            >
+              <option disabled value="empty">
+                Filter
+              </option>
+              <option value="">All</option>
+              <option value="pending">Pending</option>
+              <option value="approve">Approve</option>
+              <option value="Returnable">Returnable</option>
+              <option value="Non-returnable">Nor-returnable</option>
+            </select>
+          </div>
+        </div>
+        <div className="mt-6 flex flex-col">
+          <div className="overflow-x-auto shadow-md">
             <div className="inline-block min-w-full align-middle">
-              <div className="overflow-hidden border border-gray-200 dark:border-gray-700 md:rounded-lg">
+              <div className="overflow-hidden rounded-md border border-gray-200 dark:border-gray-700">
                 <table className="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
                   <thead className="bg-gray-50 dark:bg-gray-800">
                     <tr>

@@ -142,9 +142,9 @@ const RequestForAsset = () => {
         </div>
       </div>
       <div className="mt-6 flex flex-col">
-        <div className="overflow-x-auto rounded-md shadow-md">
+        <div className="overflow-x-auto shadow-md">
           <div className="inline-block min-w-full align-middle">
-            <div className="overflow-hidden border border-gray-200 dark:border-gray-700">
+            <div className="overflow-hidden rounded-md border border-gray-200 dark:border-gray-700">
               <table className="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
                 <thead className="bg-gray-50 dark:bg-gray-800">
                   <tr>
@@ -179,7 +179,10 @@ const RequestForAsset = () => {
                 <tbody className="divide-y divide-gray-200 bg-white dark:divide-gray-700 dark:bg-gray-900">
                   {assets?.map((asset) => {
                     return (
-                      <tr key={asset?._id}>
+                      <tr
+                        className="transition-colors duration-200 hover:bg-gray-100 dark:hover:bg-gray-800"
+                        key={asset?._id}
+                      >
                         <td className="whitespace-nowrap py-4 pl-11 text-sm font-medium text-gray-700 dark:text-gray-200">
                           <span className="capitalize">
                             {asset?.product_name}

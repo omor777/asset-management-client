@@ -9,16 +9,12 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     justifyContent: 'space-between',
   },
-  header: {
-    marginBottom: 20,
-  },
+  header: {},
   footer: {
-    marginTop: 20,
     textAlign: 'center',
   },
   section: {
     alignContent: 'flex-start',
-    marginTop: 30,
   },
   companyInfo: {
     fontSize: 13,
@@ -43,56 +39,55 @@ const PdfDocument = ({ pdfData, assetInfo, companyInfo }) => {
   return (
     <Document>
       <Page size="A4" style={styles.page}>
-        <div>
-          <View style={styles.header}>
-            <Text style={styles.companyInfo}>
-              <Text style={styles.heading}>Company Name:</Text>{' '}
-              {companyInfo?.company_name}
-            </Text>
-            <Text style={styles.companyInfo}>
-              <Text style={styles.heading}>HR Name:</Text> {companyInfo?.name}
-            </Text>
-            <Text style={styles.companyInfo}>
-              {' '}
-              <Text style={styles.heading}>HR Email:</Text> {companyInfo?.email}
-            </Text>
-            <Text style={styles.companyInfo}>
-              <Text style={styles.heading}>Total Employee:</Text>{' '}
-              {companyInfo?.employee_count}
-            </Text>
-          </View>
-          <View style={styles.section}>
-            <Text style={styles.companyInfo}>
-              <Text style={styles.heading}>Product name:</Text>{' '}
-              {pdfData?.product_name}
-            </Text>
-            <Text style={styles.companyInfo}>
-              <Text style={styles.heading}>Product type:</Text>{' '}
-              {pdfData?.product_type}
-            </Text>
+        <View style={styles.header}>
+          <Text style={styles.companyInfo}>
+            <Text style={styles.heading}>Company Name:</Text>{' '}
+            {companyInfo?.company_name}
+          </Text>
+          <Text style={styles.companyInfo}>
+            <Text style={styles.heading}>HR Name:</Text> {companyInfo?.name}
+          </Text>
+          <Text style={styles.companyInfo}>
+            {' '}
+            <Text style={styles.heading}>HR Email:</Text> {companyInfo?.email}
+          </Text>
+          <Text style={styles.companyInfo}>
+            <Text style={styles.heading}>Total Employee:</Text>{' '}
+            {companyInfo?.employee_count}
+          </Text>
+        </View>
+        <View style={styles.section}>
+          <Text style={styles.companyInfo}>
+            <Text style={styles.heading}>Product name:</Text>{' '}
+            {pdfData?.product_name}
+          </Text>
+          <Text style={styles.companyInfo}>
+            <Text style={styles.heading}>Product type:</Text>{' '}
+            {pdfData?.product_type}
+          </Text>
 
-            <Text style={styles.companyInfo}>
-              <Text style={styles.heading}>Product quantity:</Text>{' '}
-              {assetInfo?.product_quantity}
-            </Text>
+          <Text style={styles.companyInfo}>
+            <Text style={styles.heading}>Product quantity:</Text>{' '}
+            {assetInfo?.product_quantity}
+          </Text>
 
-            <Text style={styles.companyInfo}>
-              {' '}
-              <Text style={styles.heading}>Availability:</Text>{' '}
-              {assetInfo?.availability}
-            </Text>
-            <Text style={styles.companyInfo}>
-              {' '}
-              <Text style={styles.heading}>Request date:</Text> {requestDate}
-            </Text>
-            <Text style={styles.companyInfo}>
-              {' '}
-              <Text style={styles.heading}>Approve date:</Text> {approveDate}
-            </Text>
+          <Text style={styles.companyInfo}>
+            {' '}
+            <Text style={styles.heading}>Availability:</Text>{' '}
+            {assetInfo?.availability}
+          </Text>
+          <Text style={styles.companyInfo}>
+            {' '}
+            <Text style={styles.heading}>Request date:</Text> {requestDate}
+          </Text>
+          <Text style={styles.companyInfo}>
+            {' '}
+            <Text style={styles.heading}>Approve date:</Text> {approveDate}
+          </Text>
 
-            {/* Add more asset details as needed */}
-          </View>
-        </div>
+          {/* Add more asset details as needed */}
+        </View>
+
         <View style={styles.footer}>
           <Text
             style={{
