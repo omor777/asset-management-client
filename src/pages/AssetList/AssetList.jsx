@@ -1,4 +1,6 @@
 import { useMutation, useQuery } from '@tanstack/react-query';
+import { useState } from 'react';
+import { IoIosSearch } from 'react-icons/io';
 import { Link } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import LoadingSpinner from '../../components/LoadingSpinner/LoadingSpinner';
@@ -8,20 +10,24 @@ import { dateFormat } from '../../utils/date';
 // TODO: asset update functionality
 const AssetList = () => {
   const axiosSecure = useAxiosSecure();
+  const [filter, setFilter] = useState('');
+  const [sort, setSort] = useState('');
+  const [search, setSearch] = useState('');
   const {
     data: assets = [],
     isPending,
     refetch,
   } = useQuery({
-    queryKey: ['assets'],
+    queryKey: ['assets', filter, sort, search],
     queryFn: async () => {
-      const { data } = await axiosSecure('/assets');
+      const { data } = await axiosSecure(
+        `/assets?filter=${filter}&sort=${sort}&search=${search}`,
+      );
       return data;
     },
   });
 
-  //
-
+  // handle product delete
   const { mutateAsync } = useMutation({
     mutationFn: async (id) => {
       const { data } = await axiosSecure.delete(`/asset/${id}`);
@@ -54,10 +60,89 @@ const AssetList = () => {
     });
   };
 
+  const handleSearch = (e) => {
+    e.preventDefault();
+    setFilter('');
+    setSort('');
+    setSearch(e.target.search.value);
+    e.target.reset();
+  };
+
+  const handleFilter = (e) => {
+    setSearch('');
+    setSort('');
+    setFilter(e.target.value);
+  };
+
+  const handleSort = (e) => {
+    setSearch('');
+    setFilter('');
+    setSort(e.target.value);
+  };
+
   if (isPending) return <LoadingSpinner h={'50vh'} />;
 
   return (
     <section className="container px-4 pt-40">
+      {/* header */}
+      <div className="flex items-center justify-between">
+        <div>
+          <select
+            onChange={handleFilter}
+            defaultValue={'empty'}
+            className="dark:text-gray-300l block w-[130px] appearance-none rounded bg-emerald-500 py-3 text-center text-sm text-white shadow-md outline-none disabled:pointer-events-none disabled:text-white"
+          >
+            <option disabled value="empty">
+              Filter
+            </option>
+            <option value="">All</option>
+            <option value="Available">Available</option>
+            <option value="Out of stock">Out of stock</option>
+            <option value="Returnable">Returnable</option>
+            <option value="Non-returnable">Nor-returnable</option>
+          </select>
+        </div>
+        <div>
+          <form onSubmit={handleSearch} className="mx-auto max-w-md">
+            <label
+              htmlFor="search"
+              className="sr-only mb-2 text-sm font-medium text-gray-900 dark:text-white"
+            >
+              Search
+            </label>
+            <div>
+              <div className="flex h-[44px] items-center justify-between rounded-e rounded-s shadow">
+                <input
+                  type="text"
+                  name="search"
+                  className="h-full rounded-s border border-r-0 border-blue-300 pl-4 outline-none"
+                  placeholder="Search..."
+                />
+                <button
+                  type="submit"
+                  className="inline-flex h-full w-14 items-center justify-center rounded-e border border-l-0 border-blue-500 bg-blue-500"
+                >
+                  <IoIosSearch className="text-2xl text-white" />
+                </button>
+              </div>
+            </div>
+          </form>
+        </div>
+        <div>
+          <select
+            onChange={handleSort}
+            defaultValue={''}
+            className="dark:text-gray-300l block w-[130px] appearance-none rounded bg-purple-500 py-3 text-center text-sm text-white shadow-md outline-none disabled:pointer-events-none disabled:text-white"
+          >
+            <option disabled value="">
+              Sort
+            </option>
+            <option value="quantity-asc">Ascending</option>
+            <option value="quantity-dsc">Descending</option>
+          </select>
+        </div>
+      </div>
+      {/* table */}
       <div className="mt-6 flex flex-col">
         <div className="overflow-x-auto shadow-md">
           <div className="inline-block min-w-full align-middle">
