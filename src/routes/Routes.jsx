@@ -2,6 +2,7 @@ import { createBrowserRouter } from 'react-router-dom';
 import Root from '../layouts/Root/Root';
 import AddAsset from '../pages/AddAsset/AddAsset';
 import AssetList from '../pages/AssetList/AssetList';
+import UpdateAsset from '../pages/AssetList/UpdateAsset';
 import MyRequestedAsset from '../pages/Employee/MyRequestedAsset/MyRequestedAsset';
 import MyTeam from '../pages/Employee/MyTeam/MyTeam';
 import RequestForAsset from '../pages/Employee/RequestForAsset/RequestForAsset';
@@ -53,6 +54,10 @@ const router = createBrowserRouter([
       {
         path: '/asset-list',
         element: <AssetList />,
+      },
+      {
+        path: '/asset-list/update/:id',
+        element: <UpdateAsset />,
       },
       {
         path: '/all-requests',

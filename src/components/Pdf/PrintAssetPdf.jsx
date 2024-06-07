@@ -1,7 +1,24 @@
 import { PDFViewer } from '@react-pdf/renderer';
+import { useQuery } from '@tanstack/react-query';
+import PropTypes from 'prop-types';
 import { IoIosClose } from 'react-icons/io';
+import useAxiosSecure from '../../hooks/useAxiosSecure';
 import PdfDocument from './PdfDocument';
-const PrintAssetPdf = ({ pdfData, showModal, setShowModal }) => {
+const PrintAssetPdf = ({ pdfData,assetInfo, showModal, setShowModal }) => {
+  const axiosSecure = useAxiosSecure();
+  // get HR information
+  const email = pdfData?.provider_info?.email;
+  const { data: companyInfo = {} } = useQuery({
+    queryKey: ['company-info-pdf', email],
+    queryFn: async () => {
+      const { data } = await axiosSecure.get(`/employee/${email}`);
+      return data;
+    },
+  });
+
+
+ 
+
   return (
     <>
       {showModal ? (
@@ -22,7 +39,7 @@ const PrintAssetPdf = ({ pdfData, showModal, setShowModal }) => {
                 {/*body*/}
                 <div className="relative flex-auto pb-9">
                   <PDFViewer width={'100%'} height={'100%'}>
-                    <PdfDocument pdfData={pdfData} />
+                    <PdfDocument assetInfo={assetInfo} companyInfo={companyInfo} pdfData={pdfData} />
                   </PDFViewer>
                 </div>
               </div>
@@ -33,6 +50,12 @@ const PrintAssetPdf = ({ pdfData, showModal, setShowModal }) => {
       ) : null}
     </>
   );
+};
+
+PrintAssetPdf.propTypes = {
+  pdfData: PropTypes.object,
+  showModal: PropTypes.bool,
+  setShowModal: PropTypes.func,
 };
 
 export default PrintAssetPdf;

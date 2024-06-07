@@ -21,99 +21,73 @@ const styles = StyleSheet.create({
     marginTop: 30,
   },
   companyInfo: {
-    fontSize: 12,
-    marginBottom: 10,
+    fontSize: 13,
+    marginBottom: 12,
+    textTransform: 'capitalize',
+    textAlign: 'center',
+  },
+  heading: {
+    fontSize: 16,
+    fontWeight: 'bold',
   },
   date: {
     fontSize: 10,
   },
 });
 // Create Document Component
-const PdfDocument = ({ pdfData }) => {
-  console.log(pdfData, 'form pdf document-------------------------');
+const PdfDocument = ({ pdfData, assetInfo, companyInfo }) => {
+  const requestDate = format(pdfData?.requested_date, 'EEEE, MMMM do, yyyy');
+  const approveDate = format(pdfData?.approve_date, 'EEEE, MMMM do, yyyy');
+
   const currentDate = format(new Date(), 'MMM do, yyy h:mm:ss a');
   return (
     <Document>
       <Page size="A4" style={styles.page}>
         <div>
           <View style={styles.header}>
-            <Text style={styles.companyInfo}>Your Company Name</Text>
-            <Text style={styles.companyInfo}>1234 Main Street</Text>
-            <Text style={styles.companyInfo}>City, State, ZIP</Text>
-            <Text style={styles.companyInfo}>Phone: (123) 486-7890</Text>
-            <Text style={styles.companyInfo}>Email: info@yourcompany.com</Text>
+            <Text style={styles.companyInfo}>
+              <Text style={styles.heading}>Company Name:</Text>{' '}
+              {companyInfo?.company_name}
+            </Text>
+            <Text style={styles.companyInfo}>
+              <Text style={styles.heading}>HR Name:</Text> {companyInfo?.name}
+            </Text>
+            <Text style={styles.companyInfo}>
+              {' '}
+              <Text style={styles.heading}>HR Email:</Text> {companyInfo?.email}
+            </Text>
+            <Text style={styles.companyInfo}>
+              <Text style={styles.heading}>Total Employee:</Text>{' '}
+              {companyInfo?.employee_count}
+            </Text>
           </View>
           <View style={styles.section}>
-            <Text
-              style={{
-                marginBottom: 8,
-                fontSize: 14,
-                textTransform: 'capitalize',
-              }}
-            >
-              <Text
-                style={{
-                  fontSize: 18,
-                  fontWeight: 'bold',
-                }}
-              >
-                Product name:
-              </Text>{' '}
+            <Text style={styles.companyInfo}>
+              <Text style={styles.heading}>Product name:</Text>{' '}
               {pdfData?.product_name}
             </Text>
-            <Text
-              style={{
-                marginBottom: 8,
-                fontSize: 14,
-                textTransform: 'capitalize',
-              }}
-            >
-              <Text
-                style={{
-                  fontSize: 18,
-                  fontWeight: 'bold',
-                }}
-              >
-                Product type:
-              </Text>{' '}
+            <Text style={styles.companyInfo}>
+              <Text style={styles.heading}>Product type:</Text>{' '}
               {pdfData?.product_type}
             </Text>
 
-            <Text
-              style={{
-                marginBottom: 8,
-                fontSize: 14,
-                textTransform: 'capitalize',
-              }}
-            >
-              <Text
-                style={{
-                  fontSize: 18,
-                  fontWeight: 'bold',
-                }}
-              >
-                Product quantity:
-              </Text>{' '}
-              {pdfData?.product_quantity}
+            <Text style={styles.companyInfo}>
+              <Text style={styles.heading}>Product quantity:</Text>{' '}
+              {assetInfo?.product_quantity}
             </Text>
 
-            <Text
-              style={{
-                marginBottom: 8,
-                fontSize: 14,
-                textTransform: 'capitalize',
-              }}
-            >
+            <Text style={styles.companyInfo}>
               {' '}
-              <Text
-                style={{
-                  fontSize: 18,
-                  fontWeight: 'bold',
-                }}
-              >
-                Availability:
-              </Text>{' '}
-              {pdfData?.availability}
+              <Text style={styles.heading}>Availability:</Text>{' '}
+              {assetInfo?.availability}
+            </Text>
+            <Text style={styles.companyInfo}>
+              {' '}
+              <Text style={styles.heading}>Request date:</Text> {requestDate}
+            </Text>
+            <Text style={styles.companyInfo}>
+              {' '}
+              <Text style={styles.heading}>Approve date:</Text> {approveDate}
             </Text>
 
             {/* Add more asset details as needed */}
@@ -127,7 +101,7 @@ const PdfDocument = ({ pdfData }) => {
           >
             {currentDate}
           </Text>
-        </View>          
+        </View>
       </Page>
     </Document>
   );
@@ -135,6 +109,8 @@ const PdfDocument = ({ pdfData }) => {
 
 PdfDocument.propTypes = {
   pdfData: PropTypes.object,
+  companyInfo: PropTypes.object,
+  assetInfo: PropTypes.object,
 };
 
 export default PdfDocument;

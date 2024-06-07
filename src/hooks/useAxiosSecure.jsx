@@ -33,7 +33,6 @@ const useAxiosSecure = () => {
     },
   );
 
-  
   return axiosSecure;
 };
 

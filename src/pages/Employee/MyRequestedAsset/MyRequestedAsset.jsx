@@ -13,6 +13,7 @@ const MyRequestedAsset = () => {
   const axiosSecure = useAxiosSecure();
   const [showModal, setShowModal] = useState(false);
   const [pdfData, setPdfData] = useState(null);
+  const [assetInfo,setAssetInfo] = useState(null)
   const {
     data: myAssets = [],
     isPending,
@@ -28,7 +29,7 @@ const MyRequestedAsset = () => {
   // update status to cancel
   const { mutateAsync } = useMutation({
     mutationFn: async (id) => {
-      const { data } = await axiosSecure.patch(`/my-requested-asset/${id}`, {
+      const { data } = await axiosSecure.patch(`/asset/update-status/${id}`, {
         status: 'cancel',
       });
       return data;
@@ -49,10 +50,10 @@ const MyRequestedAsset = () => {
     }
   };
 
-  const handleReturn = async (id) => {
+  const handleReturn = async (ids) => {
     try {
-      await axiosSecure.patch(`/my-requested-asset/${id}`, {
-        status: 'return',
+      await axiosSecure.patch(`/asset/return/`, {
+        ...ids,
       });
       refetch();
       successAlert('Return successfully!');
@@ -63,12 +64,13 @@ const MyRequestedAsset = () => {
   };
 
   // handle print modal
-  const handlePrintModal = async (id) => {
+  const handlePrintModal = async (asset) => {
+    setPdfData(asset);
     // console.log(id);
     try {
-      const { data } = await axiosSecure(`/asset/${id}`);
+      const { data } = await axiosSecure(`/asset/${asset?.requestedAssetId}`);
       // console.log(data);
-      setPdfData(data);
+      setAssetInfo(data)
     } catch (error) {
       console.log(error);
     }
@@ -144,7 +146,7 @@ const MyRequestedAsset = () => {
                         </td>
                         <td className="whitespace-nowrap text-sm font-medium text-gray-700">
                           <div
-                            className={`inline-flex items-center gap-x-2 rounded-full px-3 py-1 dark:bg-gray-800 ${asset?.status === 'pending' && 'bg-amber-100/60'} ${asset?.status === 'approve' && 'bg-emerald-100/60'} ${asset?.status === 'reject' && 'bg-rose-100/60'} ${asset?.status === 'return' && 'bg-purple-100/60'} ${asset?.status === 'cancel' && 'bg-rose-100/60'}`}
+                            className={`inline-flex w-24 items-center justify-center gap-x-2 rounded-full py-1 dark:bg-gray-800 ${asset?.status === 'pending' && 'bg-amber-100/60'} ${asset?.status === 'approve' && 'bg-emerald-100/60'} ${asset?.status === 'reject' && 'bg-rose-100/60'} ${asset?.status === 'return' && 'bg-purple-100/60'} ${asset?.status === 'cancel' && 'bg-rose-100/60'}`}
                           >
                             <span
                               className={`h-1.5 w-1.5 rounded-full ${asset?.status === 'pending' && 'bg-amber-500'} ${asset?.status === 'approve' && 'bg-emerald-500'} ${asset?.status === 'reject' && 'bg-rose-500'} ${asset?.status === 'return' && 'bg-purple-500'} ${asset?.status === 'cancel' && 'bg-rose-500'}`}
@@ -176,7 +178,7 @@ const MyRequestedAsset = () => {
                               <button
                                 disabled={asset?.status === 'cancel'}
                                 onClick={() => handleCancelRequest(asset._id)}
-                                className={`w-20 rounded bg-rose-500 py-1 text-sm tracking-wide text-white shadow-tableBtn transition-all duration-200 hover:bg-rose-700 ${asset?.status === 'cancel' ? 'cursor-not-allowed' : ''}`}
+                                className={`w-20 rounded py-1 text-sm tracking-wide text-white shadow-tableBtn transition-all duration-200 ${asset?.status === 'cancel' || asset?.status === 'return' ? 'cursor-not-allowed bg-rose-900' : 'bg-rose-500 hover:bg-rose-700'}`}
                               >
                                 Cancel
                               </button>
@@ -184,7 +186,7 @@ const MyRequestedAsset = () => {
                             {asset?.status === 'approve' &&
                               asset?.product_type !== 'Returnable' && (
                                 <button
-                                  onClick={() => handlePrintModal(asset._id)}
+                                  onClick={() => handlePrintModal(asset)}
                                   className={`w-20 rounded bg-blue-500 py-1 text-sm tracking-wide text-white shadow-tableBtn transition-all duration-200 hover:bg-blue-700`}
                                 >
                                   Print
@@ -194,9 +196,14 @@ const MyRequestedAsset = () => {
                               asset?.status === 'return') &&
                             asset?.product_type === 'Returnable' ? (
                               <button
-                                onClick={() => handleReturn(asset?._id)}
+                                onClick={() =>
+                                  handleReturn({
+                                    reqId: asset?._id,
+                                    assetId: asset?.requestedAssetId,
+                                  })
+                                }
                                 disabled={asset?.status === 'return'}
-                                className={`w-20 rounded bg-purple-500 py-1 text-sm tracking-wide text-white shadow-tableBtn transition-all duration-200 hover:bg-purple-700 ${asset?.status === 'return' ? 'cursor-not-allowed' : ''}`}
+                                className={`w-20 rounded py-1 text-sm tracking-wide text-white shadow-tableBtn transition-all duration-200 ${asset?.status === 'return' ? 'cursor-not-allowed bg-purple-900' : 'bg-purple-500 hover:bg-purple-700'}`}
                               >
                                 Return
                               </button>
@@ -301,6 +308,7 @@ const MyRequestedAsset = () => {
       {/* <YourComponent /> */}
       <PrintAssetPdf
         pdfData={pdfData}
+        assetInfo={assetInfo}
         showModal={showModal}
         setShowModal={setShowModal}
       />

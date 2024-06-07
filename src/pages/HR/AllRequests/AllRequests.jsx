@@ -5,7 +5,6 @@ import useAxiosSecure from '../../../hooks/useAxiosSecure';
 import { errorAlert, successAlert } from '../../../utils/alert';
 import { dateFormat } from '../../../utils/date';
 
-
 // TODO: reject button function
 
 const AllRequests = () => {
@@ -26,10 +25,10 @@ const AllRequests = () => {
 
   // handle approve button
   const { mutateAsync } = useMutation({
-    mutationFn: async ({ id, updatedAssetData }) => {
+    mutationFn: async ({ updatedAssetData }) => {
       console.log();
       const { data } = await axiosSecure.patch(
-        `/asset/req-asset/${id}`,
+        `/asset/approve/`,
         updatedAssetData,
       );
       return data;
@@ -45,9 +44,25 @@ const AllRequests = () => {
     const updatedAssetData = {
       status: 'approve',
       approve_date: new Date(),
+      ...id,
     };
     try {
-      await mutateAsync({ id, updatedAssetData });
+      await mutateAsync({ updatedAssetData });
+    } catch (error) {
+      console.log(error);
+      errorAlert(error.message);
+    }
+  };
+
+  const handleReject = async (id) => {
+    try {
+      //
+      await axiosSecure.patch(`/asset/update-status/${id}`, {
+        status: 'reject',
+      });
+
+      successAlert('Request have been rejected!');
+      refetch();
     } catch (error) {
       console.log(error);
       errorAlert(error.message);
@@ -67,52 +82,50 @@ const AllRequests = () => {
                   <tr>
                     <th
                       scope="col"
-                      className="px-4 py-3.5 text-left text-sm font-normal text-gray-500 dark:text-gray-400 rtl:text-right"
+                      className="py-3.5 pl-6 text-left text-sm font-normal text-gray-500 dark:text-gray-400 rtl:text-right"
                     >
                       <span className="whitespace-nowrap">Asset Name</span>
                     </th>
                     <th
                       scope="col"
-                      className="px-4 py-3.5 text-left text-sm font-normal text-gray-500 dark:text-gray-400 rtl:text-right"
+                      className="py-3.5 text-left text-sm font-normal text-gray-500 dark:text-gray-400 rtl:text-right"
                     >
                       <span className="whitespace-nowrap">Asset Type</span>
                     </th>
                     <th
                       scope="col"
-                      className="px-4 py-3.5 text-left text-sm font-normal text-gray-500 dark:text-gray-400 rtl:text-right"
+                      className="py-3.5 text-left text-sm font-normal text-gray-500 dark:text-gray-400 rtl:text-right"
                     >
                       <span className="whitespace-nowrap">Requester Name</span>
                     </th>
                     <th
                       scope="col"
-                      className="px-4 py-3.5 text-left text-sm font-normal text-gray-500 dark:text-gray-400 rtl:text-right"
+                      className="py-3.5 text-left text-sm font-normal text-gray-500 dark:text-gray-400 rtl:text-right"
                     >
                       <span className="whitespace-nowrap">Requester Email</span>
                     </th>
 
                     <th
                       scope="col"
-                      className="px-4 py-3.5 text-left text-sm font-normal text-gray-500 dark:text-gray-400 rtl:text-right"
+                      className="py-3.5 text-left text-sm font-normal text-gray-500 dark:text-gray-400 rtl:text-right"
                     >
-                      <span className="whitespace-nowrap">
-                        Additional Notes
-                      </span>
+                      <span className="whitespace-nowrap">Notes</span>
                     </th>
                     <th
                       scope="col"
-                      className="px-4 py-3.5 text-left text-sm font-normal text-gray-500 dark:text-gray-400 rtl:text-right"
-                    >
-                      <span className="whitespace-nowrap">Request Date</span>
-                    </th>
-                    <th
-                      scope="col"
-                      className="px-4 py-3.5 text-left text-sm font-normal text-gray-500 dark:text-gray-400 rtl:text-right"
+                      className="py-3.5 text-left text-sm font-normal text-gray-500 dark:text-gray-400 rtl:text-right"
                     >
                       <span className="whitespace-nowrap">Status</span>
                     </th>
                     <th
                       scope="col"
-                      className="px-5 py-3.5 text-left text-sm font-normal text-gray-500 dark:text-gray-400 rtl:text-right"
+                      className="py-3.5 text-left text-sm font-normal text-gray-500 dark:text-gray-400 rtl:text-right"
+                    >
+                      <span className="whitespace-nowrap">Request Date</span>
+                    </th>
+                    <th
+                      scope="col"
+                      className="py-3.5 text-center text-sm font-normal text-gray-500 dark:text-gray-400 rtl:text-right"
                     >
                       <span className="whitespace-nowrap">Action</span>
                     </th>
@@ -121,12 +134,12 @@ const AllRequests = () => {
                 <tbody className="divide-y divide-gray-200 bg-white dark:divide-gray-700 dark:bg-gray-900">
                   {reqAssets?.map((asset) => (
                     <tr key={asset?._id}>
-                      <td className="whitespace-nowrap p-4 text-sm font-medium text-gray-700">
+                      <td className="whitespace-nowrap py-4 pl-6 text-sm font-medium text-gray-700">
                         <span className="capitalize dark:text-gray-300">
                           {asset?.product_name}
                         </span>
                       </td>
-                      <td className="whitespace-nowrap p-4 text-sm font-medium text-gray-700">
+                      <td className="whitespace-nowrap py-4 text-sm font-medium text-gray-700">
                         <span className="capitalize dark:text-gray-300">
                           {asset?.product_type}
                         </span>
@@ -136,47 +149,58 @@ const AllRequests = () => {
                           {asset?.requester_info?.name}
                         </span>
                       </td>
-                      <td className="whitespace-nowrap p-4 text-sm font-medium text-gray-700">
+                      <td className="whitespace-nowrap py-4 text-sm font-medium text-gray-700">
                         <span className="capitalize dark:text-gray-300">
                           {asset?.requester_info?.email}
                         </span>
                       </td>
 
-                      <td className="whitespace-nowrap p-4 text-sm font-medium text-gray-700">
+                      <td className="whitespace-nowrap py-4 text-sm font-medium text-gray-700">
                         <span className="capitalize dark:text-gray-300">
                           {asset?.additional_notes}
                         </span>
                       </td>
-                      <td className="whitespace-nowrap p-4 text-sm font-medium text-gray-700">
-                        <span className="capitalize dark:text-gray-300">
-                          <p className="w-max rounded-full bg-purple-100/60 px-3 py-1 text-xs tracking-wider text-purple-500 dark:bg-gray-800">
-                            {dateFormat(asset?.requested_date)}
-                          </p>
-                        </span>
-                      </td>
+
                       <td className="whitespace-nowrap text-sm font-medium text-gray-700">
                         <div
-                          className={`inline-flex items-center gap-x-2 rounded-full px-3 py-1 dark:bg-gray-800 ${asset?.status === 'pending' && 'bg-amber-100/60'} ${asset?.status === 'approve' && 'bg-emerald-100/60'} ${asset?.status === 'reject' && 'bg-rose-100/60'}`}
+                          className={`inline-flex items-center gap-x-2 rounded-full px-3 py-1 dark:bg-gray-800 ${asset?.status === 'pending' && 'bg-amber-100/60'} ${asset?.status === 'approve' && 'bg-emerald-100/60'} ${asset?.status === 'reject' && 'bg-rose-100/60'} ${asset?.status === 'return' && 'bg-purple-100/60'} ${asset?.status === 'cancel' && 'bg-rose-100/60'}`}
                         >
                           <span
-                            className={`h-1.5 w-1.5 rounded-full ${asset?.status === 'pending' && 'bg-amber-500'} ${asset?.status === 'approve' && 'bg-emerald-500'} ${asset?.status === 'reject' && 'bg-rose-500'}`}
+                            className={`h-1.5 w-1.5 rounded-full ${asset?.status === 'pending' && 'bg-amber-500'} ${asset?.status === 'approve' && 'bg-emerald-500'} ${asset?.status === 'reject' && 'bg-rose-500'} ${asset?.status === 'return' && 'bg-purple-500'} ${asset?.status === 'cancel' && 'bg-rose-500'}`}
                           />
                           <span
-                            className={`text-sm font-normal capitalize ${asset?.status === 'pending' && 'text-amber-500'} ${asset?.status === 'approve' && 'text-emerald-500'} ${asset?.status === 'reject' && 'text-rose-500'}`}
+                            className={`text-sm font-normal capitalize ${asset?.status === 'pending' && 'text-amber-500'} ${asset?.status === 'approve' && 'text-emerald-500'} ${asset?.status === 'reject' && 'text-rose-500'} ${asset?.status === 'return' && 'text-purple-500'} ${asset?.status === 'cancel' && 'text-rose-500'}`}
                           >
                             {asset?.status}
                           </span>
                         </div>
                       </td>
-                      <td className="whitespace-nowrap px-4 py-4 text-sm">
+
+                      <td className="whitespace-nowrap py-4 text-sm font-medium text-gray-700">
+                        <span className="capitalize dark:text-gray-300">
+                          {dateFormat(asset?.requested_date)}
+                        </span>
+                      </td>
+                      <td className="whitespace-nowrap py-4 text-sm">
                         <div className="flex items-center gap-x-6">
-                          <button className="shadow-tableBtn rounded bg-rose-500 px-4 py-1 text-sm tracking-wide text-white transition-all duration-200 hover:bg-rose-700">
+                          <button
+                            onClick={() => {
+                              handleReject(asset?._id);
+                            }}
+                            disabled={asset?.status !== 'pending'}
+                            className={`rounded px-4 py-1 text-sm tracking-wide text-white shadow-tableBtn transition-all duration-200 ${asset?.status !== 'pending' ? 'cursor-not-allowed bg-rose-900' : 'bg-rose-500 hover:bg-rose-700'}`}
+                          >
                             Reject
                           </button>
                           <button
-                            disabled={asset?.status === 'approve'}
-                            onClick={() => handleApprove(asset?._id)}
-                            className={`shadow-tableBtn rounded px-4 py-1 text-sm tracking-wide text-white transition-all duration-200 ${asset?.status === 'approve' ? 'cursor-not-allowed bg-emerald-500' : 'bg-primary hover:bg-blue-700'}`}
+                            disabled={asset?.status !== 'pending'}
+                            onClick={() =>
+                              handleApprove({
+                                assetId: asset?.requestedAssetId,
+                                reqId: asset?._id,
+                              })
+                            }
+                            className={`rounded px-4 py-1 text-sm tracking-wide text-white shadow-tableBtn transition-all duration-200 ${asset?.status !== 'pending' ? 'cursor-not-allowed bg-blue-900' : 'bg-primary hover:bg-blue-700'}`}
                           >
                             Approve
                           </button>
