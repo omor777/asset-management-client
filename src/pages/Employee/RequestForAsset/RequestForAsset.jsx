@@ -1,6 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
+import { IoIosSearch } from 'react-icons/io';
 import LoadingSpinner from '../../../components/LoadingSpinner/LoadingSpinner';
 import AssetRequestModal from '../../../components/Modal/AssetRequestModal';
 import useAuth from '../../../hooks/useAuth';
@@ -8,18 +9,22 @@ import useAxiosSecure from '../../../hooks/useAxiosSecure';
 import { errorAlert, successAlert, warningAlert } from '../../../utils/alert';
 
 const RequestForAsset = () => {
+  const { user } = useAuth();
   const axiosSecure = useAxiosSecure();
   const [showModal, setShowModal] = useState(false);
   const [reqAsset, setReqAsset] = useState(null);
-  const { user } = useAuth();
+  const [filter, setFilter] = useState('');
+  const [search, setSearch] = useState('');
   const {
     data: assets = [],
     isPending,
     refetch,
   } = useQuery({
-    queryKey: ['request-assets'],
+    queryKey: ['request-assets', search, filter],
     queryFn: async () => {
-      const { data } = await axiosSecure('/assets');
+      const { data } = await axiosSecure(
+        `/assets?search=${search}&filter=${filter}`,
+      );
       return data;
     },
   });
@@ -36,7 +41,6 @@ const RequestForAsset = () => {
   });
 
   const handleRequest = async (data) => {
- 
     const assetData = {
       product_name: reqAsset?.product_name,
       product_type: reqAsset?.product_type,
@@ -61,7 +65,7 @@ const RequestForAsset = () => {
     // console.log(assetData);
 
     try {
-      const { data } = await axiosSecure.post('/requested-asset', assetData);
+      const { data } = await axiosSecure.post('/asset/request', assetData);
       console.log(data);
 
       if (data.insertedId) {
@@ -80,19 +84,67 @@ const RequestForAsset = () => {
   };
 
   const handleOpenModal = () => {
-    // if (asset.status === 'pending')
-    //   return warningAlert('You have already request this asset!');
     setShowModal(true);
+  };
+
+  const handleSearch = (e) => {
+    e.preventDefault();
+    setFilter('');
+    setSearch(e.target.search.value);
+    e.target.reset();
+  };
+
+  const handleFilter = (e) => {
+    setSearch('');
+    setFilter(e.target.value);
   };
 
   if (isPending) return <LoadingSpinner h={'50vh'} />;
 
   return (
     <section className="container mx-auto px-4 pt-40 md:px-0">
-      <div className="flex flex-col">
-        <div className="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
-          <div className="inline-block min-w-full py-2 align-middle md:px-6 lg:px-8">
-            <div className="overflow-hidden border border-gray-200 dark:border-gray-700 md:rounded-lg">
+      <div className="flex items-center justify-between">
+        <div>
+          <form onSubmit={handleSearch} className="mx-auto max-w-md">
+            <div>
+              <div className="flex h-[44px] items-center justify-between rounded-e rounded-s shadow">
+                <input
+                  type="text"
+                  name="search"
+                  className="h-full rounded-s border border-r-0 border-blue-300 pl-4 outline-none"
+                  placeholder="Search..."
+                />
+                <button
+                  type="submit"
+                  className="inline-flex h-full w-14 items-center justify-center rounded-e border border-l-0 border-blue-500 bg-blue-500"
+                >
+                  <IoIosSearch className="text-2xl text-white" />
+                </button>
+              </div>
+            </div>
+          </form>
+        </div>
+        <div>
+          <select
+            onChange={handleFilter}
+            defaultValue={'empty'}
+            className="dark:text-gray-300l block h-11 w-[130px] appearance-none rounded bg-emerald-500 text-center text-sm text-white shadow-md outline-none disabled:pointer-events-none disabled:text-white"
+          >
+            <option disabled value="empty">
+              Filter
+            </option>
+            <option value="">All</option>
+            <option value="Available">Available</option>
+            <option value="Out of stock">Out of stock</option>
+            <option value="Returnable">Returnable</option>
+            <option value="Non-returnable">Nor-returnable</option>
+          </select>
+        </div>
+      </div>
+      <div className="mt-6 flex flex-col">
+        <div className="overflow-x-auto rounded-md shadow-md">
+          <div className="inline-block min-w-full align-middle">
+            <div className="overflow-hidden border border-gray-200 dark:border-gray-700">
               <table className="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
                 <thead className="bg-gray-50 dark:bg-gray-800">
                   <tr>
@@ -112,7 +164,7 @@ const RequestForAsset = () => {
 
                     <th
                       scope="col"
-                      className="py-3.5 text-left text-sm font-normal text-gray-500 dark:text-gray-400 rtl:text-right"
+                      className="py-3.5 pl-4 text-left text-sm font-normal text-gray-500 dark:text-gray-400 rtl:text-right"
                     >
                       <span>Availability</span>
                     </th>
@@ -128,7 +180,7 @@ const RequestForAsset = () => {
                   {assets?.map((asset) => {
                     return (
                       <tr key={asset?._id}>
-                        <td className="whitespace-nowrap py-4 pl-12 text-sm font-medium text-gray-700 dark:text-gray-200">
+                        <td className="whitespace-nowrap py-4 pl-11 text-sm font-medium text-gray-700 dark:text-gray-200">
                           <span className="capitalize">
                             {asset?.product_name}
                           </span>
@@ -159,7 +211,7 @@ const RequestForAsset = () => {
                               setReqAsset(asset);
                             }}
                             disabled={asset?.availability === 'Out of stock'}
-                            className={`rounded px-3 py-1 tracking-wide text-white transition-colors duration-200 hover:bg-blue-700 focus:outline-none ${asset?.availability === 'Out of stock' ? 'cursor-not-allowed bg-gray-700 hover:bg-gray-700' : 'bg-primary'}`}
+                            className={`rounded px-3 py-1 tracking-wide text-white transition-colors duration-200 focus:outline-none ${asset?.availability === 'Out of stock' ? 'cursor-not-allowed bg-blue-900' : 'bg-primary hover:bg-blue-700'}`}
                           >
                             Request
                           </button>
