@@ -1,4 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
+import { useState } from 'react';
+import { IoIosSearch } from 'react-icons/io';
 import LoadingSpinner from '../../../components/LoadingSpinner/LoadingSpinner';
 import useAuth from '../../../hooks/useAuth';
 import useAxiosSecure from '../../../hooks/useAxiosSecure';
@@ -10,15 +12,16 @@ import { dateFormat } from '../../../utils/date';
 const AllRequests = () => {
   const { user, loading } = useAuth();
   const axiosSecure = useAxiosSecure();
+  const [search, setSearch] = useState('');
   const {
     data: reqAssets = [],
     isPending,
     refetch,
   } = useQuery({
-    queryKey: ['req-assets', user?.email],
+    queryKey: ['req-assets', user?.email,search],
     enabled: !loading && !!user?.email,
     queryFn: async () => {
-      const { data } = await axiosSecure(`/assets/all-requests/${user?.email}`);
+      const { data } = await axiosSecure(`/assets/all-requests/${user?.email}?search=${search}`);
       return data;
     },
   });
@@ -56,11 +59,45 @@ const AllRequests = () => {
     }
   };
 
+  const handleSearch = (e) => {
+    e.preventDefault();
+    setSearch(e.target.search.value);
+    e.target.reset();
+  };
+
   if (isPending) return <LoadingSpinner h={'50vh'} />;
 
   return (
     <section className="container px-4 pt-40">
-      <div className="flex flex-col">
+      <div>
+        <div>
+          <form onSubmit={handleSearch}>
+            <label
+              htmlFor="search"
+              className="sr-only mb-2 text-sm font-medium text-gray-900 dark:text-white"
+            >
+              Search
+            </label>
+            <div>
+              <div className="flex h-[44px] items-center rounded-e rounded-s shadow">
+                <input
+                  type="text"
+                  name="search"
+                  className="h-full rounded-s border border-r-0 border-blue-300 pl-4 outline-none"
+                  placeholder="Search..."
+                />
+                <button
+                  type="submit"
+                  className="inline-flex h-full w-14 items-center justify-center rounded-e border border-l-0 border-blue-500 bg-blue-500"
+                >
+                  <IoIosSearch className="text-2xl text-white" />
+                </button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+      <div className="mt-5 flex flex-col">
         <div className="overflow-x-auto">
           <div className="inline-block min-w-full align-middle">
             <div className="overflow-hidden border border-gray-200 dark:border-gray-700 md:rounded-lg">
@@ -201,92 +238,7 @@ const AllRequests = () => {
           </div>
         </div>
       </div>
-      <div className="mt-6 flex items-center justify-between">
-        <a
-          href="#"
-          className="flex items-center gap-x-2 rounded-md border bg-white px-5 py-2 text-sm capitalize text-gray-700 transition-colors duration-200 hover:bg-gray-100 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-200 dark:hover:bg-gray-800"
-        >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-            strokeWidth="1.5"
-            stroke="currentColor"
-            className="h-5 w-5 rtl:-scale-x-100"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              d="M6.75 15.75L3 12m0 0l3.75-3.75M3 12h18"
-            />
-          </svg>
-          <span>previous</span>
-        </a>
-        <div className="hidden items-center gap-x-3 lg:flex">
-          <a
-            href="#"
-            className="rounded-md bg-blue-100/60 px-2 py-1 text-sm text-blue-500 dark:bg-gray-800"
-          >
-            1
-          </a>
-          <a
-            href="#"
-            className="rounded-md px-2 py-1 text-sm text-gray-500 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-800"
-          >
-            2
-          </a>
-          <a
-            href="#"
-            className="rounded-md px-2 py-1 text-sm text-gray-500 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-800"
-          >
-            3
-          </a>
-          <a
-            href="#"
-            className="rounded-md px-2 py-1 text-sm text-gray-500 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-800"
-          >
-            ...
-          </a>
-          <a
-            href="#"
-            className="rounded-md px-2 py-1 text-sm text-gray-500 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-800"
-          >
-            12
-          </a>
-          <a
-            href="#"
-            className="rounded-md px-2 py-1 text-sm text-gray-500 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-800"
-          >
-            13
-          </a>
-          <a
-            href="#"
-            className="rounded-md px-2 py-1 text-sm text-gray-500 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-800"
-          >
-            14
-          </a>
-        </div>
-        <a
-          href="#"
-          className="flex items-center gap-x-2 rounded-md border bg-white px-5 py-2 text-sm capitalize text-gray-700 transition-colors duration-200 hover:bg-gray-100 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-200 dark:hover:bg-gray-800"
-        >
-          <span>Next</span>
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-            strokeWidth="1.5"
-            stroke="currentColor"
-            className="h-5 w-5 rtl:-scale-x-100"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              d="M17.25 8.25L21 12m0 0l-3.75 3.75M21 12H3"
-            />
-          </svg>
-        </a>
-      </div>
+      {/* Pagination */}
     </section>
   );
 };

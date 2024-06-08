@@ -1,4 +1,5 @@
 import { useMutation, useQuery } from '@tanstack/react-query';
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import LoadingSpinner from '../../../components/LoadingSpinner/LoadingSpinner';
 import useAuth from '../../../hooks/useAuth';
@@ -13,6 +14,7 @@ const AddAnEmployee = () => {
   const { user } = useAuth();
   const axiosSecure = useAxiosSecure();
   const [loggedInUser, isPending, refetch] = useLoggedInUser();
+  const [teamMembers, setTeamMembers] = useState([]);
 
   const {
     data: employees = [],
@@ -26,10 +28,10 @@ const AddAnEmployee = () => {
     },
   });
 
-  // handle add to team
+  // added single employee at a time
   const { mutateAsync } = useMutation({
     mutationFn: async (teamMemberData) => {
-      const { data } = await axiosSecure.post(`/teams`, teamMemberData);
+      const { data } = await axiosSecure.post(`/teams/single`, teamMemberData);
       return data;
     },
     onSuccess: (data) => {
@@ -61,6 +63,69 @@ const AddAnEmployee = () => {
     };
     try {
       await mutateAsync(teamMemberData);
+    } catch (error) {
+      console.log(error);
+      errorAlert(error.message);
+    }
+  };
+
+  const handleCheckbox = (e, employee) => {
+    const isChecked = e.target.checked;
+    if (isChecked) {
+      setTeamMembers([...teamMembers, employee]);
+    } else {
+      //
+      setTeamMembers(
+        [...teamMembers].filter((tm) => {
+          return tm?._id !== employee?._id;
+        }),
+      );
+    }
+    // const teamMemberData = {
+    //   employeeId: employee._id,
+    //   teamId: loggedInUser._id,
+    //   join_date: new Date(),
+    //   employee_info: {
+    //     name: employee.name,
+    //     email: employee.email,
+    //     image: employee.image,
+    //     date_of_birth: employee.date_of_birth,
+    //     role: employee.role,
+    //   },
+    //   hr_info: {
+    //     name: loggedInUser.name,
+    //     email: loggedInUser.email,
+    //     company_name: loggedInUser.company_name,
+    //   },
+    // };
+  };
+  // handle add multiple team member
+  const handleAddMultipleTeamMember = async() => {
+    const teamsData = teamMembers.map((employee) => {
+      return {
+        employeeId: employee._id,
+        teamId: loggedInUser._id,
+        join_date: new Date(),
+        employee_info: {
+          name: employee.name,
+          email: employee.email,
+          image: employee.image,
+          date_of_birth: employee.date_of_birth,
+          role: employee.role,
+        },
+        hr_info: {
+          name: loggedInUser.name,
+          email: loggedInUser.email,
+          company_name: loggedInUser.company_name,
+        },
+      };
+    });
+    try {
+      const {data} = await axiosSecure.post(`/teams/multiple`, teamsData)
+
+      refetch()
+      refetch2()
+      console.log(data);
     } catch (error) {
       console.log(error);
       errorAlert(error.message);
@@ -142,6 +207,9 @@ const AddAnEmployee = () => {
                           <td className="whitespace-nowrap px-4 py-4 text-sm font-medium text-gray-700">
                             <div className="pl-6">
                               <input
+                                onChange={(e) => {
+                                  handleCheckbox(e, employee);
+                                }}
                                 type="checkbox"
                                 defaultValue=""
                                 className="h-5 w-5 rounded border-gray-300 bg-gray-100 text-blue-600 focus:ring-2 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:ring-offset-gray-800 dark:focus:ring-blue-600"
@@ -185,6 +253,16 @@ const AddAnEmployee = () => {
           </div>
         </div>
         {/* pagination */}
+        <div>
+          <div>
+            <button
+              onClick={handleAddMultipleTeamMember}
+              className="mt-5 rounded border border-emerald-500 px-6 py-2.5 text-sm font-semibold capitalize text-emerald-500 shadow-tableBtn dark:text-white"
+            >
+              Add selected member{' '}
+            </button>
+          </div>
+        </div>
       </section>
     </div>
   );

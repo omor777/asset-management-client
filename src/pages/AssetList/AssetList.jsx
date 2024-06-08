@@ -4,11 +4,13 @@ import { IoIosSearch } from 'react-icons/io';
 import { Link } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import LoadingSpinner from '../../components/LoadingSpinner/LoadingSpinner';
+import useAuth from '../../hooks/useAuth';
 import useAxiosSecure from '../../hooks/useAxiosSecure';
 import { errorAlert, successAlert } from '../../utils/alert';
 import { dateFormat } from '../../utils/date';
 // TODO: asset update functionality
 const AssetList = () => {
+  const { user } = useAuth();
   const axiosSecure = useAxiosSecure();
   const [filter, setFilter] = useState('');
   const [sort, setSort] = useState('');
@@ -18,10 +20,10 @@ const AssetList = () => {
     isPending,
     refetch,
   } = useQuery({
-    queryKey: ['assets', filter, sort, search],
+    queryKey: ['asset-list', filter, sort, search, user?.email],
     queryFn: async () => {
       const { data } = await axiosSecure(
-        `/assets?filter=${filter}&sort=${sort}&search=${search}`,
+        `/assets/hr/${user?.email}?filter=${filter}&sort=${sort}&search=${search}`,
       );
       return data;
     },
