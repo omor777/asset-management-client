@@ -30,6 +30,7 @@ const JoinAsHrManager = () => {
       return data;
     },
     onSuccess: (data) => {
+      console.log(data);
       if (data.insertedId) {
         successAlert('Sing up successful');
       }
@@ -66,6 +67,8 @@ const JoinAsHrManager = () => {
         payment_status: 'pending',
         role: 'HR',
       };
+
+      console.log(hrData);
       // sing up user
       await createUser(email, password);
 
@@ -76,7 +79,6 @@ const JoinAsHrManager = () => {
       await mutateAsync(hrData);
       navigate('/payment');
 
-      // console.log(hrData);
       setLoading(false);
     } catch (error) {
       console.log(error);

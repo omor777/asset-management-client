@@ -34,9 +34,10 @@ const stripePromise = loadStripe(import.meta.env.VITE_PUBLIC_KEY);
 const Payment = () => {
   const [loggedInUser, isPending] = useLoggedInUser();
 
+  console.log(loggedInUser);
+
   const [price, setPrice] = useState(null);
   const [isPay, setIsPay] = useState(false);
-  console.log(price);
 
   const handleChoosePlan = (item) => {
     setPrice(item.price);
@@ -53,7 +54,7 @@ const Payment = () => {
             return (
               <div
                 key={item.id}
-                className="transform cursor-pointer rounded border border-gray-500 px-6 py-4 shadow-card transition-colors duration-300 hover:bg-gray-200 dark:bg-gray-800"
+                className="transform cursor-pointer rounded border border-gray-500 px-6 py-4 shadow-card transition-colors duration-300 hover:bg-gray-200 dark:bg-gray-900"
               >
                 <p className="text-lg font-medium text-gray-800 dark:text-gray-100">
                   {item.title}

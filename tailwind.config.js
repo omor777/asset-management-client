@@ -14,6 +14,8 @@ export default {
       },
       colors: {
         primary: '#3b82f6',
+        secondary:'#34d399',
+        thirdly:'#8b5cf6'
       },
       fontFamily: {
         inter: ['Inter, sans-serif'],

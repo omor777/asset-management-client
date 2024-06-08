@@ -1,4 +1,5 @@
 import { useMutation, useQuery } from '@tanstack/react-query';
+import { Link } from 'react-router-dom';
 import LoadingSpinner from '../../../components/LoadingSpinner/LoadingSpinner';
 import useAuth from '../../../hooks/useAuth';
 import useAxiosSecure from '../../../hooks/useAxiosSecure';
@@ -70,21 +71,28 @@ const AddAnEmployee = () => {
 
   return (
     <div className="container px-4 pt-40">
-      <div className="grid grid-cols-1 gap-6 pb-20 md:grid-cols-2">
-        <div className="flex h-[13.75rem] flex-col items-center justify-center gap-4 rounded-md bg-blue-500 shadow-md">
+      <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
+        <div className="flex h-[13.75rem] flex-col items-center justify-center gap-4 rounded-md bg-emerald-500 shadow-md">
           <h1 className="text-4xl font-bold text-white">Total Employee</h1>
           <h3 className="text-6xl font-extrabold text-white">
             {loggedInUser?.employee_count ? loggedInUser?.employee_count : '0'}
           </h3>
         </div>
-        <div className="flex h-[13.75rem] flex-col items-center justify-center gap-4 rounded-md bg-rose-500 shadow-md">
-          <h1 className="text-4xl font-bold text-white">Package Limit</h1>
+        <div className="flex h-[13.75rem] flex-col items-center justify-center gap-4 rounded-md bg-purple-500 shadow-md">
+          <h1 className="text-4xl font-bold capitalize text-white">
+            Member Limit
+          </h1>
           <h3 className="text-6xl font-extrabold text-white">
-            {loggedInUser?.package_info?.members}
+            {loggedInUser?.member_limit}
           </h3>
         </div>
       </div>
-      <section>
+      <Link to={'/payment'} className="mt-8 flex items-center justify-center">
+        <button className="rounded border border-blue-500 px-8 py-3 text-sm font-bold uppercase text-blue-500 shadow-md transition-colors duration-200 hover:bg-blue-500 hover:text-white dark:text-white">
+          increase limit
+        </button>
+      </Link>
+      <section className="mt-12">
         <div className="flex flex-col">
           <div className="overflow-x-auto">
             <div className="inline-block min-w-full align-middle">
@@ -94,7 +102,7 @@ const AddAnEmployee = () => {
                     <tr>
                       <th
                         scope="col"
-                        className="px-4 py-3.5 text-left text-sm font-normal text-gray-500 dark:text-gray-400 rtl:text-right"
+                        className="py-3.5 pl-6 text-left text-sm font-normal text-gray-500 dark:text-gray-400 rtl:text-right"
                       >
                         <span className="whitespace-nowrap">Select Member</span>
                       </th>
@@ -132,7 +140,7 @@ const AddAnEmployee = () => {
                       return (
                         <tr key={_id}>
                           <td className="whitespace-nowrap px-4 py-4 text-sm font-medium text-gray-700">
-                            <div className="ml-5">
+                            <div className="pl-6">
                               <input
                                 type="checkbox"
                                 defaultValue=""
@@ -155,7 +163,7 @@ const AddAnEmployee = () => {
                             </span>
                           </td>
                           <td>
-                            <p className="w-max rounded-full bg-pink-100/60 px-4 py-1.5 text-sm capitalize text-pink-500 dark:bg-gray-800">
+                            <p className="w-24 rounded-full bg-purple-100/60 py-1.5 text-center text-sm capitalize text-purple-500 dark:bg-gray-800">
                               <span>{role}</span>
                             </p>
                           </td>
@@ -176,92 +184,7 @@ const AddAnEmployee = () => {
             </div>
           </div>
         </div>
-        <div className="mt-6 flex items-center justify-between">
-          <a
-            href="#"
-            className="flex items-center gap-x-2 rounded-md border bg-white px-5 py-2 text-sm capitalize text-gray-700 transition-colors duration-200 hover:bg-gray-100 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-200 dark:hover:bg-gray-800"
-          >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              strokeWidth="1.5"
-              stroke="currentColor"
-              className="h-5 w-5 rtl:-scale-x-100"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M6.75 15.75L3 12m0 0l3.75-3.75M3 12h18"
-              />
-            </svg>
-            <span>previous</span>
-          </a>
-          <div className="hidden items-center gap-x-3 lg:flex">
-            <a
-              href="#"
-              className="rounded-md bg-blue-100/60 px-2 py-1 text-sm text-blue-500 dark:bg-gray-800"
-            >
-              1
-            </a>
-            <a
-              href="#"
-              className="rounded-md px-2 py-1 text-sm text-gray-500 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-800"
-            >
-              2
-            </a>
-            <a
-              href="#"
-              className="rounded-md px-2 py-1 text-sm text-gray-500 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-800"
-            >
-              3
-            </a>
-            <a
-              href="#"
-              className="rounded-md px-2 py-1 text-sm text-gray-500 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-800"
-            >
-              ...
-            </a>
-            <a
-              href="#"
-              className="rounded-md px-2 py-1 text-sm text-gray-500 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-800"
-            >
-              12
-            </a>
-            <a
-              href="#"
-              className="rounded-md px-2 py-1 text-sm text-gray-500 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-800"
-            >
-              13
-            </a>
-            <a
-              href="#"
-              className="rounded-md px-2 py-1 text-sm text-gray-500 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-800"
-            >
-              14
-            </a>
-          </div>
-          <a
-            href="#"
-            className="flex items-center gap-x-2 rounded-md border bg-white px-5 py-2 text-sm capitalize text-gray-700 transition-colors duration-200 hover:bg-gray-100 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-200 dark:hover:bg-gray-800"
-          >
-            <span>Next</span>
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              strokeWidth="1.5"
-              stroke="currentColor"
-              className="h-5 w-5 rtl:-scale-x-100"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M17.25 8.25L21 12m0 0l-3.75 3.75M21 12H3"
-              />
-            </svg>
-          </a>
-        </div>
+        {/* pagination */}
       </section>
     </div>
   );

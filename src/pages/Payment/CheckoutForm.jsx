@@ -8,7 +8,7 @@ import useAuth from '../../hooks/useAuth';
 import useLoggedInUser from '../../hooks/useLoggedInUser';
 import { successAlert } from '../../utils/alert';
 
-const CheckoutForm = ({price}) => {
+const CheckoutForm = ({ price }) => {
   const stripe = useStripe();
   const elements = useElements();
   const axiosSecure = useAxiosSecure();
@@ -18,14 +18,14 @@ const CheckoutForm = ({price}) => {
   const { user } = useAuth();
   const navigate = useNavigate();
 
+  // console.log(price);
+
   const [loggedInUser] = useLoggedInUser();
 
   useEffect(() => {
     getClientSecret({ price });
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [price]);
-
-
 
   const getClientSecret = async (price) => {
     const { data } = await axiosSecure.post('/create-payment-intent', price);
@@ -90,9 +90,7 @@ const CheckoutForm = ({price}) => {
       delete paymentInfo._id;
 
       try {
-        await axiosSecure.patch(`/employee/${loggedInUser?.email}`, {
-          status: 'success',
-        });
+        await axiosSecure.patch(`/employee/payment/${loggedInUser?.email}`,{price});
 
         const { data } = await axiosSecure.post('/payments', paymentInfo);
         // console.log(data);
