@@ -20,8 +20,6 @@ const AssetInventoryOverview = () => {
     },
   });
 
-  console.log(sort);
-
   return (
     <section className="container mx-auto px-4 md:px-0">
       <TableHeading heading={'Asset Inventory Overview'} />

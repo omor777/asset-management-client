@@ -156,26 +156,26 @@ const AssetList = () => {
                       scope="col"
                       className="py-3.5 pl-10 text-left text-sm font-normal text-gray-500 dark:text-gray-400 rtl:text-right"
                     >
-                      Product Name
+                      Asset name
                     </th>
 
                     <th
                       scope="col"
                       className="py-3.5 text-left text-sm font-normal text-gray-500 dark:text-gray-400 rtl:text-right"
                     >
-                      Product Type
+                      Asset type
                     </th>
                     <th
                       scope="col"
                       className="py-3.5 text-left text-sm font-normal text-gray-500 dark:text-gray-400"
                     >
-                      Product Quantity
+                      Asset quantity
                     </th>
                     <th
                       scope="col"
                       className="py-3.5 text-left text-sm font-normal text-gray-500 dark:text-gray-400 rtl:text-right"
                     >
-                      Added Date
+                      Added date
                     </th>
                     <th
                       scope="col"

@@ -1,6 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
 import LoadingSpinner from '../../../components/LoadingSpinner/LoadingSpinner';
-import TableHeading from '../../../components/shared/TableHeading';
+import SectionTitle from '../../../components/SectionTitle/SectionTitle';
 import useAuth from '../../../hooks/useAuth';
 import useAxiosSecure from '../../../hooks/useAxiosSecure';
 const PendingRequests = () => {
@@ -19,11 +19,11 @@ const PendingRequests = () => {
   if (isPending || loading) return <LoadingSpinner h={'50vh'} />;
 
   return (
-    <section className="container mx-auto px-4 md:px-0">
-      <TableHeading heading={'Pending Request Items'} />
-      <div className="flex flex-col">
+    <section className="container">
+      <SectionTitle title={'Pending Request Items'} />
+      <div className="mt-10 flex flex-col">
         <div className="overflow-x-auto">
-          <div className="inline-block min-w-full py-2 align-middle">
+          <div className="inline-block min-w-full align-middle">
             <div className="overflow-hidden border border-gray-200 dark:border-gray-700 md:rounded-lg">
               <table className="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
                 <thead className="bg-gray-50 dark:bg-gray-800">
@@ -38,7 +38,7 @@ const PendingRequests = () => {
                       scope="col"
                       className="py-3.5 text-left text-sm font-normal text-gray-500 dark:text-gray-400 rtl:text-right"
                     >
-                      <span>Product quantity</span>
+                      <span>Product type</span>
                     </th>
                     <th
                       scope="col"
@@ -67,17 +67,13 @@ const PendingRequests = () => {
                       <td className="whitespace-nowrap py-4 pl-6 text-sm font-medium text-gray-700 dark:text-gray-200">
                         <span className="capitalize">{item?.product_name}</span>
                       </td>
-                      <td className="whitespace-nowrap pl-6 text-sm font-medium text-gray-700">
-                        <span className="capitalize dark:text-gray-300">
-                          <p className="w-max rounded-full bg-purple-100/60 px-3 py-1 text-xs tracking-wider text-purple-500 dark:bg-gray-800">
-                            {item?.product_quantity}
-                          </p>
-                        </span>
-                      </td>
                       <td className="whitespace-nowrap py-4 text-sm font-medium text-gray-700 dark:text-gray-200">
                         <span className="capitalize">
                           {item?.requester_info?.name}
                         </span>
+                      </td>
+                      <td className="whitespace-nowrap py-4 text-sm font-medium text-gray-700 dark:text-gray-200">
+                        <span className="capitalize">{item?.product_type}</span>
                       </td>
 
                       <td className="whitespace-nowrap py-4 text-sm font-medium text-gray-700 dark:text-gray-200">

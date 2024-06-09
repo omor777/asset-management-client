@@ -165,7 +165,7 @@ const JoinAsHrManager = () => {
                   >
                     Company Name
                   </label>
-
+                        
                   <input
                     {...register('company_name', { required: true })}
                     type="text"
