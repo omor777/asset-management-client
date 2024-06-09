@@ -56,7 +56,7 @@ const Navbar = () => {
             alt="Flowbite Logo"
           />
           <span className="self-center whitespace-nowrap text-2xl font-semibold dark:text-white">
-            Flowbite
+            AssetAura
           </span>
         </Link>
         <div className="flex space-x-3 lg:order-2 lg:space-x-0 rtl:space-x-reverse">

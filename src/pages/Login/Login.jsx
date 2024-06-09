@@ -1,31 +1,26 @@
 import React from 'react';
 import { useForm } from 'react-hook-form';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import GithubButton from '../../components/SocialBtn/GithubButton';
 import GoogleButton from '../../components/SocialBtn/GoogleButton';
 import useAuth from '../../hooks/useAuth';
 import { errorAlert, successAlert } from '../../utils/alert';
-import { saveTokenToLs } from '../../utils/token';
-import { setUserToLs } from '../../utils/localStorage';
 
 const Login = () => {
   const { loginUser, googleLogin } = useAuth();
   const navigate = useNavigate();
   const { register, handleSubmit } = useForm();
+  const location = useLocation();
+
+  const form = location?.state ? location?.state : '/';
 
   const onSubmit = async (data) => {
     const { email, password } = data;
     try {
       await loginUser(email, password);
 
-      // // save user email to local storage
-      //  setUserToLs(email)
-
-      // // save token to local storage
-      // await saveTokenToLs(email);
-
       successAlert('Login successful!');
-      navigate('/');
+      navigate(form);
     } catch (error) {
       console.log(error);
       errorAlert(error.message);

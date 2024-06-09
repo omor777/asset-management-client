@@ -2,10 +2,30 @@ import SectionTitle from '../../../components/SectionTitle/SectionTitle';
 
 const RecognitionWall = () => {
   const employees = [
-    { id: 1, name: 'Alice Johnson', achievement: 'Employee of the Month' },
-    { id: 2, name: 'Bob Lee', achievement: 'Outstanding Performance Award' },
-    { id: 3, name: 'Emily Smith', achievement: 'Innovation Excellence Award' },
-    { id: 4, name: 'David Miller', achievement: 'Leadership Excellence Award' },
+    {
+      id: 1,
+      name: 'Alice Johnson',
+      achievement: 'Employee of the Month',
+      img: 'https://i.ibb.co/ZLG9wrr/pexels-spencer-selover-142259-428333.jpg',
+    },
+    {
+      id: 2,
+      name: 'Bob Lee',
+      achievement: 'Outstanding Performance Award',
+      img: 'https://i.ibb.co/X8ydtK4/pexels-olly-775091.jpg',
+    },
+    {
+      id: 3,
+      name: 'Emily Smith',
+      achievement: 'Innovation Excellence Award',
+      img: 'https://i.ibb.co/QH8XLBm/pexels-hannah-nelson-390257-1065084.jpg',
+    },
+    {
+      id: 4,
+      name: 'David Miller',
+      achievement: 'Leadership Excellence Award',
+      img: 'https://i.ibb.co/hB5KR3M/pexels-nkhajotia-1516680.jpg',
+    },
   ];
   return (
     <div>
@@ -20,7 +40,7 @@ const RecognitionWall = () => {
               <div className="flex h-24 items-center justify-center">
                 <img
                   className="h-20 w-20 rounded-full object-cover"
-                  src={`https://via.placeholder.com/150/FF0000/FFFFFF?text=${employee.name.charAt(0)}`}
+                  src={employee.img}
                   alt={employee.name}
                 />
               </div>

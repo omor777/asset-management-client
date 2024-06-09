@@ -7,24 +7,32 @@ import useAxiosSecure from '../../../hooks/useAxiosSecure';
 import { errorAlert, successAlert } from '../../../utils/alert';
 import { dateFormat } from '../../../utils/date';
 
-// TODO: reject button function
-
 const AllRequests = () => {
   const { user, loading } = useAuth();
   const axiosSecure = useAxiosSecure();
   const [search, setSearch] = useState('');
-  const {
-    data: reqAssets = [],
-    isPending,
-    refetch,
-  } = useQuery({
-    queryKey: ['req-assets', user?.email,search],
+  const [itemsPerPage, setItemsPerPage] = useState(10);
+  const [currentPage, setCurrentPage] = useState(1);
+
+  const { data, isPending, refetch } = useQuery({
+    queryKey: ['req-assets', user?.email, search, currentPage, itemsPerPage],
     enabled: !loading && !!user?.email,
     queryFn: async () => {
-      const { data } = await axiosSecure(`/assets/all-requests/${user?.email}?search=${search}`);
+      const { data } = await axiosSecure(
+        `/assets/all-requests/${user?.email}?search=${search}&page=${currentPage}&size=${itemsPerPage}`,
+      );
       return data;
     },
   });
+
+  const reqAssets = data?.reqAssets;
+  const count = data?.count;
+
+  const totalPages = Math.ceil(count / itemsPerPage);
+  let pages;
+  if (!isPending) {
+    pages = [...Array(totalPages).keys()].map((page) => page + 1);
+  }
 
   // handle approve button
   const handleApprove = async (id) => {
@@ -65,10 +73,26 @@ const AllRequests = () => {
     e.target.reset();
   };
 
-  if (isPending) return <LoadingSpinner h={'50vh'} />;
+  const handlePagination = (page) => {
+    setCurrentPage(page);
+  };
+
+  const handlePrevButton = () => {
+    if (currentPage > 1) {
+      setCurrentPage(currentPage - 1);
+    }
+  };
+
+  const handleNextButton = () => {
+    if (currentPage < pages.length) {
+      setCurrentPage(currentPage + 1);
+    }
+  };
+
+  if (isPending) return <LoadingSpinner h={'90vh'} />;
 
   return (
-    <section className="container px-4 pt-40">
+    <section className="container px-4 pb-14 pt-40">
       <div>
         <div>
           <form onSubmit={handleSearch}>
@@ -79,7 +103,7 @@ const AllRequests = () => {
               Search
             </label>
             <div>
-              <div className="flex h-[44px] items-center rounded-e rounded-s shadow">
+              <div className="flex h-[44px] w-max items-center rounded-e rounded-s shadow">
                 <input
                   type="text"
                   name="search"
@@ -239,6 +263,72 @@ const AllRequests = () => {
         </div>
       </div>
       {/* Pagination */}
+      <div className="mt-6 flex justify-end">
+        <nav aria-label="Page navigation example">
+          <ul className="flex h-8 items-center -space-x-px text-sm">
+            <li>
+              <button
+                onClick={handlePrevButton}
+                className="ms-0 flex h-8 items-center justify-center rounded-s-lg border border-e-0 border-gray-300 bg-white px-3 leading-tight text-gray-500 hover:bg-gray-100 hover:text-gray-700 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
+              >
+                <span className="sr-only">Previous</span>
+                <svg
+                  className="h-2.5 w-2.5 rtl:rotate-180"
+                  aria-hidden="true"
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 6 10"
+                >
+                  <path
+                    stroke="currentColor"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2"
+                    d="M5 1 1 5l4 4"
+                  />
+                </svg>
+              </button>
+            </li>
+
+            {pages?.map((page) => {
+              return (
+                <li key={page}>
+                  <button
+                    onClick={() => handlePagination(page)}
+                    className={`flex h-8 items-center justify-center border px-3 leading-tight ${currentPage === page ? 'border-blue-500 bg-blue-500 text-white' : 'border-gray-300 bg-white text-gray-500 hover:bg-gray-100 hover:text-gray-700 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white'}`}
+                  >
+                    {page}
+                  </button>
+                </li>
+              );
+            })}
+
+            <li>
+              <button
+                onClick={handleNextButton}
+                className={`flex h-8 items-center justify-center rounded-e-lg border border-gray-300 bg-white px-3 leading-tight text-gray-500 hover:bg-gray-100 hover:text-gray-700 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white`}
+              >
+                <span className="sr-only">Next</span>
+                <svg
+                  className="h-2.5 w-2.5 rtl:rotate-180"
+                  aria-hidden="true"
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 6 10"
+                >
+                  <path
+                    stroke="currentColor"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2"
+                    d="m1 9 4-4-4-4"
+                  />
+                </svg>
+              </button>
+            </li>
+          </ul>
+        </nav>
+      </div>
     </section>
   );
 };

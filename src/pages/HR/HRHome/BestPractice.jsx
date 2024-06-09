@@ -7,21 +7,21 @@ const BestPractice = () => {
       content:
         'Encourage regular feedback, provide growth opportunities, and recognize achievements to keep employees engaged and motivated.',
       icon: '👍',
-      bgColor: 'bg-gradient-to-r from-blue-200 to-blue-100',
+      bgColor: 'bg-blue-300',
     },
     {
       title: 'Effective Communication',
       content:
         'Promote clear and open communication channels within the team to ensure everyone is on the same page and issues are addressed promptly.',
       icon: '💬',
-      bgColor: 'bg-gradient-to-r from-emerald-200 to-emerald-100',
+      bgColor: 'bg-emerald-300',
     },
     {
       title: 'Foster a Positive Work Culture',
       content:
         'Create a supportive and inclusive environment where employees feel valued and respected, enhancing overall job satisfaction.',
       icon: '🌟',
-      bgColor: 'bg-gradient-to-r from-purple-200 to-purple-100',
+      bgColor: 'bg-purple-300',
     },
   ];
   return (

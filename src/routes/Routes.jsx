@@ -15,6 +15,7 @@ import JoinAsHrManager from '../pages/JoinAsHrManager/JoinAsHrManager';
 import Login from '../pages/Login/Login';
 import Payment from '../pages/Payment/Payment';
 import { Profile } from '../pages/shared/Profile';
+import PrivateRoute from './PrivateRoute';
 
 const router = createBrowserRouter([
   {
@@ -31,18 +32,21 @@ const router = createBrowserRouter([
       },
       {
         path: '/request-for-asset',
-        element: <RequestForAsset />,
-      },
-      {
-        path: '/my-assets',
-        element: <MyRequestedAsset />,
+        element: (
+          <PrivateRoute>
+            <RequestForAsset />
+          </PrivateRoute>
+        ),
       },
       {
         path: '/my-team',
         element: <MyTeam />,
       },
-      {},
-      {},
+      {
+        path: '/my-assets',
+        element: <MyRequestedAsset />,
+      },
+
       {
         path: '/hr-manager',
         element: <JoinAsHrManager />,
