@@ -15,6 +15,8 @@ import JoinAsHrManager from '../pages/JoinAsHrManager/JoinAsHrManager';
 import Login from '../pages/Login/Login';
 import Payment from '../pages/Payment/Payment';
 import { Profile } from '../pages/shared/Profile';
+import EmployeeRoute from './EmployeeRoute';
+import HrRoute from './HrRoute';
 import PrivateRoute from './PrivateRoute';
 
 const router = createBrowserRouter([
@@ -34,17 +36,31 @@ const router = createBrowserRouter([
         path: '/request-for-asset',
         element: (
           <PrivateRoute>
-            <RequestForAsset />
+            <EmployeeRoute>
+              <RequestForAsset />
+            </EmployeeRoute>
           </PrivateRoute>
         ),
       },
       {
         path: '/my-team',
-        element: <MyTeam />,
+        element: (
+          <PrivateRoute>
+            <EmployeeRoute>
+              <MyTeam />
+            </EmployeeRoute>
+          </PrivateRoute>
+        ),
       },
       {
         path: '/my-assets',
-        element: <MyRequestedAsset />,
+        element: (
+          <PrivateRoute>
+            <EmployeeRoute>
+              <MyRequestedAsset />
+            </EmployeeRoute>
+          </PrivateRoute>
+        ),
       },
 
       {
@@ -53,35 +69,81 @@ const router = createBrowserRouter([
       },
       {
         path: '/add-asset',
-        element: <AddAsset />,
+        element: (
+          <PrivateRoute>
+            <HrRoute>
+              <AddAsset />
+            </HrRoute>
+          </PrivateRoute>
+        ),
       },
       {
         path: '/asset-list',
-        element: <AssetList />,
+        element: (
+          <PrivateRoute>
+            <HrRoute>
+              <AssetList />
+            </HrRoute>
+          </PrivateRoute>
+        ),
       },
       {
         path: '/asset-list/update/:id',
-        element: <UpdateAsset />,
+        element: (
+          <PrivateRoute>
+            <HrRoute>
+              <UpdateAsset />
+            </HrRoute>
+          </PrivateRoute>
+        ),
       },
       {
         path: '/all-requests',
-        element: <AllRequests />,
+        element: (
+          <PrivateRoute>
+            <HrRoute>
+              <AllRequests />
+            </HrRoute>
+          </PrivateRoute>
+        ),
       },
       {
         path: '/add-an-employee',
-        element: <AddAnEmployee />,
+        element: (
+          <PrivateRoute>
+            <HrRoute>
+              <AddAnEmployee />
+            </HrRoute>
+          </PrivateRoute>
+        ),
       },
       {
         path: 'my-employee-list',
-        element: <MyEmployeeList />,
+        element: (
+          <PrivateRoute>
+            <HrRoute>
+              <MyEmployeeList />
+            </HrRoute>
+          </PrivateRoute>
+        ),
       },
       {
         path: '/payment',
-        element: <Payment />,
+        element: (
+          <PrivateRoute>
+            <HrRoute>
+              <Payment />
+            </HrRoute>
+          </PrivateRoute>
+        ),
       },
       {
         path: '/profile',
-        element: <Profile />,
+        element: (
+          <PrivateRoute>
+            <Profile />
+          </PrivateRoute>
+        ),
       },
       {
         path: '/login',

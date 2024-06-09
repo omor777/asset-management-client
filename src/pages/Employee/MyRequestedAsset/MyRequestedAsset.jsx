@@ -3,6 +3,7 @@ import { useState } from 'react';
 import { IoIosSearch } from 'react-icons/io';
 import LoadingSpinner from '../../../components/LoadingSpinner/LoadingSpinner';
 import PrintAssetPdf from '../../../components/Pdf/PrintAssetPdf';
+import Title from '../../../components/Title/Title';
 import useAuth from '../../../hooks/useAuth';
 import useAxiosSecure from '../../../hooks/useAxiosSecure';
 import { errorAlert, successAlert } from '../../../utils/alert';
@@ -98,6 +99,7 @@ const MyRequestedAsset = () => {
   if (isPending) return <LoadingSpinner h={'50vh'} />;
   return (
     <>
+      <Title title={'AssetAura | My Requested Assets'} />
       <section className="container px-4 pt-40">
         <div className="flex items-center justify-between">
           <div>

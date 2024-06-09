@@ -10,7 +10,6 @@ import useAuth from '../../hooks/useAuth';
 import useAxiosSecure from '../../hooks/useAxiosSecure';
 import { errorAlert, successAlert } from '../../utils/alert';
 import { imageUpload } from '../../utils/api';
-import { saveTokenToLs } from '../../utils/token';
 import './style.css';
 
 const JoinAsEmployee = () => {
@@ -48,9 +47,6 @@ const JoinAsEmployee = () => {
       //sing up user
       const { user } = await createUser(email, password);
 
-      // // save token to ls
-      // await saveTokenToLs(email);
-
       // update user name and photo
       await updateProfile(user, {
         displayName: name,
@@ -67,8 +63,21 @@ const JoinAsEmployee = () => {
 
   const handleGoogleLogin = async () => {
     try {
-      await googleLogin();
+      const { user } = await googleLogin();
       successAlert('Sing in successful');
+
+      const employeeData = {
+        name: user?.displayName,
+        email: user?.email,
+        image: user?.photoURL,
+        role: 'employee',
+        isJoin: false,
+      };
+
+      // added user info to the db
+      await axiosSecure.post('/employees', employeeData);
+
+      console.table(employeeData);
       navigate('/');
     } catch (error) {
       errorAlert(error.message);

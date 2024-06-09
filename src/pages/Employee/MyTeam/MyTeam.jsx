@@ -1,5 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
 import LoadingSpinner from '../../../components/LoadingSpinner/LoadingSpinner';
+import Title from '../../../components/Title/Title';
 import useAuth from '../../../hooks/useAuth';
 import useAxiosSecure from '../../../hooks/useAxiosSecure';
 
@@ -19,6 +20,7 @@ const MyTeam = () => {
 
   return (
     <>
+      <Title title={'AssetAura | My Team'} />
       <section className="container pt-40">
         <div className="flex flex-col">
           <div className="overflow-x-auto">

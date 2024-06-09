@@ -4,6 +4,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import GithubButton from '../../components/SocialBtn/GithubButton';
 import GoogleButton from '../../components/SocialBtn/GoogleButton';
 import useAuth from '../../hooks/useAuth';
+import useAxiosSecure from '../../hooks/useAxiosSecure';
 import { errorAlert, successAlert } from '../../utils/alert';
 
 const Login = () => {
@@ -11,6 +12,7 @@ const Login = () => {
   const navigate = useNavigate();
   const { register, handleSubmit } = useForm();
   const location = useLocation();
+  const axiosSecure = useAxiosSecure();
 
   const form = location?.state ? location?.state : '/';
 
@@ -29,15 +31,26 @@ const Login = () => {
 
   const handleGoogleLogin = async () => {
     try {
-      await googleLogin();
-      successAlert('Login in successful');
-      navigate('/');
+      const { user } = await googleLogin();
+      successAlert('Login successful');
+
+      const employeeData = {
+        name: user?.displayName,
+        email: user?.email,
+        image: user?.photoURL,
+        role: 'employee',
+        isJoin: false,
+      };
+
+      // added user info to the db
+      await axiosSecure.post('/employees', employeeData);
+      // console.table(employeeData);
+      navigate(form);
     } catch (error) {
       errorAlert(error.message);
       console.log(error);
     }
   };
-
   return (
     <section className="pt-40">
       <div className="mx-auto flex flex-col items-center justify-center px-6 py-8 lg:py-0">
