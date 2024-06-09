@@ -44,9 +44,6 @@ const AssetList = () => {
     pages = [...Array(totalPages).keys()].map((page) => page + 1);
   }
 
-  // const totalPages = Math.ceil(assets.length / itemsPerPage);
-  // const pages = [...Array(totalPages).keys()].map((p) => p + 1);
-
   // handle product delete
   const { mutateAsync } = useMutation({
     mutationFn: async (id) => {

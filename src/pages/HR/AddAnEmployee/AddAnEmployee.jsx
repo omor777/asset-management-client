@@ -2,31 +2,40 @@ import { useMutation, useQuery } from '@tanstack/react-query';
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import LoadingSpinner from '../../../components/LoadingSpinner/LoadingSpinner';
-import useAuth from '../../../hooks/useAuth';
 import useAxiosSecure from '../../../hooks/useAxiosSecure';
 import useLoggedInUser from '../../../hooks/useLoggedInUser';
 import { errorAlert, successAlert } from '../../../utils/alert';
 
-//TODO: add increase the limit button and functionality
-// add multiple member with checkbox
-// add pagination on table
 const AddAnEmployee = () => {
-  const { user } = useAuth();
   const axiosSecure = useAxiosSecure();
   const [loggedInUser, isPending, refetch] = useLoggedInUser();
   const [teamMembers, setTeamMembers] = useState([]);
 
+  const [itemsPerPage] = useState(20);
+  const [currentPage, setCurrentPage] = useState(1);
+
   const {
-    data: employees = [],
+    data,
     isPending: loading,
     refetch: refetch2,
   } = useQuery({
-    queryKey: ['not-affiliated-employee'],
+    queryKey: ['not-affiliated-employee', currentPage, itemsPerPage],
     queryFn: async () => {
-      const { data } = await axiosSecure('/employees/not-affiliated');
+      const { data } = await axiosSecure(
+        `/employees/not-affiliated?page=${currentPage}&size=${itemsPerPage}`,
+      );
       return data;
     },
   });
+
+  const employees = data?.employees;
+  const count = data?.count;
+
+  const totalPages = Math.ceil(count / itemsPerPage);
+  let pages;
+  if (!loading) {
+    pages = [...Array(totalPages).keys()].map((page) => page + 1);
+  }
 
   // added single employee at a time
   const { mutateAsync } = useMutation({
@@ -99,8 +108,9 @@ const AddAnEmployee = () => {
     //   },
     // };
   };
+
   // handle add multiple team member
-  const handleAddMultipleTeamMember = async() => {
+  const handleAddMultipleTeamMember = async () => {
     const teamsData = teamMembers.map((employee) => {
       return {
         employeeId: employee._id,
@@ -121,14 +131,32 @@ const AddAnEmployee = () => {
       };
     });
     try {
-      const {data} = await axiosSecure.post(`/teams/multiple`, teamsData)
+      const { data } = await axiosSecure.post(`/teams/multiple`, teamsData);
 
-      refetch()
-      refetch2()
-      console.log(data);
+      if (data.acknowledged) {
+        setTeamMembers([]);
+        refetch2();
+        refetch();
+      }
     } catch (error) {
       console.log(error);
       errorAlert(error.message);
+    }
+  };
+
+  const handlePagination = (page) => {
+    setCurrentPage(page);
+  };
+
+  const handlePrevButton = () => {
+    if (currentPage > 1) {
+      setCurrentPage(currentPage - 1);
+    }
+  };
+
+  const handleNextButton = () => {
+    if (currentPage < pages.length) {
+      setCurrentPage(currentPage + 1);
     }
   };
 
@@ -253,15 +281,80 @@ const AddAnEmployee = () => {
           </div>
         </div>
         {/* pagination */}
-        <div>
+        <div className="mt-6 flex items-center justify-between">
           <div>
             <button
+              disabled={teamMembers.length < 1}
               onClick={handleAddMultipleTeamMember}
-              className="mt-5 rounded border border-emerald-500 px-6 py-2.5 text-sm font-semibold capitalize text-emerald-500 shadow-tableBtn dark:text-white"
+              className={`mt-5 rounded border border-emerald-500 px-6 py-2.5 text-sm font-semibold capitalize text-emerald-500 shadow-tableBtn dark:text-white ${teamMembers.length < 1 ? 'cursor-not-allowed' : ''}`}
             >
               Add selected member{' '}
             </button>
           </div>
+          <nav aria-label="Page navigation example">
+            <ul className="flex h-8 items-center -space-x-px text-sm">
+              <li>
+                <button
+                  onClick={handlePrevButton}
+                  className="ms-0 flex h-8 items-center justify-center rounded-s-lg border border-e-0 border-gray-300 bg-white px-3 leading-tight text-gray-500 hover:bg-gray-100 hover:text-gray-700 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
+                >
+                  <span className="sr-only">Previous</span>
+                  <svg
+                    className="h-2.5 w-2.5 rtl:rotate-180"
+                    aria-hidden="true"
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 6 10"
+                  >
+                    <path
+                      stroke="currentColor"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth="2"
+                      d="M5 1 1 5l4 4"
+                    />
+                  </svg>
+                </button>
+              </li>
+
+              {pages?.map((page) => {
+                return (
+                  <li key={page}>
+                    <button
+                      onClick={() => handlePagination(page)}
+                      className={`flex h-8 items-center justify-center border px-3 leading-tight ${currentPage === page ? 'border-blue-500 bg-blue-500 text-white' : 'border-gray-300 bg-white text-gray-500 hover:bg-gray-100 hover:text-gray-700 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white'}`}
+                    >
+                      {page}
+                    </button>
+                  </li>
+                );
+              })}
+
+              <li>
+                <button
+                  onClick={handleNextButton}
+                  className={`flex h-8 items-center justify-center rounded-e-lg border border-gray-300 bg-white px-3 leading-tight text-gray-500 hover:bg-gray-100 hover:text-gray-700 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white`}
+                >
+                  <span className="sr-only">Next</span>
+                  <svg
+                    className="h-2.5 w-2.5 rtl:rotate-180"
+                    aria-hidden="true"
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 6 10"
+                  >
+                    <path
+                      stroke="currentColor"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth="2"
+                      d="m1 9 4-4-4-4"
+                    />
+                  </svg>
+                </button>
+              </li>
+            </ul>
+          </nav>
         </div>
       </section>
     </div>
