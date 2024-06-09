@@ -52,9 +52,9 @@ const Login = () => {
     }
   };
   return (
-    <section className="pt-40">
-      <div className="mx-auto flex flex-col items-center justify-center px-6 py-8 lg:py-0">
-        <div className="w-full rounded-lg bg-white shadow-form dark:border dark:border-gray-700 dark:bg-gray-800 sm:max-w-2xl md:mt-0 xl:p-0">
+    <section>
+      <div className="my-auto flex min-h-screen flex-col items-center justify-center px-6 py-8 lg:py-0">
+        <div className="w-full rounded-lg bg-white shadow-form dark:border dark:border-gray-700 dark:bg-gray-900 sm:max-w-2xl md:mt-0 xl:p-0">
           <div className="space-y-4 p-6 sm:p-8 md:space-y-8">
             <form
               onSubmit={handleSubmit(onSubmit)}
@@ -73,7 +73,7 @@ const Login = () => {
                   type="email"
                   id="email"
                   placeholder="Enter your emails"
-                  className="focus:ring-primary-600 focus:border-primary-600 block w-full rounded border border-gray-300 bg-gray-50 p-2.5 text-gray-900 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-500 sm:text-sm"
+                  className="block w-full rounded border border-blue-300 bg-gray-50 p-2.5 text-gray-900 outline-none focus:border-primary focus:ring-1 focus:ring-blue-300 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-300 sm:text-sm"
                 />
               </div>
               <div>
@@ -88,7 +88,7 @@ const Login = () => {
                   type="password"
                   id="password"
                   placeholder="Enter your password"
-                  className="focus:ring-primary-600 focus:border-primary-600 block w-full rounded border border-gray-300 bg-gray-50 p-2.5 text-gray-900 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-500 sm:text-sm"
+                  className="block w-full rounded border border-blue-300 bg-gray-50 p-2.5 text-gray-900 outline-none focus:border-primary focus:ring-1 focus:ring-blue-300 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-300 sm:text-sm"
                 />
               </div>
 

@@ -7,6 +7,7 @@ import AssetRequestModal from '../../../components/Modal/AssetRequestModal';
 import useAuth from '../../../hooks/useAuth';
 import useAxiosSecure from '../../../hooks/useAxiosSecure';
 import { errorAlert, successAlert, warningAlert } from '../../../utils/alert';
+import Title from '../../../components/Title/Title';
 
 const RequestForAsset = () => {
   const { user } = useAuth();
@@ -103,6 +104,7 @@ const RequestForAsset = () => {
 
   return (
     <section className="container mx-auto px-4 pt-40 md:px-0">
+      <Title title={'AssetAura | Request for an Asset'}/>
       <div className="flex items-center justify-between">
         <div>
           <form onSubmit={handleSearch} className="mx-auto max-w-md">

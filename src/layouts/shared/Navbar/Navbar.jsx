@@ -95,7 +95,7 @@ const Navbar = () => {
           className="hidden w-full items-center justify-between lg:order-1 lg:flex lg:w-auto"
           id="navbar-sticky"
         >
-          <ul className="mt-4 flex flex-col items-center space-y-2 rounded-lg border border-gray-100 bg-gray-50 p-4 font-medium dark:border-gray-700 dark:bg-gray-800 lg:mt-0 lg:flex-row lg:space-x-6 lg:space-y-0 lg:border-0 lg:bg-white lg:p-0 lg:dark:bg-gray-900 rtl:space-x-reverse">
+          <ul className="mt-4 flex flex-col items-center space-y-2 p-4 font-medium dark:border-gray-700 dark:bg-gray-900 lg:mt-0 lg:flex-row lg:space-x-6 lg:space-y-0 lg:border-0 lg:p-0 lg:dark:bg-gray-900 rtl:space-x-reverse">
             {role === undefined && <CommonNavItem />}
             {role === 'employee' && <EmployeeNavItem />}
             {role === 'HR' && <HrNavItem />}

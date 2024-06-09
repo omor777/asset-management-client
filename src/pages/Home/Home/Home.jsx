@@ -11,9 +11,8 @@ const Home = () => {
 
   return (
     <>
-   
-      <div className="container px-4 pt-36">
-      
+      <div className="container px-4 pt-40">
+        <Title title={'AssetAura | Home'} />
         {/* for without login user */}
         {role === undefined && (
           <>

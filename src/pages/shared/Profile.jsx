@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { AiOutlineMail } from 'react-icons/ai';
 import { CiEdit } from 'react-icons/ci';
 import LoadingSpinner from '../../components/LoadingSpinner/LoadingSpinner';
+import Title from '../../components/Title/Title';
 import useAuth from '../../hooks/useAuth';
 export const Profile = () => {
   const { user, updateUserProfile, loading } = useAuth();
@@ -18,6 +19,7 @@ export const Profile = () => {
   if (loading) return <LoadingSpinner h={'80vh'} />;
   return (
     <div className="flex items-center justify-center pt-60">
+      <Title title={'AssetAura | Profile'} />
       <form
         onSubmit={handleProfileUpdate}
         className="mx-auto flex w-full max-w-2xl flex-col justify-center rounded py-10 shadow-profile-card dark:bg-gray-800 sm:px-12"

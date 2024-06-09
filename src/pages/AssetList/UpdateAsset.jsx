@@ -1,6 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
 import { useParams } from 'react-router-dom';
 import LoadingSpinner from '../../components/LoadingSpinner/LoadingSpinner';
+import Title from '../../components/Title/Title';
 import useAxiosSecure from '../../hooks/useAxiosSecure';
 import { errorAlert, successAlert } from '../../utils/alert';
 
@@ -46,6 +47,7 @@ const UpdateAsset = () => {
 
   return (
     <section className="pt-40">
+      <Title title={'AssetAura | Update Asset'} />
       <div className="mx-auto flex flex-col items-center justify-center px-6 py-8 lg:py-0">
         <div className="w-full rounded-lg bg-white shadow-form dark:border dark:border-gray-700 dark:bg-gray-800 sm:max-w-2xl md:mt-0 xl:p-0">
           <div className="space-y-4 p-6 sm:p-8 md:space-y-6">

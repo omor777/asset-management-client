@@ -2,6 +2,7 @@ import { useQuery } from '@tanstack/react-query';
 import { useState } from 'react';
 import { IoIosSearch } from 'react-icons/io';
 import LoadingSpinner from '../../../components/LoadingSpinner/LoadingSpinner';
+import Title from '../../../components/Title/Title';
 import useAuth from '../../../hooks/useAuth';
 import useAxiosSecure from '../../../hooks/useAxiosSecure';
 import { errorAlert, successAlert } from '../../../utils/alert';
@@ -93,6 +94,7 @@ const AllRequests = () => {
 
   return (
     <section className="container px-4 pb-14 pt-40">
+      <Title title={'AssetAura | All Requests'} />
       <div>
         <div>
           <form onSubmit={handleSearch}>

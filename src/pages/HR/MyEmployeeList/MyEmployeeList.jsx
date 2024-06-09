@@ -1,6 +1,7 @@
 import { useMutation, useQuery } from '@tanstack/react-query';
 import { useState } from 'react';
 import LoadingSpinner from '../../../components/LoadingSpinner/LoadingSpinner';
+import Title from '../../../components/Title/Title';
 import useAuth from '../../../hooks/useAuth';
 import useAxiosSecure from '../../../hooks/useAxiosSecure';
 import { errorAlert, successAlert } from '../../../utils/alert';
@@ -75,6 +76,7 @@ const MyEmployeeList = () => {
   if (isPending || loading) return <LoadingSpinner h={'90vh'} />;
   return (
     <div className="container pt-40">
+      <Title title={'AssetAura | My Employee List'} />
       <section>
         <div className="flex flex-col">
           <div className="overflow-x-auto">

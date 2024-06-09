@@ -4,6 +4,7 @@ import { IoIosSearch } from 'react-icons/io';
 import { Link } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import LoadingSpinner from '../../components/LoadingSpinner/LoadingSpinner';
+import Title from '../../components/Title/Title';
 import useAuth from '../../hooks/useAuth';
 import useAxiosSecure from '../../hooks/useAxiosSecure';
 import { errorAlert, successAlert } from '../../utils/alert';
@@ -117,6 +118,7 @@ const AssetList = () => {
 
   return (
     <section className="container px-4 pt-40">
+      <Title title={'AssetAura | Asset List'} />
       {/* header */}
       <div className="flex items-center justify-between">
         <div>

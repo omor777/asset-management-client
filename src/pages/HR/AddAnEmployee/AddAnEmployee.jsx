@@ -2,6 +2,7 @@ import { useMutation, useQuery } from '@tanstack/react-query';
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import LoadingSpinner from '../../../components/LoadingSpinner/LoadingSpinner';
+import Title from '../../../components/Title/Title';
 import useAxiosSecure from '../../../hooks/useAxiosSecure';
 import useLoggedInUser from '../../../hooks/useLoggedInUser';
 import { errorAlert, successAlert } from '../../../utils/alert';
@@ -164,6 +165,7 @@ const AddAnEmployee = () => {
 
   return (
     <div className="container px-4 pt-40">
+      <Title title={'AssetAura | Add an Employee'} />
       <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
         <div className="flex h-[13.75rem] flex-col items-center justify-center gap-4 rounded-md bg-emerald-500 shadow-md">
           <h1 className="text-4xl font-bold text-white">Total Employee</h1>
