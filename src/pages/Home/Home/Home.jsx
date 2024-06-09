@@ -1,4 +1,5 @@
 import useRoll from '../../../hooks/useRoll';
+import EmployeeHome from '../../Employee/Home/EmployeeHome';
 import HRHome from '../../HR/HRHome/HRHome';
 import AboutSection from '../AboutSection/AboutSection';
 import Banner from '../Banner/Banner';
@@ -31,6 +32,7 @@ const Home = () => {
         </>
       )}
       {/* For employee */}
+      {role === 'employee' && <EmployeeHome />}
 
       {/* for hr manager */}
       {role === 'HR' && <HRHome />}
