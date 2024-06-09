@@ -11,7 +11,7 @@ const AddAnEmployee = () => {
   const [loggedInUser, isPending, refetch] = useLoggedInUser();
   const [teamMembers, setTeamMembers] = useState([]);
 
-  const [itemsPerPage] = useState(20);
+  const [itemsPerPage] = useState(10);
   const [currentPage, setCurrentPage] = useState(1);
 
   const {
