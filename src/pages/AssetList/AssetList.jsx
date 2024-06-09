@@ -15,19 +15,37 @@ const AssetList = () => {
   const [filter, setFilter] = useState('');
   const [sort, setSort] = useState('');
   const [search, setSearch] = useState('');
-  const {
-    data: assets = [],
-    isPending,
-    refetch,
-  } = useQuery({
-    queryKey: ['asset-list', filter, sort, search, user?.email],
+  const [itemsPerPage] = useState(10);
+  const [currentPage, setCurrentPage] = useState(1);
+  const { data, isPending, refetch } = useQuery({
+    queryKey: [
+      'asset-list',
+      filter,
+      currentPage,
+      itemsPerPage,
+      sort,
+      search,
+      user?.email,
+    ],
     queryFn: async () => {
       const { data } = await axiosSecure(
-        `/assets/hr/${user?.email}?filter=${filter}&sort=${sort}&search=${search}`,
+        `/assets/hr/${user?.email}?filter=${filter}&sort=${sort}&search=${search}&page=${currentPage}&size=${itemsPerPage}`,
       );
       return data;
     },
   });
+
+  const assets = data?.assets;
+  const count = data?.count;
+
+  const totalPages = Math.ceil(count / itemsPerPage);
+  let pages;
+  if (!isPending) {
+    pages = [...Array(totalPages).keys()].map((page) => page + 1);
+  }
+
+  // const totalPages = Math.ceil(assets.length / itemsPerPage);
+  // const pages = [...Array(totalPages).keys()].map((p) => p + 1);
 
   // handle product delete
   const { mutateAsync } = useMutation({
@@ -80,6 +98,22 @@ const AssetList = () => {
     setSearch('');
     setFilter('');
     setSort(e.target.value);
+  };
+
+  const handlePagination = (page) => {
+    setCurrentPage(page);
+  };
+
+  const handlePrevButton = () => {
+    if (currentPage > 1) {
+      setCurrentPage(currentPage - 1);
+    }
+  };
+
+  const handleNextButton = () => {
+    if (currentPage < pages.length) {
+      setCurrentPage(currentPage + 1);
+    }
   };
 
   if (isPending) return <LoadingSpinner h={'50vh'} />;
@@ -268,6 +302,72 @@ const AssetList = () => {
         </div>
       </div>
       {/* pagination */}
+      <div className="mt-6 flex justify-end">
+        <nav aria-label="Page navigation example">
+          <ul className="flex h-8 items-center -space-x-px text-sm">
+            <li>
+              <button
+                onClick={handlePrevButton}
+                className="ms-0 flex h-8 items-center justify-center rounded-s-lg border border-e-0 border-gray-300 bg-white px-3 leading-tight text-gray-500 hover:bg-gray-100 hover:text-gray-700 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
+              >
+                <span className="sr-only">Previous</span>
+                <svg
+                  className="h-2.5 w-2.5 rtl:rotate-180"
+                  aria-hidden="true"
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 6 10"
+                >
+                  <path
+                    stroke="currentColor"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2"
+                    d="M5 1 1 5l4 4"
+                  />
+                </svg>
+              </button>
+            </li>
+
+            {pages?.map((page) => {
+              return (
+                <li key={page}>
+                  <button
+                    onClick={() => handlePagination(page)}
+                    className={`flex h-8 items-center justify-center border px-3 leading-tight ${currentPage === page ? 'border-blue-500 bg-blue-500 text-white' : 'border-gray-300 bg-white text-gray-500 hover:bg-gray-100 hover:text-gray-700 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white'}`}
+                  >
+                    {page}
+                  </button>
+                </li>
+              );
+            })}
+
+            <li>
+              <button
+                onClick={handleNextButton}
+                className={`flex h-8 items-center justify-center rounded-e-lg border border-gray-300 bg-white px-3 leading-tight text-gray-500 hover:bg-gray-100 hover:text-gray-700 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white`}
+              >
+                <span className="sr-only">Next</span>
+                <svg
+                  className="h-2.5 w-2.5 rtl:rotate-180"
+                  aria-hidden="true"
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 6 10"
+                >
+                  <path
+                    stroke="currentColor"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2"
+                    d="m1 9 4-4-4-4"
+                  />
+                </svg>
+              </button>
+            </li>
+          </ul>
+        </nav>
+      </div>
     </section>
   );
 };
