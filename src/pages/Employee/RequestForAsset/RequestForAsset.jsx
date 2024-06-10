@@ -8,6 +8,7 @@ import Title from '../../../components/Title/Title';
 import useAuth from '../../../hooks/useAuth';
 import useAxiosSecure from '../../../hooks/useAxiosSecure';
 import { errorAlert, successAlert, warningAlert } from '../../../utils/alert';
+import useAlert from '../../../hooks/useAlert';
 
 const RequestForAsset = () => {
   const { user } = useAuth();
@@ -18,6 +19,8 @@ const RequestForAsset = () => {
   const [search, setSearch] = useState('');
   const [itemsPerPage] = useState(10);
   const [currentPage, setCurrentPage] = useState(1);
+
+  const [isJoin] = useAlert();
 
   const { data, isPending, refetch } = useQuery({
     queryKey: ['request-assets', search, filter, currentPage, itemsPerPage],
@@ -50,6 +53,7 @@ const RequestForAsset = () => {
   });
 
   const handleRequest = async (data) => {
+  if(isJoin === false) return warningAlert('Please contact with your HR!')
     const assetData = {
       product_name: reqAsset?.product_name,
       product_type: reqAsset?.product_type,

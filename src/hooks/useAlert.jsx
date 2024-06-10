@@ -1,13 +1,11 @@
 import { useQuery } from '@tanstack/react-query';
-import { useState } from 'react';
 import useAuth from './useAuth';
 import useAxiosSecure from './useAxiosSecure';
 
 const useAlert = () => {
   const { user } = useAuth();
-  const [showModal, setShowModal] = useState(false);
   const axiosSecure = useAxiosSecure();
-  const { data: isJoin, isPending } = useQuery({
+  const { data: isJoin, isLoading } = useQuery({
     queryKey: ['isJoin', user?.email],
     queryFn: async () => {
       const { data } = await axiosSecure(`/employee/${user?.email}`);
@@ -15,7 +13,7 @@ const useAlert = () => {
     },
   });
 
-  return [showModal, setShowModal, isJoin, isPending];
+  return [isJoin, isLoading];
 };
 
 export default useAlert;

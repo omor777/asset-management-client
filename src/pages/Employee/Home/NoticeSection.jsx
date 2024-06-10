@@ -1,4 +1,6 @@
+import EmployeeMessage from '../../../components/EmployeeMessage/EmployeeMessage';
 import SectionTitle from '../../../components/SectionTitle/SectionTitle';
+import useAlert from '../../../hooks/useAlert';
 
 const notices = [
   {
@@ -21,29 +23,34 @@ const notices = [
   },
 ];
 const NoticeSection = () => {
+  const [isJoin] = useAlert();
   return (
     <div>
       <SectionTitle title={'Important Notices'} />
-      <div className="mt-10 grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
-        {notices.map((notice, index) => (
-          <div
-            key={index}
-            className="cursor-pointer overflow-hidden rounded-lg bg-white shadow-md transition duration-300 hover:shadow-xl dark:bg-gray-900"
-          >
-            <div className="p-4">
-              <h3 className="mb-2 text-xl font-semibold text-gray-800 dark:text-gray-100">
-                {notice.title}
-              </h3>
-              <p className="mb-2 text-sm text-gray-600 dark:text-gray-300">
-                {notice.date}
-              </p>
-              <p className="text-sm text-gray-700 dark:text-gray-300">
-                {notice.description}
-              </p>
+      {isJoin === false ? (
+        <EmployeeMessage />
+      ) : (
+        <div className="mt-10 grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
+          {notices.map((notice, index) => (
+            <div
+              key={index}
+              className="cursor-pointer overflow-hidden rounded-lg bg-white shadow-md transition duration-300 hover:shadow-xl dark:bg-gray-900"
+            >
+              <div className="p-4">
+                <h3 className="mb-2 text-xl font-semibold text-gray-800 dark:text-gray-100">
+                  {notice.title}
+                </h3>
+                <p className="mb-2 text-sm text-gray-600 dark:text-gray-300">
+                  {notice.date}
+                </p>
+                <p className="text-sm text-gray-700 dark:text-gray-300">
+                  {notice.description}
+                </p>
+              </div>
             </div>
-          </div>
-        ))}
-      </div>
+          ))}
+        </div>
+      )}
     </div>
   );
 };

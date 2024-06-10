@@ -58,14 +58,12 @@ const Navbar = () => {
           {role === 'HR' ? (
             <img
               src={loggedInUser && loggedInUser?.company_logo}
-              className="size-11 rounded-full object-cover"
-              alt="Flowbite Logo"
+              className="size-14 rounded-full border-4 border-blue-800 object-cover dark:border-blue-100"
             />
           ) : (
             <img
               src={(companyData && companyData?.hr_info?.company_logo) || logo1}
-              className="size-11 rounded-full object-cover"
-              alt="Flowbite Logo"
+              className="size-14 rounded-full border-4 border-gray-800 object-cover dark:border-blue-500"
             />
           )}
           {/* <span className="self-center whitespace-nowrap text-2xl font-semibold dark:text-white">
