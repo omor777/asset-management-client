@@ -1,6 +1,8 @@
-const GithubButton = () => {
+import PropTypes from 'prop-types';
+const GithubButton = ({ onClick }) => {
   return (
     <button
+      onClick={onClick}
       type="button"
       className="inline-flex w-full items-center justify-center rounded bg-neutral-800 px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-neutral-800/90 focus:outline-none focus:ring-4 focus:ring-[#24292F]/50 dark:bg-gray-700 dark:hover:bg-slate-700/80 dark:focus:ring-gray-500"
     >
@@ -20,6 +22,10 @@ const GithubButton = () => {
       Sign in with Github
     </button>
   );
+};
+
+GithubButton.propTypes = {
+  onClick: PropTypes.func,
 };
 
 export default GithubButton;

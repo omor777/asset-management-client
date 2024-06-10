@@ -1,4 +1,3 @@
-import React from 'react';
 import { useForm } from 'react-hook-form';
 import { useLocation, useNavigate } from 'react-router-dom';
 import GithubButton from '../../components/SocialBtn/GithubButton';
@@ -8,7 +7,7 @@ import useAxiosSecure from '../../hooks/useAxiosSecure';
 import { errorAlert, successAlert } from '../../utils/alert';
 
 const Login = () => {
-  const { loginUser, googleLogin } = useAuth();
+  const { loginUser, googleLogin, githubLogin } = useAuth();
   const navigate = useNavigate();
   const { register, handleSubmit } = useForm();
   const location = useLocation();
@@ -51,9 +50,32 @@ const Login = () => {
       console.log(error);
     }
   };
+
+  const handleGithubLogin = async () => {
+    try {
+      const { user } = await githubLogin();
+      successAlert('Login successful');
+
+      const employeeData = {
+        name: user?.displayName,
+        email: user?.email,
+        image: user?.photoURL,
+        role: 'employee',
+        isJoin: false,
+      };
+
+      // added user info to the db
+      await axiosSecure.post('/employees', employeeData);
+
+      navigate(form);
+    } catch (error) {
+      errorAlert(error.message);
+      console.log(error);
+    }
+  };
   return (
     <section className="mb-24 pt-40">
-      <div className="flex flex-col items-center justify-center ">
+      <div className="flex flex-col items-center justify-center">
         <div className="w-full rounded-md bg-white shadow-form dark:border dark:border-gray-700 dark:bg-gray-900 sm:max-w-2xl md:mt-0 xl:p-0">
           <div className="space-y-4 p-6 sm:p-8 md:space-y-8">
             <form
@@ -113,7 +135,7 @@ const Login = () => {
 
             <div className="space-y-4">
               <GoogleButton onClick={handleGoogleLogin} />
-              <GithubButton />
+              <GithubButton onClick={handleGithubLogin} />
             </div>
           </div>
         </div>

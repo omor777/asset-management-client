@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 const GoogleButton = ({ onClick }) => {
   return (
     <button
@@ -21,6 +22,10 @@ const GoogleButton = ({ onClick }) => {
       Sign in with Google
     </button>
   );
+};
+
+GoogleButton.propTypes = {
+  onClick: PropTypes.func,
 };
 
 export default GoogleButton;

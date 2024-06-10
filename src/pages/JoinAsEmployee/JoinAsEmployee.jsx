@@ -15,7 +15,7 @@ import { imageUpload } from '../../utils/api';
 import './style.css';
 
 const JoinAsEmployee = () => {
-  const { createUser, googleLogin } = useAuth();
+  const { createUser, googleLogin, githubLogin } = useAuth();
   const navigate = useNavigate();
   const [startDate, setStartDate] = useState(new Date());
   const axiosSecure = useAxiosSecure();
@@ -90,6 +90,32 @@ const JoinAsEmployee = () => {
     }
   };
 
+  const handleGithubLogin = async () => {
+    try {
+      const { user } = await githubLogin();
+      successAlert('Sing in successful');
+
+      const employeeData = {
+        name: user?.displayName,
+        email: user?.email,
+        image: user?.photoURL,
+        role: 'employee',
+        isJoin: false,
+      };
+
+      // added user info to the db
+      const { data } = await axiosSecure.post('/employees', employeeData);
+
+      console.log(data);
+
+      console.table(employeeData);
+      navigate('/');
+    } catch (error) {
+      errorAlert(error.message);
+      console.log(error);
+    }
+  };
+
   return (
     <section className="pb-24 pt-40">
       <Title title={'AssetAura | Join as Employee'} />
@@ -98,7 +124,7 @@ const JoinAsEmployee = () => {
           <div className="space-y-4 p-6 sm:p-8 md:space-y-6">
             <div className="space-y-4">
               <GoogleButton onClick={handleGoogleLogin} />
-              <GithubButton />
+              <GithubButton onClick={handleGithubLogin} />
             </div>
 
             <div className="mt-4 flex items-center justify-between">
