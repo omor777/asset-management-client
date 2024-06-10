@@ -17,6 +17,7 @@ import Payment from '../pages/Payment/Payment';
 import { Profile } from '../pages/shared/Profile';
 import EmployeeRoute from './EmployeeRoute';
 import HrRoute from './HrRoute';
+import PaymentRoute from './PaymentRoute';
 import PrivateRoute from './PrivateRoute';
 
 const router = createBrowserRouter([
@@ -72,7 +73,9 @@ const router = createBrowserRouter([
         element: (
           <PrivateRoute>
             <HrRoute>
-              <AddAsset />
+              <PaymentRoute>
+                <AddAsset />
+              </PaymentRoute>
             </HrRoute>
           </PrivateRoute>
         ),
@@ -82,7 +85,9 @@ const router = createBrowserRouter([
         element: (
           <PrivateRoute>
             <HrRoute>
-              <AssetList />
+              <PaymentRoute>
+                <AssetList />
+              </PaymentRoute>
             </HrRoute>
           </PrivateRoute>
         ),
@@ -102,7 +107,9 @@ const router = createBrowserRouter([
         element: (
           <PrivateRoute>
             <HrRoute>
-              <AllRequests />
+              <PaymentRoute>
+                <AllRequests />
+              </PaymentRoute>
             </HrRoute>
           </PrivateRoute>
         ),
@@ -112,7 +119,9 @@ const router = createBrowserRouter([
         element: (
           <PrivateRoute>
             <HrRoute>
-              <AddAnEmployee />
+              <PaymentRoute>
+                <AddAnEmployee />
+              </PaymentRoute>
             </HrRoute>
           </PrivateRoute>
         ),
@@ -122,7 +131,9 @@ const router = createBrowserRouter([
         element: (
           <PrivateRoute>
             <HrRoute>
-              <MyEmployeeList />
+              <PaymentRoute>
+                <MyEmployeeList />
+              </PaymentRoute>
             </HrRoute>
           </PrivateRoute>
         ),

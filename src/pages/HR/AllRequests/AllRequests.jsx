@@ -93,7 +93,7 @@ const AllRequests = () => {
   if (isPending) return <LoadingSpinner h={'90vh'} />;
 
   return (
-    <section className="container px-4 pb-14 pt-40">
+    <section className="container mb-24 pt-40">
       <Title title={'AssetAura | All Requests'} />
       <div>
         <div>

@@ -117,10 +117,10 @@ const AssetList = () => {
   if (isPending) return <LoadingSpinner h={'50vh'} />;
 
   return (
-    <section className="container px-4 pt-40">
+    <section className="container mb-24 pt-40">
       <Title title={'AssetAura | Asset List'} />
       {/* header */}
-      <div className="flex items-center justify-between">
+      <div className="flex flex-wrap items-center justify-between gap-y-4">
         <div>
           <select
             onChange={handleFilter}

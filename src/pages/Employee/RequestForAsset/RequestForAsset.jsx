@@ -127,7 +127,7 @@ const RequestForAsset = () => {
   if (isPending) return <LoadingSpinner h={'50vh'} />;
 
   return (
-    <section className="container mx-auto px-4 pt-40 md:px-0">
+    <section className="container mx-auto mb-24 pt-40">
       <Title title={'AssetAura | Request for an Asset'} />
       <div className="flex items-center justify-between">
         <div>

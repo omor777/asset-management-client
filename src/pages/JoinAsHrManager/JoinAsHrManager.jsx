@@ -69,7 +69,7 @@ const JoinAsHrManager = () => {
         role: 'HR',
       };
 
-      console.log(hrData);
+      // console.log(hrData);
       // sing up user
       await createUser(email, password);
 
@@ -89,7 +89,7 @@ const JoinAsHrManager = () => {
   };
 
   return (
-    <section className="container pt-40">
+    <section className="container mb-24 pt-40">
       <Title title={'AssetAura | Join as HR'} />
 
       <div className="mx-auto flex flex-col items-center justify-center">

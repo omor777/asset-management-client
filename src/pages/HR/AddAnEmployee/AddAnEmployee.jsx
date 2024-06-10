@@ -5,7 +5,7 @@ import LoadingSpinner from '../../../components/LoadingSpinner/LoadingSpinner';
 import Title from '../../../components/Title/Title';
 import useAxiosSecure from '../../../hooks/useAxiosSecure';
 import useLoggedInUser from '../../../hooks/useLoggedInUser';
-import { errorAlert, successAlert } from '../../../utils/alert';
+import { errorAlert, successAlert, warningAlert } from '../../../utils/alert';
 
 const AddAnEmployee = () => {
   const axiosSecure = useAxiosSecure();
@@ -54,6 +54,9 @@ const AddAnEmployee = () => {
   });
 
   const handleAddToTeam = async (employee) => {
+    if (loggedInUser?.employee_count >= loggedInUser?.member_limit)
+      return warningAlert('Please increase your memeber limit');
+
     const teamMemberData = {
       employeeId: employee._id,
       teamId: loggedInUser._id,
@@ -113,6 +116,9 @@ const AddAnEmployee = () => {
 
   // handle add multiple team member
   const handleAddMultipleTeamMember = async () => {
+    if (loggedInUser?.employee_count >= loggedInUser?.member_limit)
+      return warningAlert('Please increase your memeber limit');
+
     const teamsData = teamMembers.map((employee) => {
       return {
         employeeId: employee._id,
@@ -166,7 +172,7 @@ const AddAnEmployee = () => {
   if (loading || isPending) return <LoadingSpinner h={'50vh'} />;
 
   return (
-    <div className="container px-4 pt-40">
+    <div className="container mb-24 pt-40">
       <Title title={'AssetAura | Add an Employee'} />
       <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
         <div className="flex h-[13.75rem] flex-col items-center justify-center gap-4 rounded-md bg-emerald-500 shadow-md">

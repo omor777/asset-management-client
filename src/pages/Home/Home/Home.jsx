@@ -1,4 +1,5 @@
 import Title from '../../../components/Title/Title';
+import usePayment from '../../../hooks/usePayment';
 import useRoll from '../../../hooks/useRoll';
 import EmployeeHome from '../../Employee/Home/EmployeeHome';
 import HRHome from '../../HR/HRHome/HRHome';
@@ -9,9 +10,11 @@ import Packages from '../Packages/Packages';
 const Home = () => {
   const [role] = useRoll();
 
+  usePayment();
+
   return (
     <>
-      <div className="container px-4 pt-40">
+      <div className="container pt-40">
         <Title title={'AssetAura | Home'} />
         {/* for without login user */}
         {role === undefined && (

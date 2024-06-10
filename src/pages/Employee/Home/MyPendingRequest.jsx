@@ -56,7 +56,7 @@ const MyPendingRequest = () => {
   if (isPending) return <LoadingSpinner h={'50vh'} />;
 
   return (
-    <section className="container px-4 lg:px-0">
+    <section className="container">
       <SectionTitle title={'My Pending Request Items'} />
       <div className="mt-6 flex flex-col">
         <div className="overflow-x-auto shadow-md">

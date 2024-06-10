@@ -18,7 +18,7 @@ export const Profile = () => {
 
   if (loading) return <LoadingSpinner h={'80vh'} />;
   return (
-    <div className="flex items-center justify-center pt-60">
+    <div className="mb-24 flex items-center justify-center pt-40">
       <Title title={'AssetAura | Profile'} />
       <form
         onSubmit={handleProfileUpdate}

@@ -8,10 +8,10 @@ const EmployeeHome = () => {
       <div>
         <NoticeSection />
       </div>
-      <div className="mt-28">
+      <div className="mt-24">
         <MyPendingRequest />
       </div>
-      <div className="my-28">
+      <div className="my-24">
         <MonthlyRequest />
       </div>
       {/* <Modal /> */}

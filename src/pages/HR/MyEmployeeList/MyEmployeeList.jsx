@@ -75,7 +75,7 @@ const MyEmployeeList = () => {
 
   if (isPending || loading) return <LoadingSpinner h={'90vh'} />;
   return (
-    <div className="container pt-40">
+    <div className="container pt-40 mb-24">
       <Title title={'AssetAura | My Employee List'} />
       <section>
         <div className="flex flex-col">

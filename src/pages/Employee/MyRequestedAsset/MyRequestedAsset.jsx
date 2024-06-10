@@ -131,7 +131,7 @@ const MyRequestedAsset = () => {
   return (
     <>
       <Title title={'AssetAura | My Requested Assets'} />
-      <section className="container px-4 pt-40">
+      <section className="container mb-24 pt-40">
         <div className="flex items-center justify-between">
           <div>
             <form onSubmit={handleSearch} className="mx-auto max-w-md">

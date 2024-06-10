@@ -7,13 +7,13 @@ import TopRequestedItem from './TopRequestedItem';
 const HRHome = () => {
   return (
     <div className="space-y-24">
-      <PieChartSection />
+      <BestPractice />
       <PendingRequests />
       <TopRequestedItem />
       <LimitedStockItem />
-      <RecognitionWall />
+      <PieChartSection />
       <div className="pb-24">
-        <BestPractice />
+        <RecognitionWall />
       </div>
     </div>
   );

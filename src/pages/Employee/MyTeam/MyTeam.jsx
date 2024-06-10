@@ -51,7 +51,7 @@ const MyTeam = () => {
   return (
     <>
       <Title title={'AssetAura | My Team'} />
-      <section className="container pt-40">
+      <section className="container mb-24 pt-40">
         <div className="flex flex-col">
           <div className="overflow-x-auto shadow-md">
             <div className="inline-block min-w-full align-middle">
