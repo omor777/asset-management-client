@@ -5,14 +5,19 @@ import CommonNavItem from '../../../components/NavItem/CommonNavItem';
 import EmployeeNavItem from '../../../components/NavItem/EmployeeNavItem/EmployeeNavItem';
 import HrNavItem from '../../../components/NavItem/HrNavItem/HrNavItem';
 import useAuth from '../../../hooks/useAuth';
+import useCompanyInfo from '../../../hooks/useCompanyInfo';
 import useRoll from '../../../hooks/useRoll';
+// import logo1 from '../../../../public/logo1.jpg'
+import logo1 from '../../../../public/logo1.jpg';
+import useLoggedInUser from '../../../hooks/useLoggedInUser';
 const Navbar = () => {
   const { user, logoutUser } = useAuth();
   const navigate = useNavigate();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const mobileMenuRef = useRef(null);
   const [theme, setTheme] = useState(true);
-
+  const [companyData] = useCompanyInfo();
+  const [loggedInUser] = useLoggedInUser();
   const [role] = useRoll();
 
   useEffect(() => {
@@ -50,14 +55,22 @@ const Navbar = () => {
           to={'/'}
           className="flex items-center space-x-3 rtl:space-x-reverse"
         >
-          <img
-            src="https://flowbite.com/docs/images/logo.svg"
-            className="h-8"
-            alt="Flowbite Logo"
-          />
-          <span className="self-center whitespace-nowrap text-2xl font-semibold dark:text-white">
+          {role === 'HR' ? (
+            <img
+              src={loggedInUser && loggedInUser?.company_logo}
+              className="size-11 rounded-full object-cover"
+              alt="Flowbite Logo"
+            />
+          ) : (
+            <img
+              src={(companyData && companyData?.hr_info?.company_logo) || logo1}
+              className="size-11 rounded-full object-cover"
+              alt="Flowbite Logo"
+            />
+          )}
+          {/* <span className="self-center whitespace-nowrap text-2xl font-semibold dark:text-white">
             AssetAura
-          </span>
+          </span> */}
         </Link>
         <div className="flex space-x-3 lg:order-2 lg:space-x-0 rtl:space-x-reverse">
           <div className="flex items-center gap-5">

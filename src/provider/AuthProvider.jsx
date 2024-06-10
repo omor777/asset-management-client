@@ -9,10 +9,10 @@ import {
   signOut,
   updateProfile,
 } from 'firebase/auth';
+import PropTypes from 'prop-types';
 import { createContext, useEffect, useState } from 'react';
 import { app } from '../firebase/firebase.config';
 import useAxiosCommon from '../hooks/useAxiosCommon';
-
 const googleProvider = new GoogleAuthProvider();
 const githubProvider = new GithubAuthProvider();
 
@@ -23,6 +23,7 @@ const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
   const axiosCommon = useAxiosCommon();
+
   const createUser = (email, password) => {
     setLoading(true);
 
@@ -48,7 +49,6 @@ const AuthProvider = ({ children }) => {
     return signOut(auth);
   };
 
-
   const updateUserProfile = (name, photoUrl) => {
     return updateProfile(auth.currentUser, {
       displayName: name,
@@ -71,7 +71,7 @@ const AuthProvider = ({ children }) => {
         setLoading(false);
       } else {
         //
-        localStorage.removeItem('access-token')
+        localStorage.removeItem('access-token');
         setLoading(false);
       }
     });
@@ -93,6 +93,10 @@ const AuthProvider = ({ children }) => {
   return (
     <AuthContext.Provider value={authInfo}>{children}</AuthContext.Provider>
   );
+};
+
+AuthProvider.propTypes = {
+  children: PropTypes.element,
 };
 
 export default AuthProvider;

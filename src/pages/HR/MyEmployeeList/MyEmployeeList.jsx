@@ -79,35 +79,35 @@ const MyEmployeeList = () => {
       <Title title={'AssetAura | My Employee List'} />
       <section>
         <div className="flex flex-col">
-          <div className="overflow-x-auto">
+          <div className="overflow-x-auto shadow-md">
             <div className="inline-block min-w-full align-middle">
-              <div className="overflow-hidden border border-gray-200 dark:border-gray-700 md:rounded-lg">
+              <div className="overflow-hidden rounded-md border border-gray-200 dark:border-gray-700">
                 <table className="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
                   <thead className="bg-gray-50 dark:bg-gray-800">
                     <tr>
                       <th
                         scope="col"
-                        className="py-3.5 pl-10 text-left text-sm font-normal text-gray-500 dark:text-gray-400 rtl:text-right"
+                        className="py-3.5 text-sm font-normal text-gray-500 dark:text-gray-400 rtl:text-right"
                       >
                         <span className="whitespace-nowrap">Member Image</span>
                       </th>
                       <th
                         scope="col"
-                        className="py-3.5 text-left text-sm font-normal text-gray-500 dark:text-gray-400 rtl:text-right"
+                        className="py-3.5 text-sm font-normal text-gray-500 dark:text-gray-400 rtl:text-right"
                       >
                         <span className="whitespace-nowrap">Member Name</span>
                       </th>
 
                       <th
                         scope="col"
-                        className="py-3.5 text-left text-sm font-normal text-gray-500 dark:text-gray-400 rtl:text-right"
+                        className="py-3.5 text-sm font-normal text-gray-500 dark:text-gray-400 rtl:text-right"
                       >
                         <span className="whitespace-nowrap">Member Type</span>
                       </th>
 
                       <th
                         scope="col"
-                        className="py-3.5 text-left text-sm font-normal text-gray-500 dark:text-gray-400 rtl:text-right"
+                        className="py-3.5 text-sm font-normal text-gray-500 dark:text-gray-400 rtl:text-right"
                       >
                         <span className="whitespace-nowrap">Action</span>
                       </th>
@@ -118,30 +118,33 @@ const MyEmployeeList = () => {
                       //   console.log(employee);
                       const { _id, employee_info } = employee ?? {};
                       return (
-                        <tr key={_id}>
-                          <td className="whitespace-nowrap py-4 text-sm font-medium text-gray-700">
+                        <tr
+                          className="transition-colors duration-200 hover:bg-gray-100 dark:hover:bg-gray-800"
+                          key={_id}
+                        >
+                          <td className="whitespace-nowrap py-4 text-center text-sm font-medium text-gray-700">
                             <span className="">
                               <img
-                                className="ml-14 size-14 rounded-full object-cover"
+                                className="mx-auto size-14 rounded-full object-cover"
                                 src={employee_info?.image}
                                 alt=""
                               />
                             </span>
                           </td>
-                          <td className="whitespace-nowrap py-4 text-sm font-medium text-gray-700">
+                          <td className="whitespace-nowrap py-4 text-center text-sm font-medium text-gray-700">
                             <span className="capitalize dark:text-gray-300">
                               {employee_info.name}
                             </span>
                           </td>
                           <td>
-                            <p className="w-max rounded-full bg-blue-100/60 px-4 py-1.5 text-sm capitalize text-blue-500 dark:bg-gray-800">
+                            <p className="mx-auto w-max rounded-full bg-purple-100/60 px-4 py-1.5 text-sm capitalize text-purple-500 dark:bg-gray-800">
                               <span>{employee_info.role}</span>
                             </p>
                           </td>
                           <td>
                             <button
                               onClick={() => mutateAsync(employee)}
-                              className="w-20 rounded bg-rose-500 py-1 text-sm font-medium text-white shadow-tableBtn transition-colors duration-200 hover:bg-rose-700"
+                              className="mx-auto block w-20 rounded bg-rose-500 py-1 text-sm font-medium text-white shadow-tableBtn transition-colors duration-200 hover:bg-rose-700"
                             >
                               Remove
                             </button>

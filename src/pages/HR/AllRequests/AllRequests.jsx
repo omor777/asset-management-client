@@ -124,55 +124,56 @@ const AllRequests = () => {
         </div>
       </div>
       <div className="mt-5 flex flex-col">
-        <div className="overflow-x-auto">
-          <div className="inline-block min-w-full align-middle">
+        <div className="overflow-x-auto shadow-md">
+          <div className="min-w-full align-middle">
             <div className="overflow-hidden border border-gray-200 dark:border-gray-700 md:rounded-lg">
               <table className="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
                 <thead className="bg-gray-50 dark:bg-gray-800">
                   <tr>
                     <th
                       scope="col"
-                      className="py-3.5 pl-6 text-left text-sm font-normal text-gray-500 dark:text-gray-400 rtl:text-right"
+                      className="py-3.5 text-sm font-normal text-gray-500 dark:text-gray-400 rtl:text-right"
                     >
                       <span className="whitespace-nowrap">Asset Name</span>
                     </th>
                     <th
                       scope="col"
-                      className="py-3.5 text-left text-sm font-normal text-gray-500 dark:text-gray-400 rtl:text-right"
+                      className="py-3.5 text-sm font-normal text-gray-500 dark:text-gray-400 rtl:text-right"
                     >
                       <span className="whitespace-nowrap">Asset Type</span>
                     </th>
                     <th
                       scope="col"
-                      className="py-3.5 text-left text-sm font-normal text-gray-500 dark:text-gray-400 rtl:text-right"
+                      className="py-3.5 text-sm font-normal text-gray-500 dark:text-gray-400 rtl:text-right"
                     >
                       <span className="whitespace-nowrap">Requester Name</span>
                     </th>
                     <th
                       scope="col"
-                      className="py-3.5 text-left text-sm font-normal text-gray-500 dark:text-gray-400 rtl:text-right"
+                      className="py-3.5 text-sm font-normal text-gray-500 dark:text-gray-400 rtl:text-right"
                     >
                       <span className="whitespace-nowrap">Requester Email</span>
                     </th>
 
                     <th
                       scope="col"
-                      className="py-3.5 text-left text-sm font-normal text-gray-500 dark:text-gray-400 rtl:text-right"
+                      className="py-3.5 text-sm font-normal text-gray-500 dark:text-gray-400 rtl:text-right"
                     >
                       <span className="whitespace-nowrap">Notes</span>
                     </th>
                     <th
                       scope="col"
-                      className="py-3.5 text-left text-sm font-normal text-gray-500 dark:text-gray-400 rtl:text-right"
-                    >
-                      <span className="whitespace-nowrap">Status</span>
-                    </th>
-                    <th
-                      scope="col"
-                      className="py-3.5 text-left text-sm font-normal text-gray-500 dark:text-gray-400 rtl:text-right"
+                      className="py-3.5 text-sm font-normal text-gray-500 dark:text-gray-400 rtl:text-right"
                     >
                       <span className="whitespace-nowrap">Request Date</span>
                     </th>
+                    <th
+                      scope="col"
+                      className="py-3.5 text-sm font-normal text-gray-500 dark:text-gray-400 rtl:text-right"
+                    >
+                      <span className="whitespace-nowrap">Status</span>
+                    </th>
+
                     <th
                       scope="col"
                       className="py-3.5 text-center text-sm font-normal text-gray-500 dark:text-gray-400 rtl:text-right"
@@ -183,35 +184,44 @@ const AllRequests = () => {
                 </thead>
                 <tbody className="divide-y divide-gray-200 bg-white dark:divide-gray-700 dark:bg-gray-900">
                   {reqAssets?.map((asset) => (
-                    <tr key={asset?._id}>
-                      <td className="whitespace-nowrap py-4 pl-6 text-sm font-medium text-gray-700">
+                    <tr
+                      className="transition-colors duration-200 hover:bg-gray-100 dark:hover:bg-gray-800"
+                      key={asset?._id}
+                    >
+                      <td className="whitespace-nowrap py-4 text-center text-sm font-medium text-gray-700">
                         <span className="capitalize dark:text-gray-300">
                           {asset?.product_name}
                         </span>
                       </td>
-                      <td className="whitespace-nowrap py-4 text-sm font-medium text-gray-700">
+                      <td className="whitespace-nowrap py-4 text-center text-sm font-medium text-gray-700">
                         <span className="capitalize dark:text-gray-300">
                           {asset?.product_type}
                         </span>
                       </td>
-                      <td className="whitespace-nowrap p-4 text-sm font-medium text-gray-700">
+                      <td className="whitespace-nowrap p-4 text-center text-sm font-medium text-gray-700">
                         <span className="capitalize dark:text-gray-300">
                           {asset?.requester_info?.name}
                         </span>
                       </td>
-                      <td className="whitespace-nowrap py-4 text-sm font-medium text-gray-700">
+                      <td className="whitespace-nowrap py-4 text-center text-sm font-medium text-gray-700">
                         <span className="capitalize dark:text-gray-300">
                           {asset?.requester_info?.email}
                         </span>
                       </td>
 
-                      <td className="whitespace-nowrap py-4 text-sm font-medium text-gray-700">
+                      <td className="whitespace-nowrap py-4 text-center text-sm font-medium text-gray-700">
                         <span className="capitalize dark:text-gray-300">
                           {asset?.additional_notes}
                         </span>
                       </td>
 
-                      <td className="whitespace-nowrap text-sm font-medium text-gray-700">
+                      <td className="whitespace-nowrap py-4 text-center text-sm font-medium text-gray-700">
+                        <span className="capitalize dark:text-gray-300">
+                          {dateFormat(asset?.requested_date)}
+                        </span>
+                      </td>
+
+                      <td className="whitespace-nowrap text-center text-sm font-medium text-gray-700">
                         <div
                           className={`inline-flex items-center gap-x-2 rounded-full px-3 py-1 dark:bg-gray-800 ${asset?.status === 'pending' && 'bg-amber-100/60'} ${asset?.status === 'approve' && 'bg-emerald-100/60'} ${asset?.status === 'reject' && 'bg-rose-100/60'} ${asset?.status === 'return' && 'bg-purple-100/60'} ${asset?.status === 'cancel' && 'bg-rose-100/60'}`}
                         >
@@ -226,13 +236,8 @@ const AllRequests = () => {
                         </div>
                       </td>
 
-                      <td className="whitespace-nowrap py-4 text-sm font-medium text-gray-700">
-                        <span className="capitalize dark:text-gray-300">
-                          {dateFormat(asset?.requested_date)}
-                        </span>
-                      </td>
                       <td className="whitespace-nowrap py-4 text-sm">
-                        <div className="flex items-center gap-x-6">
+                        <div className="flex items-center justify-center gap-x-6">
                           <button
                             onClick={() => {
                               handleReject(asset?._id);

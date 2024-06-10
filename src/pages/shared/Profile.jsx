@@ -27,7 +27,7 @@ export const Profile = () => {
         <img
           src={user?.photoURL}
           alt=""
-          className="mx-auto aspect-square h-32 w-32 rounded-full dark:bg-gray-500"
+          className="mx-auto aspect-square h-32 w-32 rounded-full object-cover dark:bg-gray-500"
         />
         <div className="mb-3 mt-4 space-y-1">
           <div className="mb-2 flex items-center justify-center text-center text-2xl font-semibold text-gray-800 dark:text-gray-100 sm:text-3xl">

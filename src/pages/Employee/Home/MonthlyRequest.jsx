@@ -9,7 +9,7 @@ import { dateFormat } from '../../../utils/date';
 const MonthlyRequest = () => {
   const { user } = useAuth();
   const axiosSecure = useAxiosSecure();
-  const [itemsPerPage] = useState(2);
+  const [itemsPerPage] = useState(10);
   const [currentPage, setCurrentPage] = useState(1);
 
   const { data, isPending } = useQuery({
