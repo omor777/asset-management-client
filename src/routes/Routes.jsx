@@ -6,6 +6,7 @@ import UpdateAsset from '../pages/AssetList/UpdateAsset';
 import MyRequestedAsset from '../pages/Employee/MyRequestedAsset/MyRequestedAsset';
 import MyTeam from '../pages/Employee/MyTeam/MyTeam';
 import RequestForAsset from '../pages/Employee/RequestForAsset/RequestForAsset';
+import Error from '../pages/Error/Error';
 import AddAnEmployee from '../pages/HR/AddAnEmployee/AddAnEmployee';
 import AllRequests from '../pages/HR/AllRequests/AllRequests';
 import MyEmployeeList from '../pages/HR/MyEmployeeList/MyEmployeeList';
@@ -24,6 +25,7 @@ const router = createBrowserRouter([
   {
     path: '/',
     element: <Root />,
+    errorElement: <Error />,
     children: [
       {
         path: '/',

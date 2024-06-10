@@ -54,7 +54,7 @@ const JoinAsEmployee = () => {
         photoURL: image_url,
       });
 
-      successAlert('Sing up successful please login!');
+      successAlert('Sing up successful');
       navigate('/');
     } catch (error) {
       console.log(error);
