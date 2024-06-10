@@ -5,21 +5,21 @@ const tips = [
     content:
       'Encourage regular feedback, provide growth opportunities, and recognize achievements to keep employees engaged and motivated.',
     icon: '👍',
-    bgColor: 'bg-blue-300',
+    bgColor: 'bg-gray-50 dark:bg-gray-900',
   },
   {
     title: 'Effective Communication',
     content:
       'Promote clear and open communication channels within the team to ensure everyone is on the same page and issues are addressed promptly.',
     icon: '💬',
-    bgColor: 'bg-emerald-300',
+    bgColor: 'bg-gray-50 dark:bg-gray-900',
   },
   {
     title: 'Foster a Positive Work Culture',
     content:
       'Create a supportive and inclusive environment where employees feel valued and respected, enhancing overall job satisfaction.',
     icon: '🌟',
-    bgColor: 'bg-purple-300',
+    bgColor: 'bg-gray-50 dark:bg-gray-900',
   },
 ];
 const BestPractice = () => {
@@ -37,10 +37,10 @@ const BestPractice = () => {
                 {tip.icon}
               </div>
               <div className="w-full md:flex-1">
-                <h3 className="mb-3 font-semibold text-gray-800 md:text-2xl">
+                <h3 className="mb-3 font-semibold text-gray-800 dark:text-gray-100 md:text-2xl">
                   {tip.title}
                 </h3>
-                <p className="text-base leading-7 text-gray-700 md:text-lg">
+                <p className="text-base leading-7 text-gray-700 dark:text-gray-300 md:text-lg">
                   {tip.content}
                 </p>
               </div>

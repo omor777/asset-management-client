@@ -3,6 +3,7 @@ import { useState } from 'react';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import { useForm } from 'react-hook-form';
+import { ImSpinner9 } from 'react-icons/im';
 import { useNavigate } from 'react-router-dom';
 import GithubButton from '../../components/SocialBtn/GithubButton';
 import GoogleButton from '../../components/SocialBtn/GoogleButton';
@@ -18,6 +19,7 @@ const JoinAsEmployee = () => {
   const navigate = useNavigate();
   const [startDate, setStartDate] = useState(new Date());
   const axiosSecure = useAxiosSecure();
+  const [loading, setLoading] = useState(false);
   const { register, handleSubmit } = useForm({
     defaultValues: {
       name: '',
@@ -27,6 +29,7 @@ const JoinAsEmployee = () => {
   });
 
   const onSubmit = async (data) => {
+    setLoading(true);
     const { name, email, password, photo } = data;
 
     // console.log(data);
@@ -53,10 +56,11 @@ const JoinAsEmployee = () => {
         displayName: name,
         photoURL: image_url,
       });
-
+      setLoading(false);
       successAlert('Sing up successful');
       navigate('/');
     } catch (error) {
+      setLoading(false);
       console.log(error);
       errorAlert(error.message);
     }
@@ -185,10 +189,15 @@ const JoinAsEmployee = () => {
               </div>
 
               <button
+                disabled={loading}
                 type="submit"
-                className="w-full rounded bg-blue-700 px-5 py-2.5 text-sm font-medium text-white hover:bg-blue-800 focus:outline-none focus:ring-2 focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+                className={`mt-6 inline-flex w-full justify-center rounded bg-blue-700 px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-blue-800 focus:outline-none focus:ring-2 focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 ${loading ? 'cursor-not-allowed' : ''}`}
               >
-                Sing Up
+                {loading ? (
+                  <ImSpinner9 className="animate-spin text-xl" />
+                ) : (
+                  'Sing Up'
+                )}
               </button>
             </form>
           </div>

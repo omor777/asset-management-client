@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { FaBars, FaMoon } from 'react-icons/fa';
+import { MdWbSunny } from 'react-icons/md';
 import { Link, useNavigate } from 'react-router-dom';
 import CommonNavItem from '../../../components/NavItem/CommonNavItem';
 import EmployeeNavItem from '../../../components/NavItem/EmployeeNavItem/EmployeeNavItem';
@@ -10,15 +11,16 @@ import useRoll from '../../../hooks/useRoll';
 // import logo1 from '../../../../public/logo1.jpg'
 import logo1 from '../../../../public/logo1.jpg';
 import useLoggedInUser from '../../../hooks/useLoggedInUser';
+import { getThemeFromLs, setThemeToLs } from '../../../utils/theme';
 const Navbar = () => {
   const { user, logoutUser } = useAuth();
   const navigate = useNavigate();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const mobileMenuRef = useRef(null);
-  const [theme, setTheme] = useState(true);
   const [companyData] = useCompanyInfo();
   const [loggedInUser] = useLoggedInUser();
   const [role] = useRoll();
+  const [theme, setTheme] = useState('light');
 
   useEffect(() => {
     if (isMenuOpen) {
@@ -28,16 +30,38 @@ const Navbar = () => {
     }
   }, [isMenuOpen]);
 
-  const handleMenuToggle = () => {
-    setIsMenuOpen((prevMenu) => !prevMenu);
+  const handleTheme = () => {
+    const theme = getThemeFromLs();
+    if (theme === 'light') {
+      setThemeToLs('dark');
+      setTheme('dark');
+      document.documentElement.setAttribute('class', 'dark');
+    } else if (theme === 'dark') {
+      setTheme('light');
+      setThemeToLs('light');
+      document.documentElement.setAttribute('class', 'light');
+    } else {
+      setThemeToLs('dark');
+      setTheme('dark');
+      document.documentElement.setAttribute('class', 'dark');
+    }
   };
 
-  const handleThemeToggle = () => {
-    setTheme(!theme);
-    document.documentElement.setAttribute(
-      'class',
-      `${theme ? 'dark' : 'light'}`,
-    );
+  useEffect(() => {
+    setTheme(getThemeFromLs());
+
+    if (theme === 'dark') {
+      // document.body.classList.add('dark');
+      document.documentElement.setAttribute('class', 'dark');
+    } else if (theme === 'light') {
+      // document.body.classList.remove('dark');
+      setThemeToLs('light');
+      document.documentElement.setAttribute('class', 'light');
+    }
+  }, [theme]);
+
+  const handleMenuToggle = () => {
+    setIsMenuOpen((prevMenu) => !prevMenu);
   };
 
   const handleLogout = async () => {
@@ -72,8 +96,14 @@ const Navbar = () => {
         </Link>
         <div className="flex space-x-3 lg:order-2 lg:space-x-0 rtl:space-x-reverse">
           <div className="flex items-center gap-5">
-            <button onClick={handleThemeToggle}>
-              <FaMoon className="text-xl dark:text-gray-300" />
+            <button className="mr-4" onClick={handleTheme}>
+              {theme === 'light' ? (
+                <FaMoon className="text-3xl text-gray-800 dark:text-gray-300" />
+              ) : theme === 'dark' ? (
+                <MdWbSunny className="text-3xl text-gray-800 dark:text-gray-300" />
+              ) : (
+                <FaMoon className="text-3xl text-gray-800 dark:text-gray-300" />
+              )}
             </button>
             {user ? (
               <button
