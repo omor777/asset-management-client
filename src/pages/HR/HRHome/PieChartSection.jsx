@@ -47,10 +47,10 @@ const PieChartSection = () => {
   return (
     <div>
       <SectionTitle title={'Returnable vs Non-returnable Items'} />
-      <div className="mt-10 rounded-md border border-gray-50 p-8 shadow-md dark:border-gray-600 dark:bg-gray-900">
+      <div className="mt-10 rounded-md border border-gray-200 p-8 shadow-md dark:border-gray-600 dark:bg-gray-900">
         <div className="flex flex-col items-center justify-between lg:flex-row">
           <div className="mb-10 flex w-full justify-center lg:mb-0 lg:w-1/2">
-            <PieChart width={370} height={350}>
+            <PieChart width={300} height={350}>
               <Pie
                 data={data}
                 cx="50%"

@@ -5,7 +5,7 @@ const HrNavItem = () => {
     <>
       <NavItem label={'Home'} address={'/'} />
       <NavItem label={'Asset List'} address={'/asset-list'} />
-      <NavItem label={'Add Asset'} address={'/add-asset'} />
+      <NavItem label={'Add an Asset'} address={'/add-asset'} />
       <NavItem label={'All Requests'} address={'/all-requests'} />
       <NavItem label={'My Employee List'} address={'/my-employee-list'} />
       <NavItem label={'Add an Employee'} address={'/add-an-employee'} />

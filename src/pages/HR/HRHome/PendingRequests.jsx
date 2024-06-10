@@ -22,39 +22,39 @@ const PendingRequests = () => {
     <section className="container">
       <SectionTitle title={'Pending Request Items'} />
       <div className="mt-10 flex flex-col">
-        <div className="overflow-x-auto">
+        <div className="overflow-x-auto shadow-md">
           <div className="inline-block min-w-full align-middle">
-            <div className="overflow-hidden border border-gray-200 dark:border-gray-700 md:rounded-lg">
+            <div className="overflow-hidden border border-gray-200 dark:border-gray-700 rounded-md">
               <table className="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
                 <thead className="bg-gray-50 dark:bg-gray-800">
                   <tr>
                     <th
                       scope="col"
-                      className="py-3.5 pl-6 text-left text-sm font-normal text-gray-500 dark:text-gray-400 rtl:text-right"
+                      className="whitespace-nowrap px-2 py-3.5 text-sm font-normal text-gray-500 dark:text-gray-400 rtl:text-right"
                     >
                       <span>Product name</span>
                     </th>
                     <th
                       scope="col"
-                      className="py-3.5 text-left text-sm font-normal text-gray-500 dark:text-gray-400 rtl:text-right"
+                      className="whitespace-nowrap px-2 py-3.5 text-sm font-normal text-gray-500 dark:text-gray-400 rtl:text-right"
                     >
                       <span>Product type</span>
                     </th>
                     <th
                       scope="col"
-                      className="py-3.5 text-left text-sm font-normal text-gray-500 dark:text-gray-400 rtl:text-right"
+                      className="whitespace-nowrap px-2 py-3.5 text-sm font-normal text-gray-500 dark:text-gray-400 rtl:text-right"
                     >
                       <span>Requester name</span>
                     </th>
                     <th
                       scope="col"
-                      className="py-3.5 text-left text-sm font-normal text-gray-500 dark:text-gray-400 rtl:text-right"
+                      className="whitespace-nowrap px-2 py-3.5 text-sm font-normal text-gray-500 dark:text-gray-400 rtl:text-right"
                     >
                       <span>Requester email</span>
                     </th>
                     <th
                       scope="col"
-                      className="py-3.5 pl-5 text-left text-sm font-normal text-gray-500 dark:text-gray-400 rtl:text-right"
+                      className="whitespace-nowrap px-2 py-3.5 text-sm font-normal text-gray-500 dark:text-gray-400 rtl:text-right"
                     >
                       <span>Status</span>
                     </th>
@@ -64,24 +64,24 @@ const PendingRequests = () => {
                   {/* table row */}
                   {data?.map((item) => (
                     <tr key={item._id}>
-                      <td className="whitespace-nowrap py-4 pl-6 text-sm font-medium text-gray-700 dark:text-gray-200">
+                      <td className="whitespace-nowrap px-2 py-4 text-center text-sm font-medium text-gray-700 dark:text-gray-200">
                         <span className="capitalize">{item?.product_name}</span>
                       </td>
-                      <td className="whitespace-nowrap py-4 text-sm font-medium text-gray-700 dark:text-gray-200">
+                      <td className="whitespace-nowrap px-2 py-4 text-center text-sm font-medium text-gray-700 dark:text-gray-200">
                         <span className="capitalize">
                           {item?.requester_info?.name}
                         </span>
                       </td>
-                      <td className="whitespace-nowrap py-4 text-sm font-medium text-gray-700 dark:text-gray-200">
+                      <td className="whitespace-nowrap px-2 py-4 text-center text-sm font-medium text-gray-700 dark:text-gray-200">
                         <span className="capitalize">{item?.product_type}</span>
                       </td>
 
-                      <td className="whitespace-nowrap py-4 text-sm font-medium text-gray-700 dark:text-gray-200">
+                      <td className="whitespace-nowrap px-2 py-4 text-center text-sm font-medium text-gray-700 dark:text-gray-200">
                         <span className="capitalize">
                           {item?.requester_info?.email}
                         </span>
                       </td>
-                      <td>
+                      <td className="whitespace-nowrap px-2 text-center">
                         <div
                           className={`inline-flex items-center gap-x-2 rounded-full px-3 py-1 dark:bg-gray-800 ${item?.status === 'pending' && 'bg-amber-100/60'} ${item?.status === 'approve' && 'bg-emerald-100/60'} ${item?.status === 'reject' && 'bg-rose-100/60'}`}
                         >

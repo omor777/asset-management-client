@@ -4,7 +4,7 @@ import LoadingSpinner from '../../../components/LoadingSpinner/LoadingSpinner';
 import SectionTitle from '../../../components/SectionTitle/SectionTitle';
 import useAuth from '../../../hooks/useAuth';
 import useAxiosSecure from '../../../hooks/useAxiosSecure';
-import { dateFormat } from '../../../utils/date';
+import { dateFormat2 } from '../../../utils/date';
 
 const MonthlyRequest = () => {
   const { user } = useAuth();
@@ -54,39 +54,39 @@ const MonthlyRequest = () => {
       <SectionTitle title={'My Monthly Request'} />
       <div className="mt-6 flex flex-col">
         <div className="overflow-x-auto shadow-md">
-          <div className="min-w-full">
+          <div className="inline-block min-w-full align-middle">
             <div className="overflow-hidden rounded-md border border-gray-200 dark:border-gray-700">
               <table className="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
                 <thead className="bg-gray-50 dark:bg-gray-800">
                   <tr>
                     <th
                       scope="col"
-                      className="py-3.5 text-sm font-normal text-gray-500 dark:text-gray-400 rtl:text-right"
+                      className="whitespace-nowrap px-2 py-3.5 text-sm font-normal text-gray-500 dark:text-gray-400 rtl:text-right"
                     >
                       <span className="whitespace-nowrap">Asset name</span>
                     </th>
                     <th
                       scope="col"
-                      className="py-3.5 text-sm font-normal text-gray-500 dark:text-gray-400 rtl:text-right"
+                      className="whitespace-nowrap px-2 py-3.5 text-sm font-normal text-gray-500 dark:text-gray-400 rtl:text-right"
                     >
                       <span className="whitespace-nowrap">Asset type</span>
                     </th>
 
                     <th
                       scope="col"
-                      className="py-3.5 text-sm font-normal text-gray-500 dark:text-gray-400 rtl:text-right"
+                      className="whitespace-nowrap px-2 py-3.5 text-sm font-normal text-gray-500 dark:text-gray-400 rtl:text-right"
                     >
                       <span className="whitespace-nowrap">Provider email</span>
                     </th>
                     <th
                       scope="col"
-                      className="py-3.5 text-sm font-normal text-gray-500 dark:text-gray-400 rtl:text-right"
+                      className="whitespace-nowrap px-2 py-3.5 text-sm font-normal text-gray-500 dark:text-gray-400 rtl:text-right"
                     >
                       <span className="whitespace-nowrap">Request date</span>
                     </th>
                     <th
                       scope="col"
-                      className="py-3.5 text-sm font-normal text-gray-500 dark:text-gray-400 rtl:text-right"
+                      className="whitespace-nowrap px-2 py-3.5 text-sm font-normal text-gray-500 dark:text-gray-400 rtl:text-right"
                     >
                       <span className="whitespace-nowrap">Status</span>
                     </th>
@@ -95,29 +95,29 @@ const MonthlyRequest = () => {
                 <tbody className="divide-y divide-gray-200 bg-white dark:divide-gray-700 dark:bg-gray-900">
                   {myAssets?.map((asset) => (
                     <tr key={asset?._id}>
-                      <td className="whitespace-nowrap py-4 text-center text-sm font-medium text-gray-700">
+                      <td className="whitespace-nowrap px-2 py-4 text-center text-sm font-medium text-gray-700">
                         <span className="capitalize dark:text-gray-300">
                           {asset?.product_name}
                         </span>
                       </td>
-                      <td className="whitespace-nowrap py-4 text-center text-sm font-medium text-gray-700">
+                      <td className="whitespace-nowrap px-2 py-4 text-center text-sm font-medium text-gray-700">
                         <span className="capitalize dark:text-gray-300">
                           {asset?.product_type}
                         </span>
                       </td>
 
-                      <td className="whitespace-nowrap py-4 text-center text-sm font-medium text-gray-700">
+                      <td className="whitespace-nowrap px-2 py-4 text-center text-sm font-medium text-gray-700">
                         <span className="capitalize dark:text-gray-300">
                           {asset?.provider_info?.email}
                         </span>
                       </td>
-                      <td className="whitespace-nowrap py-4 text-center text-sm font-medium text-gray-700">
+                      <td className="whitespace-nowrap px-2 py-4 text-center text-sm font-medium text-gray-700">
                         <span className="capitalize dark:text-gray-300">
-                          {dateFormat(asset?.requested_date)}
+                          {dateFormat2(asset?.requested_date)}
                         </span>
                       </td>
 
-                      <td className="whitespace-nowrap text-center text-sm font-medium text-gray-700">
+                      <td className="whitespace-nowrap px-2 text-center text-sm font-medium text-gray-700">
                         <div
                           className={`inline-flex w-24 items-center justify-center gap-x-2 rounded-full py-1 dark:bg-gray-800 ${asset?.status === 'pending' && 'bg-amber-100/60'} ${asset?.status === 'approve' && 'bg-emerald-100/60'} ${asset?.status === 'reject' && 'bg-rose-100/60'} ${asset?.status === 'return' && 'bg-purple-100/60'} ${asset?.status === 'cancel' && 'bg-rose-100/60'}`}
                         >

@@ -75,7 +75,7 @@ const MyEmployeeList = () => {
 
   if (isPending || loading) return <LoadingSpinner h={'90vh'} />;
   return (
-    <div className="container pt-40 mb-24">
+    <div className="container mb-24 pt-40">
       <Title title={'AssetAura | My Employee List'} />
       <section>
         <div className="flex flex-col">
@@ -87,27 +87,27 @@ const MyEmployeeList = () => {
                     <tr>
                       <th
                         scope="col"
-                        className="py-3.5 text-sm font-normal text-gray-500 dark:text-gray-400 rtl:text-right"
+                        className="px-2 py-3.5 text-sm font-normal text-gray-500 dark:text-gray-400 rtl:text-right"
                       >
                         <span className="whitespace-nowrap">Member Image</span>
                       </th>
                       <th
                         scope="col"
-                        className="py-3.5 text-sm font-normal text-gray-500 dark:text-gray-400 rtl:text-right"
+                        className="px-2 py-3.5 text-sm font-normal text-gray-500 dark:text-gray-400 rtl:text-right"
                       >
                         <span className="whitespace-nowrap">Member Name</span>
                       </th>
 
                       <th
                         scope="col"
-                        className="py-3.5 text-sm font-normal text-gray-500 dark:text-gray-400 rtl:text-right"
+                        className="px-2 py-3.5 text-sm font-normal text-gray-500 dark:text-gray-400 rtl:text-right"
                       >
                         <span className="whitespace-nowrap">Member Type</span>
                       </th>
 
                       <th
                         scope="col"
-                        className="py-3.5 text-sm font-normal text-gray-500 dark:text-gray-400 rtl:text-right"
+                        className="px-2 py-3.5 text-sm font-normal text-gray-500 dark:text-gray-400 rtl:text-right"
                       >
                         <span className="whitespace-nowrap">Action</span>
                       </th>
@@ -122,7 +122,7 @@ const MyEmployeeList = () => {
                           className="transition-colors duration-200 hover:bg-gray-100 dark:hover:bg-gray-800"
                           key={_id}
                         >
-                          <td className="whitespace-nowrap py-4 text-center text-sm font-medium text-gray-700">
+                          <td className="whitespace-nowrap px-2 py-4 text-center text-sm font-medium text-gray-700">
                             <span className="">
                               <img
                                 className="mx-auto size-14 rounded-full object-cover"
@@ -131,17 +131,17 @@ const MyEmployeeList = () => {
                               />
                             </span>
                           </td>
-                          <td className="whitespace-nowrap py-4 text-center text-sm font-medium text-gray-700">
+                          <td className="whitespace-nowrap px-2 py-4 text-center text-sm font-medium text-gray-700">
                             <span className="capitalize dark:text-gray-300">
                               {employee_info.name}
                             </span>
                           </td>
-                          <td>
+                          <td className="px-2">
                             <p className="mx-auto w-max rounded-full bg-purple-100/60 px-4 py-1.5 text-sm capitalize text-purple-500 dark:bg-gray-800">
                               <span>{employee_info.role}</span>
                             </p>
                           </td>
-                          <td>
+                          <td className="px-2">
                             <button
                               onClick={() => mutateAsync(employee)}
                               className="mx-auto block w-20 rounded bg-rose-500 py-1 text-sm font-medium text-white shadow-tableBtn transition-colors duration-200 hover:bg-rose-700"

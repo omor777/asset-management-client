@@ -89,8 +89,8 @@ const JoinAsEmployee = () => {
   return (
     <section className="pb-24 pt-40">
       <Title title={'AssetAura | Join as Employee'} />
-      <div className="mx-auto flex flex-col items-center justify-center px-6 py-8 lg:py-0">
-        <div className="w-full rounded-lg bg-white shadow-form dark:border dark:border-gray-700 dark:bg-gray-800 sm:max-w-2xl md:mt-0 xl:p-0">
+      <div className="mx-auto flex flex-col items-center justify-center">
+        <div className="w-full rounded-md bg-white shadow-form dark:border dark:border-gray-700 dark:bg-gray-800 sm:max-w-2xl md:mt-0 xl:p-0">
           <div className="space-y-4 p-6 sm:p-8 md:space-y-6">
             <div className="space-y-4">
               <GoogleButton onClick={handleGoogleLogin} />
@@ -115,7 +115,7 @@ const JoinAsEmployee = () => {
                   htmlFor="name"
                   className="mb-2 block text-sm font-medium text-gray-900 dark:text-white"
                 >
-                  Name
+                  Full Name
                 </label>
 
                 <input

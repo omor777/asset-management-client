@@ -93,7 +93,7 @@ const JoinAsHrManager = () => {
       <Title title={'AssetAura | Join as HR'} />
 
       <div className="mx-auto flex flex-col items-center justify-center">
-        <div className="w-full rounded-lg bg-white shadow-form dark:border dark:border-gray-700 dark:bg-gray-800 md:mt-0 xl:p-0">
+        <div className="w-full rounded-md bg-white shadow-form dark:border dark:border-gray-700 dark:bg-gray-800 md:mt-0 xl:p-0">
           <div className="p-6 sm:p-8">
             <form onSubmit={handleSubmit(onSubmit)} noValidate>
               <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
@@ -102,7 +102,7 @@ const JoinAsHrManager = () => {
                     htmlFor="name"
                     className="mb-2 block text-sm font-medium text-gray-900 dark:text-white"
                   >
-                    Name
+                    Full Name
                   </label>
 
                   <input

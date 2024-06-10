@@ -132,7 +132,7 @@ const MyRequestedAsset = () => {
     <>
       <Title title={'AssetAura | My Requested Assets'} />
       <section className="container mb-24 pt-40">
-        <div className="flex items-center justify-between">
+        <div className="flex flex-wrap items-center justify-between gap-y-4">
           <div>
             <form onSubmit={handleSearch} className="mx-auto max-w-md">
               <div>
@@ -170,6 +170,7 @@ const MyRequestedAsset = () => {
             </select>
           </div>
         </div>
+        {/* table */}
         <div className="mt-6 flex flex-col">
           <div className="overflow-x-auto shadow-md">
             <div className="inline-block min-w-full align-middle">
@@ -179,20 +180,20 @@ const MyRequestedAsset = () => {
                     <tr>
                       <th
                         scope="col"
-                        className="py-3.5 text-sm font-normal text-gray-500 dark:text-gray-400 rtl:text-right"
+                        className="whitespace-nowrap px-2 py-3.5 text-sm font-normal text-gray-500 dark:text-gray-400 rtl:text-right"
                       >
                         <span className="whitespace-nowrap">Asset Name</span>
                       </th>
                       <th
                         scope="col"
-                        className="py-3.5 text-sm font-normal text-gray-500 dark:text-gray-400 rtl:text-right"
+                        className="whitespace-nowrap px-2 py-3.5 text-sm font-normal text-gray-500 dark:text-gray-400 rtl:text-right"
                       >
                         <span className="whitespace-nowrap">Asset Type</span>
                       </th>
 
                       <th
                         scope="col"
-                        className="py-3.5 text-sm font-normal text-gray-500 dark:text-gray-400 rtl:text-right"
+                        className="whitespace-nowrap px-2 py-3.5 text-sm font-normal text-gray-500 dark:text-gray-400 rtl:text-right"
                       >
                         <span className="whitespace-nowrap">
                           Request Status
@@ -200,20 +201,20 @@ const MyRequestedAsset = () => {
                       </th>
                       <th
                         scope="col"
-                        className="py-3.5 text-sm font-normal text-gray-500 dark:text-gray-400 rtl:text-right"
+                        className="whitespace-nowrap px-2 py-3.5 text-sm font-normal text-gray-500 dark:text-gray-400 rtl:text-right"
                       >
                         <span className="whitespace-nowrap">Request Date</span>
                       </th>
                       <th
                         scope="col"
-                        className="py-3.5 text-sm font-normal text-gray-500 dark:text-gray-400 rtl:text-right"
+                        className="whitespace-nowrap px-2 py-3.5 text-sm font-normal text-gray-500 dark:text-gray-400 rtl:text-right"
                       >
                         <span className="whitespace-nowrap">Approval Date</span>
                       </th>
 
                       <th
                         scope="col"
-                        className="py-3.5 text-sm font-normal text-gray-500 dark:text-gray-400 rtl:text-right"
+                        className="whitespace-nowrap px-2 py-3.5 text-sm font-normal text-gray-500 dark:text-gray-400 rtl:text-right"
                       >
                         <span className="whitespace-nowrap">Action</span>
                       </th>
@@ -225,17 +226,17 @@ const MyRequestedAsset = () => {
                         className="transition-colors duration-200 hover:bg-gray-100 dark:hover:bg-gray-800"
                         key={asset?._id}
                       >
-                        <td className="whitespace-nowrap py-4 text-center text-sm font-medium text-gray-700">
+                        <td className="whitespace-nowrap px-2 py-4 text-center text-sm font-medium text-gray-700">
                           <span className="capitalize dark:text-gray-300">
                             {asset?.product_name}
                           </span>
                         </td>
-                        <td className="whitespace-nowrap py-4 text-center text-sm font-medium text-gray-700">
+                        <td className="whitespace-nowrap px-2 py-4 text-center text-sm font-medium text-gray-700">
                           <span className="capitalize dark:text-gray-300">
                             {asset?.product_type}
                           </span>
                         </td>
-                        <td className="whitespace-nowrap text-center text-sm font-medium text-gray-700">
+                        <td className="whitespace-nowrap px-2 text-center text-sm font-medium text-gray-700">
                           <div
                             className={`inline-flex w-24 items-center justify-center gap-x-2 rounded-full py-1 dark:bg-gray-800 ${asset?.status === 'pending' && 'bg-amber-100/60'} ${asset?.status === 'approve' && 'bg-emerald-100/60'} ${asset?.status === 'reject' && 'bg-rose-100/60'} ${asset?.status === 'return' && 'bg-purple-100/60'} ${asset?.status === 'cancel' && 'bg-rose-100/60'}`}
                           >
@@ -249,12 +250,12 @@ const MyRequestedAsset = () => {
                             </span>
                           </div>
                         </td>
-                        <td className="whitespace-nowrap text-center text-sm font-medium text-gray-700">
+                        <td className="whitespace-nowrap text-center px-2 text-sm font-medium text-gray-700">
                           <span className="capitalize dark:text-gray-300">
                             {dateFormat(asset?.requested_date)}
                           </span>
                         </td>
-                        <td className="whitespace-nowrap py-4 text-center text-sm font-medium text-gray-700">
+                        <td className="whitespace-nowrap py-4 px-2 text-center text-sm font-medium text-gray-700">
                           {asset?.approve_date && (
                             <span className="capitalize dark:text-gray-300">
                               {dateFormat(asset?.approve_date)}
@@ -262,7 +263,7 @@ const MyRequestedAsset = () => {
                           )}
                         </td>
 
-                        <td className="whitespace-nowrap py-4 text-center text-sm">
+                        <td className="whitespace-nowrap py-4 text-center text-sm px-2">
                           <div className="flex items-center justify-center">
                             {asset?.status === 'pending' ||
                             asset?.status === 'cancel' ? (

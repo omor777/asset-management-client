@@ -129,7 +129,7 @@ const RequestForAsset = () => {
   return (
     <section className="container mx-auto mb-24 pt-40">
       <Title title={'AssetAura | Request for an Asset'} />
-      <div className="flex items-center justify-between">
+      <div className="flex flex-wrap items-center justify-between gap-y-4">
         <div>
           <form onSubmit={handleSearch} className="mx-auto max-w-md">
             <div>
@@ -177,27 +177,27 @@ const RequestForAsset = () => {
                   <tr>
                     <th
                       scope="col"
-                      className="py-3.5 text-sm font-normal text-gray-500 dark:text-gray-400 rtl:text-right"
+                      className="whitespace-nowrap px-2 py-3.5 text-sm font-normal text-gray-500 dark:text-gray-400 rtl:text-right"
                     >
                       <span>Name</span>
                     </th>
 
                     <th
                       scope="col"
-                      className="py-3.5 text-sm font-normal text-gray-500 dark:text-gray-400 rtl:text-right"
+                      className="whitespace-nowrap px-2 py-3.5 text-sm font-normal text-gray-500 dark:text-gray-400 rtl:text-right"
                     >
                       <span>Asset Type</span>
                     </th>
 
                     <th
                       scope="col"
-                      className="py-3.5 text-sm font-normal text-gray-500 dark:text-gray-400 rtl:text-right"
+                      className="whitespace-nowrap px-2 py-3.5 text-sm font-normal text-gray-500 dark:text-gray-400 rtl:text-right"
                     >
                       <span>Availability</span>
                     </th>
                     <th
                       scope="col"
-                      className="py-3.5 text-sm font-normal text-gray-500 dark:text-gray-400 rtl:text-right"
+                      className="whitespace-nowrap px-2 py-3.5 text-sm font-normal text-gray-500 dark:text-gray-400 rtl:text-right"
                     >
                       <span>Action</span>
                     </th>
@@ -210,19 +210,19 @@ const RequestForAsset = () => {
                         className="transition-colors duration-200 hover:bg-gray-100 dark:hover:bg-gray-800"
                         key={asset?._id}
                       >
-                        <td className="whitespace-nowrap py-4 text-center text-sm font-medium text-gray-700 dark:text-gray-200">
+                        <td className="whitespace-nowrap px-2 py-4 text-center text-sm font-medium text-gray-700 dark:text-gray-200">
                           <span className="capitalize">
                             {asset?.product_name}
                           </span>
                         </td>
 
-                        <td className="whitespace-nowrap py-4 text-center text-sm text-gray-500 dark:text-gray-300">
+                        <td className="whitespace-nowrap px-2 py-4 text-center text-sm text-gray-500 dark:text-gray-300">
                           <span className="capitalize">
                             {asset?.product_type}
                           </span>
                         </td>
 
-                        <td className="whitespace-nowrap py-4 text-center text-sm font-medium text-gray-700">
+                        <td className="whitespace-nowrap px-2 py-4 text-center text-sm font-medium text-gray-700">
                           <p
                             className={`inline-flex items-center rounded-full ${asset?.availability === 'Out of stock' ? 'bg-red-100/60' : 'bg-emerald-100/60'} w-28 justify-center py-1 dark:bg-gray-800`}
                           >
@@ -234,7 +234,7 @@ const RequestForAsset = () => {
                           </p>
                         </td>
 
-                        <td className="whitespace-nowrap py-4 text-center text-sm">
+                        <td className="whitespace-nowrap px-2 py-4 text-center text-sm">
                           <button
                             onClick={() => {
                               handleOpenModal();

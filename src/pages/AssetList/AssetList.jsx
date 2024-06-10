@@ -181,38 +181,38 @@ const AssetList = () => {
       <div className="mt-6 flex flex-col">
         <div className="overflow-x-auto shadow-md">
           <div className="inline-block min-w-full align-middle">
-            <div className="overflow-hidden border border-gray-200 dark:border-gray-700">
+            <div className="overflow-hidden rounded-md border border-gray-200 dark:border-gray-700">
               <table className="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
                 <thead className="bg-gray-50 dark:bg-gray-800">
                   <tr>
                     <th
                       scope="col"
-                      className="py-3.5 pl-10 text-left text-sm font-normal text-gray-500 dark:text-gray-400 rtl:text-right"
+                      className="whitespace-nowrap px-2 py-3.5 text-sm font-normal text-gray-500 dark:text-gray-400 rtl:text-right"
                     >
                       Asset name
                     </th>
 
                     <th
                       scope="col"
-                      className="py-3.5 text-left text-sm font-normal text-gray-500 dark:text-gray-400 rtl:text-right"
+                      className="whitespace-nowrap px-2 py-3.5 text-sm font-normal text-gray-500 dark:text-gray-400 rtl:text-right"
                     >
                       Asset type
                     </th>
                     <th
                       scope="col"
-                      className="py-3.5 text-left text-sm font-normal text-gray-500 dark:text-gray-400"
+                      className="whitespace-nowrap px-2 py-3.5 text-sm font-normal text-gray-500 dark:text-gray-400"
                     >
                       Asset quantity
                     </th>
                     <th
                       scope="col"
-                      className="py-3.5 text-left text-sm font-normal text-gray-500 dark:text-gray-400 rtl:text-right"
+                      className="whitespace-nowrap px-2 py-3.5 text-sm font-normal text-gray-500 dark:text-gray-400 rtl:text-right"
                     >
                       Added date
                     </th>
                     <th
                       scope="col"
-                      className="py-3.5 text-left text-sm font-normal text-gray-500 dark:text-gray-400 rtl:text-right"
+                      className="whitespace-nowrap px-2 py-3.5 text-sm font-normal text-gray-500 dark:text-gray-400 rtl:text-right"
                     >
                       Action
                     </th>
@@ -229,29 +229,32 @@ const AssetList = () => {
                       added_date,
                     } = asset || {};
                     return (
-                      <tr key={_id}>
-                        <td className="whitespace-nowrap py-4 pl-10 text-sm font-medium capitalize text-gray-700 dark:text-gray-300">
+                      <tr
+                        className="transition-colors duration-200 hover:bg-gray-100 dark:hover:bg-gray-800"
+                        key={_id}
+                      >
+                        <td className="whitespace-nowrap px-2 py-4 text-center text-sm font-medium capitalize text-gray-700 dark:text-gray-300">
                           {product_name}
                         </td>
 
-                        <td className="whitespace-nowrap py-4 text-sm text-gray-500 dark:text-gray-300">
+                        <td className="whitespace-nowrap px-2 py-4 text-center text-sm text-gray-500 dark:text-gray-300">
                           {product_type}
                         </td>
 
-                        <td className="whitespace-nowrap py-4 pl-4 text-center text-sm font-medium text-gray-700">
-                          <p className="w-16 rounded-full bg-purple-100/60 px-4 py-1.5 text-sm text-purple-500 dark:bg-gray-800">
+                        <td className="whitespace-nowrap px-2 py-4 text-center text-sm font-medium text-gray-700">
+                          <p className="mx-auto w-16 rounded-full bg-purple-100/60 px-4 py-1.5 text-sm text-purple-500 dark:bg-gray-800">
                             {product_quantity < 10
                               ? String(product_quantity).padStart(2, '0')
                               : product_quantity}
                           </p>
                         </td>
 
-                        <td className="whitespace-nowrap py-4 text-sm font-medium capitalize text-gray-700 dark:text-gray-300">
+                        <td className="whitespace-nowrap px-2 py-4 text-center text-sm font-medium capitalize text-gray-700 dark:text-gray-300">
                           {dateFormat(added_date)}
                         </td>
 
-                        <td className="whitespace-nowrap py-4 text-sm">
-                          <div className="flex items-center gap-x-6">
+                        <td className="whitespace-nowrap px-2 py-4 text-center text-sm">
+                          <div className="flex items-center justify-center gap-x-6">
                             <button
                               onClick={() => handleDeleteAsset(_id)}
                               className="text-gray-500 transition-colors duration-200 hover:text-red-500 focus:outline-none dark:text-gray-300 dark:hover:text-red-500"

@@ -21,39 +21,39 @@ const LimitedStockItem = () => {
     <section className="container">
       <SectionTitle title={'Limited Stock Items'} />
       <div className="mt-10 flex flex-col">
-        <div className="overflow-x-auto">
+        <div className="overflow-x-auto shadow-md">
           <div className="inline-block min-w-full align-middle">
-            <div className="overflow-hidden border border-gray-200 dark:border-gray-700 md:rounded-lg">
+            <div className="overflow-hidden rounded-md border border-gray-200 dark:border-gray-700">
               <table className="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
                 <thead className="bg-gray-50 dark:bg-gray-800">
                   <tr>
                     <th
                       scope="col"
-                      className="py-3.5 pl-6 text-left text-sm font-normal text-gray-500 dark:text-gray-400 rtl:text-right"
+                      className="whitespace-nowrap px-2 py-3.5 text-sm font-normal text-gray-500 dark:text-gray-400 rtl:text-right"
                     >
                       <span>Asset name</span>
                     </th>
                     <th
                       scope="col"
-                      className="py-3.5 text-left text-sm font-normal text-gray-500 dark:text-gray-400 rtl:text-right"
+                      className="whitespace-nowrap px-2 py-3.5 text-sm font-normal text-gray-500 dark:text-gray-400 rtl:text-right"
                     >
                       <span>Asset type</span>
                     </th>
                     <th
                       scope="col"
-                      className="py-3.5 pl-4 text-left text-sm font-normal text-gray-500 dark:text-gray-400 rtl:text-right"
+                      className="whitespace-nowrap px-2 py-3.5 text-sm font-normal text-gray-500 dark:text-gray-400 rtl:text-right"
                     >
                       <span>Availability</span>
                     </th>
                     <th
                       scope="col"
-                      className="py-3.5 text-left text-sm font-normal text-gray-500 dark:text-gray-400 rtl:text-right"
+                      className="whitespace-nowrap px-2 py-3.5 text-sm font-normal text-gray-500 dark:text-gray-400 rtl:text-right"
                     >
                       <span>Added date</span>
                     </th>
                     <th
                       scope="col"
-                      className="py-3.5 pl-3 text-left text-sm font-normal text-gray-500 dark:text-gray-400 rtl:text-right"
+                      className="whitespace-nowrap px-2 py-3.5 text-sm font-normal text-gray-500 dark:text-gray-400 rtl:text-right"
                     >
                       <span>Asset quantity</span>
                     </th>
@@ -63,14 +63,14 @@ const LimitedStockItem = () => {
                   {/* table row */}
                   {data?.map((item) => (
                     <tr key={item._id}>
-                      <td className="whitespace-nowrap py-4 pl-6 text-sm font-medium text-gray-700 dark:text-gray-200">
+                      <td className="whitespace-nowrap px-2 py-4 text-center text-sm font-medium text-gray-700 dark:text-gray-200">
                         <span className="capitalize">{item?.product_name}</span>
                       </td>
-                      <td className="whitespace-nowrap py-4 text-sm font-medium text-gray-700 dark:text-gray-200">
+                      <td className="whitespace-nowrap px-2 py-4 text-center text-sm font-medium text-gray-700 dark:text-gray-200">
                         <span className="capitalize">{item?.product_type}</span>
                       </td>
 
-                      <td className="whitespace-nowrap py-4 text-sm font-medium text-gray-700">
+                      <td className="whitespace-nowrap px-2 py-4 text-center text-sm font-medium text-gray-700">
                         <p
                           className={`inline-flex items-center rounded-full ${item?.availability === 'Out of stock' ? 'bg-red-100/60' : 'bg-emerald-100/60'} w-28 justify-center py-1 dark:bg-gray-800`}
                         >
@@ -82,16 +82,16 @@ const LimitedStockItem = () => {
                         </p>
                       </td>
 
-                      <td className="whitespace-nowrap py-4 text-sm font-medium text-gray-700 dark:text-gray-200">
+                      <td className="whitespace-nowrap px-2 py-4 text-center text-sm font-medium text-gray-700 dark:text-gray-200">
                         <span className="capitalize">
                           {dateFormat(item?.added_date)}
                         </span>
                       </td>
-                      <td className="whitespace-nowrap py-4 pl-7 text-center text-sm font-medium text-gray-700">
-                        <p className="w-16 rounded-full bg-purple-100/60 px-4 py-1.5 text-sm text-purple-500 dark:bg-gray-800">
-                          {item?.request_count < 10
-                            ? String(item?.request_count).padStart(2, '0')
-                            : item?.request_count}
+                      <td className="whitespace-nowrap px-2 py-4 text-center text-sm font-medium text-gray-700">
+                        <p className="mx-auto w-16 rounded-full bg-purple-100/60 px-4 py-1.5 text-sm text-purple-500 dark:bg-gray-800">
+                          {item?.product_quantity < 10
+                            ? String(item?.product_quantity).padStart(2, '0')
+                            : item?.product_quantity}
                         </p>
                       </td>
                     </tr>

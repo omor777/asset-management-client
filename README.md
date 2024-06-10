@@ -1,9 +1,22 @@
-# React + Vite
+# AssetAura
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## HR Email ---> omorfaruk14@gmail.com
 
-Currently, two official plugins are available:
+## HR Password ---> 123456
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
-  "# b9a12-client-side-omor777"
+Live Site: [https://asset-management-system-330cd.web.app](https://asset-management-system-330cd.web.app)
+
+## Features and Characteristics:
+
+- Intuitive dashboard providing an overview of all assets.
+- User-friendly interface with intuitive navigation
+- Responsive design for seamless experience across devices
+- Secure user authentication and authorization system
+- Integrated payment system to handle transactions, subscriptions, and invoices securely and efficiently.
+- Secure access with role-based permissions for HR managers and employees, ensuring data privacy and integrity.
+- Every data have search, sort, filter functionality.
+- HR can add employee to his/her team
+- Easily track and manage all assets with detailed information.
+- User can increase member limit buy subscription
+
+## My Website theme: Volunteer Management Website

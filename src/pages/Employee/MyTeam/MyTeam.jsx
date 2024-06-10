@@ -61,20 +61,20 @@ const MyTeam = () => {
                     <tr>
                       <th
                         scope="col"
-                        className="py-3.5 text-sm font-normal text-gray-500 dark:text-gray-400 rtl:text-right"
+                        className="whitespace-nowrap px-2 py-3.5 text-sm font-normal text-gray-500 dark:text-gray-400 rtl:text-right"
                       >
                         <span className="whitespace-nowrap">Member Image</span>
                       </th>
                       <th
                         scope="col"
-                        className="py-3.5 text-sm font-normal text-gray-500 dark:text-gray-400 rtl:text-right"
+                        className="whitespace-nowrap px-2 py-3.5 text-sm font-normal text-gray-500 dark:text-gray-400 rtl:text-right"
                       >
                         <span className="whitespace-nowrap">Member Name</span>
                       </th>
 
                       <th
                         scope="col"
-                        className="py-3.5 text-sm font-normal text-gray-500 dark:text-gray-400 rtl:text-right"
+                        className="whitespace-nowrap px-2 py-3.5 text-sm font-normal text-gray-500 dark:text-gray-400 rtl:text-right"
                       >
                         <span className="whitespace-nowrap">Member Type</span>
                       </th>
@@ -82,14 +82,13 @@ const MyTeam = () => {
                   </thead>
                   <tbody className="divide-y divide-gray-200 bg-white dark:divide-gray-700 dark:bg-gray-900">
                     {myTeams?.map((employee) => {
-                      //   console.log(employee);
                       const { _id, employee_info } = employee ?? {};
                       return (
                         <tr
                           className="transition-colors duration-200 hover:bg-gray-100 dark:hover:bg-gray-800"
                           key={_id}
                         >
-                          <td className="whitespace-nowrap py-4 text-sm font-medium text-gray-700">
+                          <td className="whitespace-nowrap px-2 py-4 text-sm font-medium text-gray-700">
                             <span className="">
                               <img
                                 className="mx-auto size-14 rounded-full object-cover"
@@ -98,12 +97,12 @@ const MyTeam = () => {
                               />
                             </span>
                           </td>
-                          <td className="whitespace-nowrap py-4 text-center text-sm font-medium text-gray-700">
+                          <td className="whitespace-nowrap px-2 py-4 text-center text-sm font-medium text-gray-700">
                             <span className="capitalize dark:text-gray-300">
                               {employee_info.name}
                             </span>
                           </td>
-                          <td className="text-center">
+                          <td className="px-2 text-center">
                             <p className="mx-auto w-max rounded-full bg-purple-100/60 px-4 py-1.5 text-sm capitalize text-purple-500 dark:bg-gray-800">
                               <span>{employee_info.role}</span>
                             </p>

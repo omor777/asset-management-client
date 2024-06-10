@@ -176,7 +176,7 @@ const AddAnEmployee = () => {
       <Title title={'AssetAura | Add an Employee'} />
       <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
         <div className="flex h-[13.75rem] flex-col items-center justify-center gap-4 rounded-md bg-emerald-500 shadow-md">
-          <h1 className="text-4xl font-bold text-white">Total Employee</h1>
+          <h1 className="text-4xl font-bold text-white">Total Member</h1>
           <h3 className="text-6xl font-extrabold text-white">
             {loggedInUser?.employee_count ? loggedInUser?.employee_count : '0'}
           </h3>
@@ -195,7 +195,7 @@ const AddAnEmployee = () => {
           increase limit
         </button>
       </Link>
-      <section className="mt-12">
+      <section className="mt-24">
         <div className="flex flex-col">
           <div className="overflow-x-auto shadow-md">
             <div className="inline-block min-w-full align-middle">
@@ -205,33 +205,33 @@ const AddAnEmployee = () => {
                     <tr>
                       <th
                         scope="col"
-                        className="py-3.5 text-sm font-normal text-gray-500 dark:text-gray-400 rtl:text-right"
+                        className="px-2 py-3.5 text-sm font-normal text-gray-500 dark:text-gray-400 rtl:text-right"
                       >
                         <span className="whitespace-nowrap">Select Member</span>
                       </th>
                       <th
                         scope="col"
-                        className="py-3.5 text-sm font-normal text-gray-500 dark:text-gray-400 rtl:text-right"
+                        className="px-2 py-3.5 text-sm font-normal text-gray-500 dark:text-gray-400 rtl:text-right"
                       >
                         <span className="whitespace-nowrap">Member Image</span>
                       </th>
                       <th
                         scope="col"
-                        className="py-3.5 text-sm font-normal text-gray-500 dark:text-gray-400 rtl:text-right"
+                        className="px-2 py-3.5 text-sm font-normal text-gray-500 dark:text-gray-400 rtl:text-right"
                       >
                         <span className="whitespace-nowrap">Member Name</span>
                       </th>
 
                       <th
                         scope="col"
-                        className="py-3.5 text-sm font-normal text-gray-500 dark:text-gray-400 rtl:text-right"
+                        className="px-2 py-3.5 text-sm font-normal text-gray-500 dark:text-gray-400 rtl:text-right"
                       >
                         <span className="whitespace-nowrap">Member Type</span>
                       </th>
 
                       <th
                         scope="col"
-                        className="py-3.5 text-sm font-normal text-gray-500 dark:text-gray-400 rtl:text-right"
+                        className="px-2 py-3.5 text-sm font-normal text-gray-500 dark:text-gray-400 rtl:text-right"
                       >
                         <span className="whitespace-nowrap">Action</span>
                       </th>
@@ -245,7 +245,7 @@ const AddAnEmployee = () => {
                           className="transition-colors duration-200 hover:bg-gray-100 dark:hover:bg-gray-800"
                           key={_id}
                         >
-                          <td className="whitespace-nowrap py-4 pl-4 text-sm font-medium text-gray-700">
+                          <td className="whitespace-nowrap px-2 py-4 pl-4 text-sm font-medium text-gray-700">
                             <div className="pl-6">
                               <input
                                 onChange={(e) => {
@@ -257,7 +257,7 @@ const AddAnEmployee = () => {
                               />
                             </div>
                           </td>
-                          <td className="whitespace-nowrap py-4 text-sm font-medium text-gray-700">
+                          <td className="whitespace-nowrap px-2 py-4 text-sm font-medium text-gray-700">
                             <span className="">
                               <img
                                 className="mx-auto size-14 rounded-full object-cover"
@@ -266,17 +266,17 @@ const AddAnEmployee = () => {
                               />
                             </span>
                           </td>
-                          <td className="whitespace-nowrap py-4 text-center text-sm font-medium text-gray-700">
+                          <td className="whitespace-nowrap px-2 py-4 text-center text-sm font-medium text-gray-700">
                             <span className="capitalize dark:text-gray-300">
                               {name}
                             </span>
                           </td>
-                          <td>
+                          <td className="px-2">
                             <p className="mx-auto w-24 rounded-full bg-purple-100/60 py-1.5 text-center text-sm capitalize text-purple-500 dark:bg-gray-800">
                               <span>{role}</span>
                             </p>
                           </td>
-                          <td>
+                          <td className="px-2">
                             <button
                               onClick={() => handleAddToTeam(employee)}
                               className="mx-auto block w-20 rounded bg-primary py-1 text-sm font-medium text-white shadow-tableBtn transition-colors duration-200 hover:bg-blue-700"
