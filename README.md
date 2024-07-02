@@ -33,6 +33,8 @@ yarn install
 
 4. replace this with your firebase config
 ```
+// ./src/firebase/firebase.config.js
+
 // Import the functions you need from the SDKs you need
 import { initializeApp } from 'firebase/app';
 
