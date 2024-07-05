@@ -35,7 +35,7 @@ const Banner = () => {
             img={'https://i.ibb.co/3cjkCbp/pexels-fauxels-3184339.jpg'}
             btnText={'Join As Employee'}
             address={'/employee'}
-            heading={'Streamline Your Day with Flowbite'}
+            heading={'Streamline Your Day with AssetAura'}
             description={
               'Effortlessly track assets, access maintenance schedules, and get real-time updates all in one place.'
             }
@@ -46,7 +46,7 @@ const Banner = () => {
             img={'https://i.ibb.co/gJ3wgdC/creative-people-working-office.jpg'}
             btnText={'Join As HR Manager'}
             address={'/hr-manager'}
-            heading={'Gain Visibility and Insight with Flowbite'}
+            heading={'Gain Visibility and Insight with AssetAura'}
             description={`Make informed decisions about resource allocation, optimize asset utilization, and ensure regulatory compliance.`}
           />
         </SwiperSlide>
